@@ -252,7 +252,12 @@ public class DBCreation {
                     + "NIF varchar (15),"
                     + "EMAIL varchar(50),"
                     + "MOBILEPHONE bigint,"
+                    + "LANDLINE bigint,"
                     + "DOB date,"
+                    + "GENDER varchar (15),"
+                    + "ADDICTIONS text,"
+                    + "WEIGHT float,"
+                    + "HEIGHT float,"
                     + "IDADDRESS int,"
                     + "PRIMARY KEY (ID),"
                     + "FOREIGN KEY(IDADDRESS)";
@@ -286,6 +291,34 @@ public class DBCreation {
                     + "IDADDRESS int,"
                     + "PRIMARY KEY (ID),"
                     + "FOREIGN KEY(IDADDRESS)";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    private void cTIllnesses() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE ILLNESSES"
+                    + "(ID int,"
+                    + "DESCRIPTION text,"
+                    + "PERSONALPATHOLOGIES text,"
+                    + "HEREDITARYDISEASES text,"
+                    + "IDTREATMENT date,"
+                    + "IDPATIENT int,"
+                    + "PRIMARY KEY (ID),"
+                    + "FOREIGN KEY(IDTREATMENT)"
+                    + "FOREIGN KEY(IDPATIENT)";
             st.execute(in);
             st.close();
         }
