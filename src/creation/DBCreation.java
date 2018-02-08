@@ -4,7 +4,7 @@
  * and open the template in the editor.
     Created by Andrés Daniel de Pereda Cruz
  */
-package clinicalhistory.db;
+package creation;
 
 import java.io.File;
 import java.sql.*;
