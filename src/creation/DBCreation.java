@@ -363,6 +363,7 @@ public abstract class DBCreation {
                     + "OBSERVATIONS text,"
                     + "LASTMODIFICATION date,"
                     + "BLOODGROUP varchar (4),"
+                    + "MEDICALINSURANCE int,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY(ID))";
             st.execute(in);
