@@ -9,6 +9,8 @@ package clinicalhistory.db;
 
 import java.io.File;
 import java.sql.*;
+
+import creation.Conector;
 /**
  *
  * @author andre
