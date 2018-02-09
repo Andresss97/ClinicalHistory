@@ -29,7 +29,7 @@ public class Conector {
     public void conectar() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connect = DriverManager.getConnection("jdbc:sqlite:" + "C:\\DatabasesGHC\\DBproject.db");
+            connect = DriverManager.getConnection("jdbc:sqlite:" + "DBproject.db");
         }
         catch(Exception ex) {
             System.out.println(ex.getMessage());

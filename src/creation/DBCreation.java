@@ -21,7 +21,7 @@ public abstract class DBCreation {
     }
     
     private static boolean findUrl() {
-        File f = new File("C:\\DatabasesGHC\\DBproject.db");
+        File f = new File("./DatabasesGHC/DBproject.db");
         if(f.exists()) {
             url = f.getAbsolutePath();
             return true;
@@ -33,10 +33,10 @@ public abstract class DBCreation {
     
     public static void createDB() {
         if(findUrl() != true) {
-            url = "C:\\DatabasesGHC\\DBproject.db";
+            url = "DBproject.db";
             String bUrl = "jdbc:sqlite:" + url;
             
-            File newDir = new File("C:\\DatabasesGHC");
+            File newDir = new File("./DatabasesGHC");
             Connection con = null;
             
             try {
