@@ -219,6 +219,7 @@ public abstract class DBCreation {
                     + "(ID int NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "DATE date,"
+                    + "OBSERVATIONS text,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY(ID))";
             st.execute(in);
