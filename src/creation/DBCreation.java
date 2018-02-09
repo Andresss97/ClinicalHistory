@@ -13,17 +13,17 @@ import java.sql.*;
  *
  * @author andre
  */
-public class DBCreation {
-    private String url;
+public abstract class DBCreation {
+    private static String url;
     
     public DBCreation() {
-        this.url = null;
+        url = null;
     }
     
-    private boolean findUrl() {
+    private static boolean findUrl() {
         File f = new File("C:\\DatabasesGHC\\DBproject.db");
         if(f.exists()) {
-            this.url = f.getAbsolutePath();
+            url = f.getAbsolutePath();
             return true;
         }
         else {
@@ -31,10 +31,10 @@ public class DBCreation {
         }
     }
     
-    public void createDB() {
-        if(this.findUrl() != true) {
-            this.url = "C:\\DatabasesGHC\\DBproject.db";
-            String bUrl = "jdbc:sqlite:" + this.url;
+    public static void createDB() {
+        if(findUrl() != true) {
+            url = "C:\\DatabasesGHC\\DBproject.db";
+            String bUrl = "jdbc:sqlite:" + url;
             
             File newDir = new File("C:\\DatabasesGHC");
             Connection con = null;
@@ -43,15 +43,15 @@ public class DBCreation {
                 Class.forName("org.sqlite.JDBC");
                 newDir.mkdir();
                 con = DriverManager.getConnection(bUrl);
-                this.cTAddress();
-                this.cTAllergies();
-                this.cTDoctor();
-                this.cTMapping();
-                this.cTPatient();
-                this.cTSurgeries();
-                this.cTTreatment();
-                this.cTVaccine();
-                this.cTIllnesses();
+                cTAddress();
+                cTAllergies();
+                cTDoctor();
+                cTMapping();
+                cTPatient();
+                cTSurgeries();
+                cTTreatment();
+                cTVaccine();
+                cTIllnesses();
             }
             catch(ClassNotFoundException | SQLException ex) {
                 
@@ -67,7 +67,7 @@ public class DBCreation {
         }
     }
     
-    private void cTAddress() {
+    private static void cTAddress() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -77,7 +77,7 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ADDRESS "
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "CITY varchar(50),"
                     + "STREET varchar(50),"
                     + "CP bigint,"
@@ -95,35 +95,35 @@ public class DBCreation {
         }
     }
     
-    private void cTAllergies() {
+    private static void cTAllergies() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
         
         try {
-            con.conectar();;
+            con.conectar();
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ALLERGIES"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
-                    + "GROUP varchar(50),"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "TYPE varchar(50),"
                     + "NOTES text,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID),"
                     + "PRIMARY KEY(ID))";
             
             st.execute(in);
             st.close();
         }
         catch(Exception ex) {
-            
+            System.out.println(ex.getMessage());
         }
         finally {
             con.killConnection();
         }
     }
     
-    private void cTDoctor() {
+    private static void cTDoctor() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -133,8 +133,8 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE DOCTOR"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
-                    + "USER varchar(50) NOT NULL UNIQUE,"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "USER varchar(50) NOT NULL,"
                     + "PSW varchar(50) NOT NULL,"
                     + "EMAIL varchar(100),"
                     + "SPECIALITY varchar(35) NOT NULL,"
@@ -143,7 +143,7 @@ public class DBCreation {
                     + "SURNAME varchar(50) NOT NULL,"
                     + "NIF varchar(25) NOT NULL,"
                     + "DOB DATE,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
                     + "PRIMARY KEY (ID))";
             
             st.execute(in);
@@ -157,7 +157,7 @@ public class DBCreation {
         }
     }
     
-    private void cTMapping() {
+    private static void cTMapping() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -180,7 +180,7 @@ public class DBCreation {
         }
     }
     
-    private void cTSurgeries() {
+    private static void cTSurgeries() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -189,11 +189,11 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE SURGERIES"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
                     + "DOS date,"
                     + "Type varchar(50),"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
                     + "PRIMARY KEY (ID))";
             
             st.execute(in);
@@ -207,7 +207,7 @@ public class DBCreation {
         }
     }
     
-    private void cTVaccine() {
+    private static void cTVaccine() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -216,9 +216,9 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE VACCINE"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY(ID))";
             st.execute(in);
             st.close();
@@ -231,7 +231,7 @@ public class DBCreation {
         }
     }
     
-    private void cTPatient() {
+    private static void cTPatient() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -240,7 +240,7 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE PATIENT"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "SURNAME varchar(25) NOT NULL,"
                     + "NIF varchar (15) NOT NULL,"
@@ -252,7 +252,7 @@ public class DBCreation {
                     + "ADDICTIONS text,"
                     + "WEIGHT float,"
                     + "HEIGHT float,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
                     + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
@@ -265,7 +265,7 @@ public class DBCreation {
         }
     }
     
-    private void cTTreatment() {
+    private static void cTTreatment() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -274,7 +274,7 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE TREATMENT"
-                    + "(ID int,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "START date,"
                     + "END date,"
                     + "REHAB boolean,"
@@ -293,7 +293,7 @@ public class DBCreation {
         }
     }
     
-    private void cTIllnesses() {
+    private static void cTIllnesses() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -302,12 +302,12 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE ILLNESSES"
-                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "DESCRIPTION text,"
                     + "PERSONALPATHOLOGIES text,"
                     + "HEREDITARYDISEASES text,"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON DELETE CASCADE ON UPDATE CASCADE,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
                     + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
