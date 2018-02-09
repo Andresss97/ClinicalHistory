@@ -8,6 +8,7 @@ package creation;
 
 import java.io.File;
 import java.sql.*;
+
 /**
  *
  * @author andre
@@ -50,6 +51,7 @@ public class DBCreation {
                 this.cTSurgeries();
                 this.cTTreatment();
                 this.cTVaccine();
+                this.cTIllnesses();
             }
             catch(ClassNotFoundException | SQLException ex) {
                 
@@ -75,16 +77,12 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ADDRESS "
-                    + "(ID int NOT NULL,"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
                     + "CITY varchar(50),"
                     + "STREET varchar(50),"
                     + "CP bigint,"
                     + "HOUSENUMBER bigint,"
-                    + "IDDOCTOR int,"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY (IDPATIENT),"
-                    + "FOREIGN KEY (IDDOCTOR))";
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -107,12 +105,12 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ALLERGIES"
-                    + "(ID int NOT NULL,"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
                     + "GROUP varchar(50),"
                     + "NOTES text,"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY(ID),"
-                    + "FOREIGN KEY(IDPATIENT))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY(ID))";
             
             st.execute(in);
             st.close();
@@ -135,19 +133,18 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE DOCTOR"
-                    + "(ID int,"
-                    + "USER varchar(50),"
-                    + "PSW varchar(50),"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "USER varchar(50) NOT NULL UNIQUE,"
+                    + "PSW varchar(50) NOT NULL,"
                     + "EMAIL varchar(100),"
-                    + "SPECIALITY varchar(35),"
+                    + "SPECIALITY varchar(35) NOT NULL,"
                     + "MOBILEPHONE bigInt,"
-                    + "NAME varchar(50),"
-                    + "SURNAME varchar(50),"
-                    + "NIF varchar(25),"
+                    + "NAME varchar(50) NOT NULL,"
+                    + "SURNAME varchar(50) NOT NULL,"
+                    + "NIF varchar(25) NOT NULL,"
                     + "DOB DATE,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY (IDADDRESS))";
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -192,14 +189,12 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE SURGERIES"
-                    + "(ID int,"
-                    + "IDPATIENT int,"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON DELETE CASCADE ON UPDATE CASCADE,"
                     + "DOS date,"
                     + "Type varchar(50),"
-                    + "IDTREATMENT int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDPATIENT),"
-                    + "FOREIGN KEY(IDTREATMENT))";
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -221,11 +216,10 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE VACCINE"
-                    + "(ID int,"
-                    + "NAME varchar(25),"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY(ID),"
-                    + "FOREIGN KEY(IDPATIENT))";
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "NAME varchar(25) NOT NULL,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY(ID))";
             st.execute(in);
             st.close();
         }
@@ -246,16 +240,20 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE PATIENT"
-                    + "(ID int,"
-                    + "NAME varchar(25),"
-                    + "SURNAME varchar(25),"
-                    + "NIF varchar (15),"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "NAME varchar(25) NOT NULL,"
+                    + "SURNAME varchar(25) NOT NULL,"
+                    + "NIF varchar (15) NOT NULL,"
                     + "EMAIL varchar(50),"
                     + "MOBILEPHONE bigint,"
+                    + "LANDLINE bigint,"
                     + "DOB date,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDADDRESS)";
+                    + "GENDER varchar (15),"
+                    + "ADDICTIONS text,"
+                    + "WEIGHT float,"
+                    + "HEIGHT float,"
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID) ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
         }
@@ -283,9 +281,34 @@ public class DBCreation {
                     + "MEDICATION text,"
                     + "DESCRIPTION text,"
                     + "DOB date,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDADDRESS)";
+                    + "PRIMARY KEY (ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
+    private void cTIllnesses() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE ILLNESSES"
+                    + "(ID int NOT NULL UNIQUE PRIMARY KEY,"
+                    + "DESCRIPTION text,"
+                    + "PERSONALPATHOLOGIES text,"
+                    + "HEREDITARYDISEASES text,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON DELETE CASCADE ON UPDATE CASCADE,"
+                    + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
         }
