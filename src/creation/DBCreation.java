@@ -72,8 +72,8 @@ public abstract class DBCreation {
             
             in = "CREATE TABLE ALLERGIES"
                     + "(ID int NOT NULL UNIQUE,"
-                    + "TYPE varchar(50),"
-                    + "NOTES text,"
+                    + "GROUP varchar(50),"
+                    + "OBSERVATIONS text,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID),"
                     + "PRIMARY KEY(ID))";
@@ -100,8 +100,8 @@ public abstract class DBCreation {
             
             in = "CREATE TABLE DOCTOR"
                     + "(ID int NOT NULL UNIQUE,"
-                    + "USER varchar(50) NOT NULL,"
-                    + "PSW varchar(50) NOT NULL,"
+                    + "USERNAME varchar(50) NOT NULL,"
+                    + "PASSWORD varchar(50) NOT NULL,"
                     + "EMAIL varchar(100),"
                     + "SPECIALITY varchar(35) NOT NULL,"
                     + "MOBILEPHONE bigInt,"
@@ -157,8 +157,8 @@ public abstract class DBCreation {
             in = "CREATE TABLE SURGERIES"
                     + "(ID int NOT NULL UNIQUE,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
-                    + "DOS date,"
-                    + "Type varchar(50),"
+                    + "DATE date,"
+                    + "TYPE varchar(50),"
                     + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
                     + "PRIMARY KEY (ID))";
             
@@ -184,6 +184,8 @@ public abstract class DBCreation {
             in = "CREATE TABLE VACCINE"
                     + "(ID int NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
+                    + "DATE date,"
+                    + "OBSERVATIONS text,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY(ID))";
             st.execute(in);
@@ -215,7 +217,8 @@ public abstract class DBCreation {
                     + "LANDLINE bigint,"
                     + "DOB date,"
                     + "GENDER varchar (15),"
-                    + "ADDICTIONS text,"
+                    + "USERNAME text,"
+                    + "PASSWORD varchar (20),"
                     + "WEIGHT float,"
                     + "HEIGHT float,"
                     + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
@@ -246,7 +249,8 @@ public abstract class DBCreation {
                     + "REHAB boolean,"
                     + "MEDICATION text,"
                     + "DESCRIPTION text,"
-                    + "DOB date,"
+                    + "OBSERVATIONS text,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
@@ -272,6 +276,8 @@ public abstract class DBCreation {
                     + "DESCRIPTION text,"
                     + "PERSONALPATHOLOGIES text,"
                     + "HEREDITARYDISEASES text,"
+                    + "OBSERVATIONS text,"
+                    + "DATE date,"
                     + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
                     + "PRIMARY KEY (ID))";
@@ -285,4 +291,56 @@ public abstract class DBCreation {
             con.killConnection();
         }
     }
+    private static void cTAppointment() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE APPOINTMENT"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "HOUR  NOT NULL,"
+                    + "DATE date NOT NULL," 
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    private static void cTClinicalHistory() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE CLINICALHISTORY"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "ADDICTIONS text,"
+                    + "OBSERVATIONS text,"
+                    + "LASTMODIFICATION date,"
+                    + "BLOODGROUP varchar (4),"
+                    + "MEDICALINSURANCE int,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
 }
