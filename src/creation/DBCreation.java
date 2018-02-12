@@ -13,59 +13,25 @@ import java.sql.*;
  *
  * @author andre
  */
-public abstract class DBCreation {
-    private static String url;
-    
-    public DBCreation() {
-        url = null;
-    }
-    
-    private static boolean findUrl() {
-        File f = new File("C:\\DatabasesGHC\\DBproject.db");
-        if(f.exists()) {
-            url = f.getAbsolutePath();
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    public static void createDB() {
-        if(findUrl() != true) {
-            url = "C:\\DatabasesGHC\\DBproject.db";
-            String bUrl = "jdbc:sqlite:" + url;
-            
-            File newDir = new File("C:\\DatabasesGHC");
-            Connection con = null;
-            
-            try {
-                Class.forName("org.sqlite.JDBC");
-                newDir.mkdir();
-                con = DriverManager.getConnection(bUrl);
-                cTAddress();
-                cTAllergies();
-                cTDoctor();
-                cTMapping();
-                cTPatient();
-                cTSurgeries();
-                cTTreatment();
-                cTVaccine();
-                cTIllnesses();
-            }
-            catch(ClassNotFoundException | SQLException ex) {
-                
-            }
-            finally {
-                try {
-                    con.close();
-                }
-                catch(SQLException ex) {
-                    
-                }
-            }
-        }
-    }
+public abstract class DBCreation {    
+	
+	public static void createDB() {
+		Conector con = new Conector();
+		if(con.conectar() == true) {
+			cTAddress();
+			cTAllergies();
+			cTDoctor();
+			cTMapping();
+			cTPatient();
+			cTSurgeries();
+			cTTreatment();
+			cTVaccine();
+			cTIllnesses();
+		}
+		else {
+			//Aqui va un JOptionPane con un error
+		}
+	}
     
     private static void cTAddress() {
         Conector con = new Conector();

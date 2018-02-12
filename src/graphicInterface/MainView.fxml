@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="15.0">
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="aDoctors" mnemonicParsing="false" onAction="#OnClickButtonADoctors" text="Access Doctors" />
+                  <Button fx:id="aPatient" mnemonicParsing="false" onAction="#OnClickButtonAPatients" text="Access Patient" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <Label prefHeight="70.0" prefWidth="326.0" text="Babylon Studio" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets left="80.0" />
+         </BorderPane.margin>
+      </Label>
+   </left>
+</BorderPane>
