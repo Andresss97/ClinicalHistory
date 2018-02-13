@@ -304,6 +304,7 @@ public abstract class DBCreation {
                     + "(ID int NOT NULL UNIQUE,"
                     + "HOUR  NOT NULL,"
                     + "DATE date NOT NULL," 
+                    + "REASON text NOT NULL,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
                     + "PRIMARY KEY(ID))";
             st.execute(in);
