@@ -13,6 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ControllerLogInDoctors {
@@ -42,7 +43,19 @@ public class ControllerLogInDoctors {
     	window.setScene(new Scene(root));
     	window.show();
     }
-
+    
+    @FXML
+    void onClickHyperlink(ActionEvent event) throws IOException {
+    	Parent root = FXMLLoader.load(getClass().getResource("SignInDoctors.fxml"));
+    	Stage windowParent = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	Stage window = new Stage();
+    	Scene scene = new Scene(root);
+    	window.initOwner(windowParent);
+    	window.initModality(Modality.APPLICATION_MODAL);
+    	window.setScene(scene);
+    	window.showAndWait();
+    }
+    
     @FXML
     void logInOnClick(ActionEvent event) {
 
