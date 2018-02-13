@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  */
 public class Conector {
     private Connection connect;
-
+    private String url;
+    
     public Connection getConnect() {
         return connect;
     }
@@ -26,13 +27,20 @@ public class Conector {
         this.connect = connect;
     }
     
-    public void conectar() {
+    public String getUrl() {
+    	return url;
+    }
+    
+    public boolean conectar() {
         try {
             Class.forName("org.sqlite.JDBC");
-            connect = DriverManager.getConnection("jdbc:sqlite:" + "DBproject.db");
+            this.url = "jdbc:sqlite:" + ".//Database//DBproject.db";
+            connect = DriverManager.getConnection(this.url);
+            return true;
         }
         catch(Exception ex) {
             System.out.println(ex.getMessage());
+            return false;
         }
     }
     
