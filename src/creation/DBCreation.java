@@ -9,10 +9,9 @@ package creation;
 import java.io.File;
 import java.sql.*;
 
-/**
- *
- * @author andre
- */
+
+
+
 public abstract class DBCreation {    
 	
 	public static void createDB() {
@@ -32,7 +31,7 @@ public abstract class DBCreation {
 			//Aqui va un JOptionPane con un error
 		}
 	}
-    
+	
     private static void cTAddress() {
         Conector con = new Conector();
         Statement st = null;
