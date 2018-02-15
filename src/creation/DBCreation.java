@@ -298,13 +298,9 @@ public abstract class DBCreation {
                     + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "HOUR  NOT NULL,"
                     + "DATE date NOT NULL," 
-<<<<<<< HEAD
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
-=======
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID)"
                     + "REASON text NOT NULL,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
->>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
             st.execute(in);
             st.close();
         }
@@ -324,7 +320,7 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE CLINICALHISTORY"
-                    + "(ID int PTIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "ADDICTIONS text,"
                     + "OBSERVATIONS text,"
                     + "LASTMODIFICATION date,"
