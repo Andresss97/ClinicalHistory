@@ -298,7 +298,13 @@ public abstract class DBCreation {
                     + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "HOUR  NOT NULL,"
                     + "DATE date NOT NULL," 
+<<<<<<< HEAD
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
+=======
+                    + "REASON text NOT NULL,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
+>>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
             st.execute(in);
             st.close();
         }
