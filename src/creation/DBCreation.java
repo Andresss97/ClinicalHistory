@@ -8,64 +8,32 @@ package creation;
 
 import java.io.File;
 import java.sql.*;
+
 /**
  *
  * @author andre
  */
-public class DBCreation {
-    private String url;
+public abstract class DBCreation {    
+	
+	public static void createDB() {
+		Conector con = new Conector();
+		if(con.conectar() == true) {
+			cTAddress();
+			cTAllergies();
+			cTDoctor();
+			cTMapping();
+			cTPatient();
+			cTSurgeries();
+			cTTreatment();
+			cTVaccine();
+			cTIllnesses();
+		}
+		else {
+			//Aqui va un JOptionPane con un error
+		}
+	}
     
-    public DBCreation() {
-        this.url = null;
-    }
-    
-    private boolean findUrl() {
-        File f = new File("C:\\DatabasesGHC\\DBproject.db");
-        if(f.exists()) {
-            this.url = f.getAbsolutePath();
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-    
-    public void createDB() {
-        if(this.findUrl() != true) {
-            this.url = "C:\\DatabasesGHC\\DBproject.db";
-            String bUrl = "jdbc:sqlite:" + this.url;
-            
-            File newDir = new File("C:\\DatabasesGHC");
-            Connection con = null;
-            
-            try {
-                Class.forName("org.sqlite.JDBC");
-                newDir.mkdir();
-                con = DriverManager.getConnection(bUrl);
-                this.cTAddress();
-                this.cTAllergies();
-                this.cTDoctor();
-                this.cTMapping();
-                this.cTPatient();
-                this.cTSurgeries();
-                this.cTTreatment();
-                this.cTVaccine();
-            }
-            catch(ClassNotFoundException | SQLException ex) {
-                
-            }
-            finally {
-                try {
-                    con.close();
-                }
-                catch(SQLException ex) {
-                    
-                }
-            }
-        }
-    }
-    
-    private void cTAddress() {
+    private static void cTAddress() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -75,16 +43,12 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ADDRESS "
-                    + "(ID int NOT NULL,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "CITY varchar(50),"
                     + "STREET varchar(50),"
                     + "CP bigint,"
                     + "HOUSENUMBER bigint,"
-                    + "IDDOCTOR int,"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY (IDPATIENT),"
-                    + "FOREIGN KEY (IDDOCTOR))";
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -97,35 +61,35 @@ public class DBCreation {
         }
     }
     
-    private void cTAllergies() {
+    private static void cTAllergies() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
         
         try {
-            con.conectar();;
+            con.conectar();
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ALLERGIES"
-                    + "(ID int NOT NULL,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "GROUP varchar(50),"
-                    + "NOTES text,"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY(ID),"
-                    + "FOREIGN KEY(IDPATIENT))";
+                    + "OBSERVATIONS text,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID),"
+                    + "PRIMARY KEY(ID))";
             
             st.execute(in);
             st.close();
         }
         catch(Exception ex) {
-            
+            System.out.println(ex.getMessage());
         }
         finally {
             con.killConnection();
         }
     }
     
-    private void cTDoctor() {
+    private static void cTDoctor() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -135,19 +99,19 @@ public class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE DOCTOR"
-                    + "(ID int,"
-                    + "USER varchar(50),"
-                    + "PSW varchar(50),"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "USERNAME varchar(50) NOT NULL,"
+                    + "PASSWORD varchar(50) NOT NULL,"
                     + "EMAIL varchar(100),"
-                    + "SPECIALITY varchar(35),"
+                    + "GENDER varchar(20)"
+                    + "SPECIALITY varchar(35) NOT NULL,"
                     + "MOBILEPHONE bigInt,"
-                    + "NAME varchar(50),"
-                    + "SURNAME varchar(50),"
-                    + "NIF varchar(25),"
+                    + "NAME varchar(50) NOT NULL,"
+                    + "SURNAME varchar(50) NOT NULL,"
+                    + "NIF varchar(25) NOT NULL,"
                     + "DOB DATE,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY (IDADDRESS))";
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -160,7 +124,7 @@ public class DBCreation {
         }
     }
     
-    private void cTMapping() {
+    private static void cTMapping() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -183,7 +147,7 @@ public class DBCreation {
         }
     }
     
-    private void cTSurgeries() {
+    private static void cTSurgeries() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -192,14 +156,12 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE SURGERIES"
-                    + "(ID int,"
-                    + "IDPATIENT int,"
-                    + "DOS date,"
-                    + "Type varchar(50),"
-                    + "IDTREATMENT int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDPATIENT),"
-                    + "FOREIGN KEY(IDTREATMENT))";
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
+                    + "DATE date,"
+                    + "TYPE varchar(50),"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
+                    + "PRIMARY KEY (ID))";
             
             st.execute(in);
             st.close();
@@ -212,7 +174,7 @@ public class DBCreation {
         }
     }
     
-    private void cTVaccine() {
+    private static void cTVaccine() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -221,11 +183,12 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE VACCINE"
-                    + "(ID int,"
-                    + "NAME varchar(25),"
-                    + "IDPATIENT int,"
-                    + "PRIMARY KEY(ID),"
-                    + "FOREIGN KEY(IDPATIENT))";
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "NAME varchar(25) NOT NULL,"
+                    + "DATE date,"
+                    + "OBSERVATIONS text,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
             st.execute(in);
             st.close();
         }
@@ -237,7 +200,7 @@ public class DBCreation {
         }
     }
     
-    private void cTPatient() {
+    private static void cTPatient() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -246,16 +209,21 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE PATIENT"
-                    + "(ID int,"
-                    + "NAME varchar(25),"
-                    + "SURNAME varchar(25),"
-                    + "NIF varchar (15),"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "NAME varchar(25) NOT NULL,"
+                    + "SURNAME varchar(25) NOT NULL,"
+                    + "NIF varchar (15) NOT NULL,"
                     + "EMAIL varchar(50),"
                     + "MOBILEPHONE bigint,"
+                    + "HOMEPHONE bigint,"
                     + "DOB date,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDADDRESS)";
+                    + "GENDER varchar (15),"
+                    + "USERNAME text,"
+                    + "PASSWORD varchar (20),"
+                    + "WEIGHT float,"
+                    + "HEIGHT float,"
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
+                    + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
         }
@@ -267,7 +235,7 @@ public class DBCreation {
         }
     }
     
-    private void cTTreatment() {
+    private static void cTTreatment() {
         Conector con = new Conector();
         Statement st = null;
         String in = null;
@@ -276,16 +244,15 @@ public class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE TREATMENT"
-                    + "(ID int,"
+                    + "(ID int NOT NULL UNIQUE,"
                     + "START date,"
                     + "END date,"
                     + "REHAB boolean,"
                     + "MEDICATION text,"
                     + "DESCRIPTION text,"
-                    + "DOB date,"
-                    + "IDADDRESS int,"
-                    + "PRIMARY KEY (ID),"
-                    + "FOREIGN KEY(IDADDRESS)";
+                    + "OBSERVATIONS text,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY (ID))";
             st.execute(in);
             st.close();
         }
@@ -296,4 +263,86 @@ public class DBCreation {
             con.killConnection();
         }
     }
+    
+    private static void cTIllnesses() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE ILLNESSES"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "DESCRIPTION text,"
+                    + "PERSONALPATHOLOGIES text,"
+                    + "HEREDITARYDISEASES text,"
+                    + "OBSERVATIONS text,"
+                    + "DATE date,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
+                    + "PRIMARY KEY (ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    private static void cTAppointment() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE APPOINTMENT"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "HOUR  NOT NULL,"
+                    + "DATE date NOT NULL," 
+                    + "REASON text NOT NULL,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    private static void cTClinicalHistory() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE CLINICALHISTORY"
+                    + "(ID int NOT NULL UNIQUE,"
+                    + "ADDICTIONS text,"
+                    + "OBSERVATIONS text,"
+                    + "LASTMODIFICATION date,"
+                    + "BLOODGROUP varchar (4),"
+                    + "MEDICALINSURANCE int,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
+                    + "PRIMARY KEY(ID))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
 }
