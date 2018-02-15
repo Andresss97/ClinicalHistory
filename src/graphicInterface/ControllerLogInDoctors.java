@@ -52,6 +52,7 @@ public class ControllerLogInDoctors {
     	Scene scene = new Scene(root);
     	window.initOwner(windowParent);
     	window.initModality(Modality.APPLICATION_MODAL);
+    	window.setResizable(false);
     	window.setScene(scene);
     	window.showAndWait();
     }

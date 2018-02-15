@@ -6,7 +6,6 @@
  */
 package creation;
 
-import java.io.File;
 import java.sql.*;
 
 /**
@@ -27,6 +26,8 @@ public abstract class DBCreation {
 			cTTreatment();
 			cTVaccine();
 			cTIllnesses();
+			cTAppointment();
+			cTClinicalHistory();
 		}
 		else {
 			//Aqui va un JOptionPane con un error
@@ -43,12 +44,11 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ADDRESS "
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY NOT NULL UNIQUE,"
                     + "CITY varchar(50),"
                     + "STREET varchar(50),"
                     + "CP bigint,"
-                    + "HOUSENUMBER bigint,"
-                    + "PRIMARY KEY (ID))";
+                    + "HOUSENUMBER bigint)";
             
             st.execute(in);
             st.close();
@@ -71,12 +71,11 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ALLERGIES"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "GROUP varchar(50),"
+                    + "(ID int PRIMARY KEY NOT NULL UNIQUE,"
+                    + "TYPE varchar(50),"
                     + "OBSERVATIONS text,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID))";
             
             st.execute(in);
             st.close();
@@ -99,19 +98,18 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE DOCTOR"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
                     + "USERNAME varchar(50) NOT NULL,"
                     + "PASSWORD varchar(50) NOT NULL,"
                     + "EMAIL varchar(100),"
-                    + "GENDER varchar(20)"
-                    + "SPECIALITY varchar(35) NOT NULL,"
-                    + "MOBILEPHONE bigInt,"
+                    + "GENDER varchar(20),"
+                    + "SPECIALITY varchar(35),"
+                    + "MOBILEPHONE Int,"
                     + "NAME varchar(50) NOT NULL,"
                     + "SURNAME varchar(50) NOT NULL,"
                     + "NIF varchar(25) NOT NULL,"
                     + "DOB DATE,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID))";
             
             st.execute(in);
             st.close();
@@ -156,12 +154,11 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE SURGERIES"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
                     + "DATE date,"
                     + "TYPE varchar(50),"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
-                    + "PRIMARY KEY (ID))";
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT)";
             
             st.execute(in);
             st.close();
@@ -183,7 +180,7 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE VACCINE"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "DATE date,"
                     + "OBSERVATIONS text,"
@@ -209,7 +206,7 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE PATIENT"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "SURNAME varchar(25) NOT NULL,"
                     + "NIF varchar (15) NOT NULL,"
@@ -222,8 +219,7 @@ public abstract class DBCreation {
                     + "PASSWORD varchar (20),"
                     + "WEIGHT float,"
                     + "HEIGHT float,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID))";
             st.execute(in);
             st.close();
         }
@@ -244,15 +240,14 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE TREATMENT"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "START date,"
                     + "END date,"
                     + "REHAB boolean,"
                     + "MEDICATION text,"
                     + "DESCRIPTION text,"
                     + "OBSERVATIONS text,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
             st.execute(in);
             st.close();
         }
@@ -273,15 +268,14 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE ILLNESSES"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "DESCRIPTION text,"
                     + "PERSONALPATHOLOGIES text,"
                     + "HEREDITARYDISEASES text,"
                     + "OBSERVATIONS text,"
                     + "DATE date,"
                     + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
-                    + "PRIMARY KEY (ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT)";
             st.execute(in);
             st.close();
         }
@@ -301,11 +295,10 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE APPOINTMENT"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "HOUR  NOT NULL,"
                     + "DATE date NOT NULL," 
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
             st.execute(in);
             st.close();
         }
@@ -325,14 +318,13 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE CLINICALHISTORY"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID int PTIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "ADDICTIONS text,"
                     + "OBSERVATIONS text,"
                     + "LASTMODIFICATION date,"
                     + "BLOODGROUP varchar (4),"
                     + "MEDICALINSURANCE int,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID))";
             st.execute(in);
             st.close();
         }

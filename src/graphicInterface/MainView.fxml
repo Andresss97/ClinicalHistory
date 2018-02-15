@@ -9,12 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="719.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
    <top>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <HBox spacing="15.0">
+            <HBox spacing="15.0" style="-fx-background-color: #0A90E8;">
                <children>
                   <Region HBox.hgrow="ALWAYS" />
                   <Button fx:id="aDoctors" mnemonicParsing="false" onAction="#OnClickButtonADoctors" text="Access Doctors" />
@@ -28,7 +27,7 @@
       </VBox>
    </top>
    <left>
-      <Label prefHeight="70.0" prefWidth="326.0" text="Babylon Studio" BorderPane.alignment="CENTER">
+      <Label prefHeight="70.0" prefWidth="326.0" text="Babylon Studio" textFill="#fffbfb" BorderPane.alignment="CENTER">
          <font>
             <Font size="48.0" />
          </font>
