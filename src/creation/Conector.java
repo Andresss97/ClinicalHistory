@@ -19,6 +19,11 @@ public class Conector {
     private Connection connect;
     private String url;
     
+    public Conector() {
+    	this.connect = null;
+    	this.url = null;
+    }
+    
     public Connection getConnect() {
         return connect;
     }
