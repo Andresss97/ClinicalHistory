@@ -14,6 +14,8 @@ public abstract class Person {
 	public enum GENDER {MALE, FEMALE};
 	private GENDER gender;
 	private byte photo;
+	private Address address;
+	private int ID;
 	
 	@SuppressWarnings("deprecation")
 	public Person() {
@@ -25,6 +27,8 @@ public abstract class Person {
 		this.surname = null;
 		this.dob = new Date(1,1,1);
 		this.gender = null;
+		this.address = new Address();
+		this.ID = 0;
 	}
 	
 	public String getUser() {
@@ -107,12 +111,19 @@ public abstract class Person {
 		this.photo = photo;
 	}
 
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((NIF == null) ? 0 : NIF.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ID;
 		return result;
 	}
 
@@ -125,18 +136,8 @@ public abstract class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		if (NIF == null) {
-			if (other.NIF != null)
-				return false;
-		} else if (!NIF.equals(other.NIF))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
+		if (ID != other.ID)
 			return false;
 		return true;
 	}
-	
-	
 }
