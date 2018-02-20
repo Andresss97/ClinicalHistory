@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
+<AnchorPane fx:id="mainManel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="290.0" layoutX="238.0" layoutY="128.0" stroke="#070707" strokeType="INSIDE" width="410.0" />
-      <Label layoutX="347.0" layoutY="35.0" text="Babylon Studio" textFill="#f9fafc">
+      <Label layoutX="307.0" layoutY="26.0" text="Babylon Studio" textFill="#0d0d0d">
          <font>
-            <Font size="24.0" />
+            <Font size="36.0" />
          </font>
       </Label>
-      <Button layoutX="764.0" layoutY="40.0" mnemonicParsing="false" style="-fx-background-color: #151928;" text="Sign Up" textFill="#f5f5f5" />
-      <TextField layoutX="337.0" layoutY="218.0" prefHeight="25.0" prefWidth="211.0" promptText="Username" />
-      <PasswordField layoutX="337.0" layoutY="273.0" prefHeight="25.0" prefWidth="211.0" promptText="Password" />
+      <Button fx:id="signIn" layoutX="764.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSignUp" text="Sign Up" />
+      <TextField fx:id="user" layoutX="337.0" layoutY="207.0" prefHeight="25.0" prefWidth="211.0" promptText="Username">
+         <effect>
+            <DropShadow />
+         </effect>
+      </TextField>
+      <PasswordField fx:id="password" layoutX="337.0" layoutY="273.0" prefHeight="25.0" prefWidth="211.0" promptText="Password">
+         <effect>
+            <DropShadow />
+         </effect>
+      </PasswordField>
       <Button fx:id="logIn" layoutX="496.0" layoutY="341.0" mnemonicParsing="false" onAction="#onClickLogIn" text="Log In" />
       <ImageView fitHeight="48.0" fitWidth="64.0" layoutX="253.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="56.0" fitWidth="58.0" layoutX="275.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Business-Man.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="58.0" layoutX="275.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/Login-WF.png" />
+         </image>
+      </ImageView>
+      <Hyperlink fx:id="fPHyperlink" layoutX="418.0" layoutY="310.0" onAction="#onClickHyperlink" text="Forgot your password?" />
    </children>
 </AnchorPane>

@@ -2,6 +2,8 @@ package pojos;
 
 import java.sql.Date;
 
+import javafx.scene.image.Image;
+
 public abstract class Person {
 	private String user;
 	private String password;
@@ -13,7 +15,7 @@ public abstract class Person {
 	private Date dob;
 	public enum GENDER {MALE, FEMALE};
 	private GENDER gender;
-	private byte photo;
+	private Image photo;
 	private Address address;
 	private int ID;
 	
@@ -103,11 +105,11 @@ public abstract class Person {
 		this.gender = gender;
 	}
 
-	public byte getPhoto() {
+	public Image getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(byte photo) {
+	public void setPhoto(Image photo) {
 		this.photo = photo;
 	}
 
@@ -117,27 +119,5 @@ public abstract class Person {
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Person other = (Person) obj;
-		if (ID != other.ID)
-			return false;
-		return true;
 	}
 }

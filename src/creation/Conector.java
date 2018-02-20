@@ -39,8 +39,9 @@ public class Conector {
     public boolean conectar() {
         try {
             Class.forName("org.sqlite.JDBC");
-            this.url = "jdbc:sqlite:" + ".//Database//DBproject.db";
-            connect = DriverManager.getConnection(this.url);
+            String bUrl = "jdbc:sqlite:" + ".//Database//DBproject.db";
+            connect = DriverManager.getConnection(bUrl);
+            this.url = ".//Database//DBproject.db";
             return true;
         }
         catch(Exception ex) {
