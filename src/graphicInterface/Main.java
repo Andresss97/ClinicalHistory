@@ -1,5 +1,6 @@
 package graphicInterface;
 
+import creation.DBCreation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
+		DBCreation.createDB();
 		this.window = primaryStage;
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
 		this.window.initStyle(StageStyle.UNDECORATED);

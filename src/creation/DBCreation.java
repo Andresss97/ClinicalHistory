@@ -6,7 +6,6 @@
  */
 package creation;
 
-import java.io.File;
 import java.sql.*;
 
 /**
@@ -17,7 +16,8 @@ public abstract class DBCreation {
 	
 	public static void createDB() {
 		Conector con = new Conector();
-		if(con.conectar() == true) {
+		
+		if(con.conectar() == true ) {
 			cTAddress();
 			cTAllergies();
 			cTDoctor();
@@ -27,6 +27,10 @@ public abstract class DBCreation {
 			cTTreatment();
 			cTVaccine();
 			cTIllnesses();
+			cTAppointment();
+			cTClinicalHistory();
+			cTAdministrator();
+			cTMappingLogIn();
 		}
 		else {
 			//Aqui va un JOptionPane con un error
@@ -43,12 +47,11 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ADDRESS "
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "CITY varchar(50),"
                     + "STREET varchar(50),"
                     + "CP bigint,"
-                    + "HOUSENUMBER bigint,"
-                    + "PRIMARY KEY (ID))";
+                    + "HOUSENUMBER bigint)";
             
             st.execute(in);
             st.close();
@@ -71,12 +74,11 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE ALLERGIES"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "GROUP varchar(50),"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "TYPE varchar(50),"
                     + "OBSERVATIONS text,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)";
             
             st.execute(in);
             st.close();
@@ -99,19 +101,19 @@ public abstract class DBCreation {
             st = con.getConnect().createStatement();
             
             in = "CREATE TABLE DOCTOR"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "USERNAME varchar(50) NOT NULL,"
                     + "PASSWORD varchar(50) NOT NULL,"
-                    + "EMAIL varchar(100),"
-                    + "GENDER varchar(20)"
+                    + "EMAIL varchar(100) NOT NULL,"
+                    + "GENDER varchar(20) NOT NULL,"
                     + "SPECIALITY varchar(35) NOT NULL,"
-                    + "MOBILEPHONE bigInt,"
+                    + "MOBILEPHONE int,"
                     + "NAME varchar(50) NOT NULL,"
                     + "SURNAME varchar(50) NOT NULL,"
                     + "NIF varchar(25) NOT NULL,"
-                    + "DOB DATE,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "DOB date NOT NULL,"
+                    + "PHOTO blob,"
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL)";
             
             st.execute(in);
             st.close();
@@ -156,12 +158,11 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE SURGERIES"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,"
                     + "DATE date,"
                     + "TYPE varchar(50),"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
-                    + "PRIMARY KEY (ID))";
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)";
             
             st.execute(in);
             st.close();
@@ -183,12 +184,11 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE VACCINE"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "DATE date,"
                     + "OBSERVATIONS text,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
             st.execute(in);
             st.close();
         }
@@ -209,21 +209,20 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE PATIENT"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "NAME varchar(25) NOT NULL,"
                     + "SURNAME varchar(25) NOT NULL,"
                     + "NIF varchar (15) NOT NULL,"
-                    + "EMAIL varchar(50),"
+                    + "EMAIL varchar(50) NOT NULL,"
                     + "MOBILEPHONE bigint,"
                     + "HOMEPHONE bigint,"
-                    + "DOB date,"
-                    + "GENDER varchar (15),"
-                    + "USERNAME text,"
-                    + "PASSWORD varchar (20),"
+                    + "DOB date NOT NULL,"
+                    + "GENDER varchar (15) NOT NULL,"
+                    + "USERNAME varchar(50) NOT NULL,"
+                    + "PASSWORD varchar (20) NOT NULL,"
                     + "WEIGHT float,"
                     + "HEIGHT float,"
-                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL)";
             st.execute(in);
             st.close();
         }
@@ -244,15 +243,14 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE TREATMENT"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "START date,"
-                    + "END date,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "START date NOT NULL,"
+                    + "END date NOT NULL,"
                     + "REHAB boolean,"
                     + "MEDICATION text,"
                     + "DESCRIPTION text,"
-                    + "OBSERVATIONS text,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY (ID))";
+                    + "TRESULTS text,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON UPDATE CASCADE ON DELETE SET NULL)";
             st.execute(in);
             st.close();
         }
@@ -273,67 +271,12 @@ public abstract class DBCreation {
             con.conectar();
             st = con.getConnect().createStatement();
             in = "CREATE TABLE ILLNESSES"
-                    + "(ID int NOT NULL UNIQUE,"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
                     + "DESCRIPTION text,"
-                    + "PERSONALPATHOLOGIES text,"
-                    + "HEREDITARYDISEASES text,"
-                    + "OBSERVATIONS text,"
                     + "DATE date,"
-                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT,"
-                    + "PRIMARY KEY (ID))";
-            st.execute(in);
-            st.close();
-        }
-        catch(Exception ex) {
-            
-        }
-        finally {
-            con.killConnection();
-        }
-    }
-    private static void cTAppointment() {
-        Conector con = new Conector();
-        Statement st = null;
-        String in = null;
-        
-        try {
-            con.conectar();
-            st = con.getConnect().createStatement();
-            in = "CREATE TABLE APPOINTMENT"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "HOUR  NOT NULL,"
-                    + "DATE date NOT NULL," 
-                    + "REASON text NOT NULL,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
-            st.execute(in);
-            st.close();
-        }
-        catch(Exception ex) {
-            
-        }
-        finally {
-            con.killConnection();
-        }
-    }
-    private static void cTClinicalHistory() {
-        Conector con = new Conector();
-        Statement st = null;
-        String in = null;
-        
-        try {
-            con.conectar();
-            st = con.getConnect().createStatement();
-            in = "CREATE TABLE CLINICALHISTORY"
-                    + "(ID int NOT NULL UNIQUE,"
-                    + "ADDICTIONS text,"
-                    + "OBSERVATIONS text,"
-                    + "LASTMODIFICATION date,"
-                    + "BLOODGROUP varchar (4),"
-                    + "MEDICALINSURANCE int,"
-                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID),"
-                    + "PRIMARY KEY(ID))";
+                    + "TYPE varchar(50),"
+                    + "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL,"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
             st.execute(in);
             st.close();
         }
@@ -345,4 +288,102 @@ public abstract class DBCreation {
         }
     }
     
+    private static void cTAppointment() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE APPOINTMENT"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "HOUR int NOT NULL,"
+                    + "DATE date NOT NULL," 
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,"
+                    + "IDDOCTOR int CONSTRAINT rDoctor REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL,"
+                    + "REASON text NOT NULL)";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+        	System.out.println(ex.getMessage());
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
+    private static void cTClinicalHistory() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE CLINICALHISTORY"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "ADDICTIONS text,"
+                    + "OBSERVATIONS text,"
+                    + "LASTMODIFICATION date,"
+                    + "BLOODGROUP varchar (15),"
+                    + "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
+    private static void cTAdministrator() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE ADMINISTRATOR"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "USER varchar(50),"
+                    + "PASSWORD varchar(50))";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
+    
+    private static void cTMappingLogIn() {
+        Conector con = new Conector();
+        Statement st = null;
+        String in = null;
+        
+        try {
+            con.conectar();
+            st = con.getConnect().createStatement();
+            in = "CREATE TABLE MAPPINGLOGIN"
+                    + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,"
+                    + "USERNAME varchar(50),"
+                    + "PASSWORD varchar (50),"
+                    + "USERTYPE int NOT NULL)";
+            st.execute(in);
+            st.close();
+        }
+        catch(Exception ex) {
+            
+        }
+        finally {
+            con.killConnection();
+        }
+    }
 }
