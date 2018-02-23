@@ -196,6 +196,7 @@ public class QuerysInsert {
 			st.close();
 		}
 	}
+	
 	public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
 		String query;
 
@@ -234,6 +235,7 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
+	
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;
 
@@ -247,6 +249,7 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
+	
 	public void insertAllergies(Allergies allergies) throws SQLException {
 		String query;
 
@@ -259,6 +262,7 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
+	
 	public void insertSurgeries (Surgeries surgeries) throws SQLException {
 		String query;
 
