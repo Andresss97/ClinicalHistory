@@ -173,7 +173,7 @@ public abstract class DBCreation {
 		try {
 			st = con.getConnect().createStatement();
 			in = "CREATE TABLE TREATMENT" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "START date NOT NULL,"
-					+ "END date NOT NULL," + "REHAB boolean," + "MEDICATION text," + "DESCRIPTION text,"
+					+ "END date NOT NULL," + "TYPE varchar(50)," + "DESCRIPTION text,"
 					+ "TRESULTS text,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
@@ -191,7 +191,7 @@ public abstract class DBCreation {
 		try {
 			st = con.getConnect().createStatement();
 			in = "CREATE TABLE ILLNESSES" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "DESCRIPTION text,"
-					+ "DATE date," + "TYPE varchar(50),"
+					+ "DATE date," + "TYPE varchar(50),"+"NAME text,"
 					+ "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);

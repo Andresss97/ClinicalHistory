@@ -9,14 +9,16 @@ public class Treatment {
 	private Date endDate;
 	public enum typeTreatment{MEDICATION,REHAB};
 	private typeTreatment treatment;
-	private String descrpition;
+	private String description;
+	private String tresults;
 	
 	public Treatment() {
 		this.IDtreatment=0;
 		this.startDate=null;
 		this.endDate=null;
 		this.treatment=null;
-		this.descrpition=null;
+		this.description=null;
+		this.tresults=null;
 	}
 	
 	public int getIDtreatment() {
@@ -25,6 +27,14 @@ public class Treatment {
 	
 	public void setIDtreatment(int iDtreatment) {
 		IDtreatment = iDtreatment;
+	}
+	
+	public String getResults() {
+		return this.tresults;
+	}
+	
+	public void setResults(String results){
+		this.tresults = results;
 	}
 	
 	public Date getStartDate() {
@@ -52,11 +62,11 @@ public class Treatment {
 	}
 	
 	public String getDescrpition() {
-		return descrpition;
+		return description;
 	}
 	
 	public void setDescrpition(String descrpition) {
-		this.descrpition = descrpition;
+		this.description = descrpition;
 	}
 
 	

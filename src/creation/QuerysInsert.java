@@ -7,11 +7,10 @@ import java.sql.SQLException;
 import javax.sql.rowset.serial.SerialBlob;
 
 import graphicInterface.Main;
-import pojos.Address;
-import pojos.Doctor;
-import pojos.Patient;
 import pojos.Person.GENDER;
-
+import pojos.Treatment.typeTreatment;
+import pojos.*;
+import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
 	
@@ -117,7 +116,7 @@ public class QuerysInsert {
 		
 		st.setString(1, address.getCity());
 		st.setString(2, address.getStreet());
-		st.setInt(3, address.getHouseNumber());
+		st.setInt(3, address.getPostalCode());
 		st.setInt(4, address.getHouseNumber());
 		
 		st.executeUpdate();
@@ -191,4 +190,131 @@ public class QuerysInsert {
 			st.close();
 		}
 	}
+	
+	public void insertIllness(Illness illness) throws SQLException {
+		String query;
+
+		query = "INSERT into illness (name,type,description,date,Tresults) values (?,?,?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1,illness.getName());
+		
+		if(illness.getTypeDisease().equals(typeDisease.HEREDITARY)) {
+			st.setString(2,"Hereditary");
+		}
+		else {
+			st.setString(2, "Personal");
+		}
+		
+		st.setString(3,illness.getDescription());
+		st.setDate(4,illness.getDate());;
+		
+		st.executeUpdate();
+		st.close();
+	
+	}
+	
+	public void insertVaccine(Vaccine vaccine) throws SQLException{
+		String query;
+		
+		query = "INSERT into vaccine (name,date,observations,) values(?,?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		switch(vaccine.getNameVaccine()){
+		case CHOLERA:
+			st.setString(1, "Cholera");
+			break;
+		case DIPHTHERIA:
+			st.setString(1, "Diphtheria");
+			break;
+		case HEPATITIS_A:
+			st.setString(1, "HepatitisA");
+			break;
+		case HEPATITIS_B:
+			st.setString(1, "HepatitisB");
+			break;
+		case HERPES:
+			st.setString(1, "Herpes");
+			break;
+		case INFLUENZA_A:
+			st.setString(1, "InfluenzaA");
+			break;
+		case INFLUENZA_B:
+			st.setString(1, "InfluenzaB");
+			break;
+		case MEASLES:
+			st.setString(1, "Measles");
+			break;
+		case MENINGOCOCCAL:
+			st.setString(1, "Meningococcal");
+			break;
+		case PAPILLOMAVIRUS:
+			st.setString(1, "Papillomavirus");
+			break;
+		case PNEUMOCOCCAL:
+			st.setString(1, "Pneumocaccal");
+			break;
+		case RABIES:
+			st.setString(1, "Rabies");
+			break;
+		case ROTAVIRUS:
+			st.setString(1, "Rotavirus");
+			break;
+		case RUBELLA:
+			st.setString(1, "Rubella");
+			break;
+		case SMALLPOX:
+			st.setString(1, "SmallPox");
+			break;
+		case TETANUS:
+			st.setString(1, "Tetanus");
+			break;
+		case TUBERCULOSIS:
+			st.setString(1, "Tuberculosis");
+			break;
+		case TYPHOID:
+			st.setString(1, "Typhoid");
+			break;
+		case VARICELLA:
+			st.setString(1, "Varicella");
+			break;
+		case YELLOWFEVER:
+			st.setString(1, "YellowFever");
+			break;
+		default:
+			break;	
+		}
+		
+		st.setDate(2, vaccine.getDate());
+		st.setString(3, vaccine.getDescription());
+		
+		st.executeUpdate();
+		st.close();	
+	}
+	
+	
+	public void insertTreatment(Treatment treatment) throws SQLException {
+		String query;
+		
+		query = "INSERT into treatment (start,end, type, description,) values(?,?,?,?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setDate(1, treatment.getStartDate());
+		st.setDate(2, treatment.getEndDate());
+		
+		if(treatment.getTreatment().equals(typeTreatment.MEDICATION)) {
+			st.setString(3, "Medication");
+		}
+		else {
+			st.setString(3, "Rehab");
+		}
+		st.setString(4, treatment.getDescrpition());
+		st.setString(5, treatment.getResults());
+		
+		st.executeUpdate();
+		st.close();
+		
+	}
+	
+	
 }
