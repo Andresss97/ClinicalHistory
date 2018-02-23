@@ -36,17 +36,15 @@ public class Conector {
     	return url;
     }
     
-    public boolean conectar() {
+    public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
             String bUrl = "jdbc:sqlite:" + ".//Database//DBproject.db";
             connect = DriverManager.getConnection(bUrl);
             this.url = ".//Database//DBproject.db";
-            return true;
         }
         catch(Exception ex) {
             System.out.println(ex.getMessage());
-            return false;
         }
     }
     

@@ -1,5 +1,8 @@
 package graphicInterface;
 
+import java.io.File;
+
+import creation.Conector;
 import creation.DBCreation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -11,14 +14,25 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	
 	private Stage window;
-
+	public static Conector conector;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception{
-		DBCreation.createDB();
+		this.conector = new Conector();
+		File url = new File(".//Database//DBproject.db");
+		
+		if(!url.exists()) {
+			this.conector.connect();
+			DBCreation.createDB(this.conector);
+		}
+		else {
+			this.conector.connect();
+		}
+		
 		this.window = primaryStage;
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
 		this.window.initStyle(StageStyle.UNDECORATED);

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import creation.Conector;
-import creation.Querys;
+import creation.QuerysInsert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,8 +20,10 @@ import javafx.scene.image.ImageView;
 import pojos.*;
 import pojos.Person.GENDER;
 
-public class ControllerSignUpPatient implements Initializable{
 
+public class ControllerSignUpPatient implements Initializable{
+	private Conector conn = Main.conector;
+	
     @FXML
     private Button browse;
 
@@ -91,12 +93,10 @@ public class ControllerSignUpPatient implements Initializable{
     void onCreateClick(ActionEvent event) {
     	Address address = new Address();
     	Patient patient = new Patient();
-    	Conector con = new Conector();
-    	Querys query = new Querys();
+    	QuerysInsert query = new QuerysInsert();
     	GENDER gender = null;
     	int addres = 0;
     	
-    	con.conectar();
     	
     	address.setCity(city.getText());
     	address.setStreet(street.getText());
@@ -105,8 +105,8 @@ public class ControllerSignUpPatient implements Initializable{
     	
     	try {
 			query.insertAddress(address);	
-		} catch (SQLException e) {
-			
+		} catch (Exception e) {
+			System.out.println(e.getMessage() + " das error aqui 1");
 		}
     	
     	patient.setName(name.getText());
@@ -130,9 +130,10 @@ public class ControllerSignUpPatient implements Initializable{
     	
     	try {
 			query.insertPatient(patient, addres);
-		} catch (SQLException e) {
+			query.insertUser(null, patient, null, null);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
+			System.out.println(e.getMessage() + " das error aqui 2");
 		}
     }
 

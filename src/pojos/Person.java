@@ -15,7 +15,7 @@ public abstract class Person {
 	private Date dob;
 	public enum GENDER {MALE, FEMALE};
 	private GENDER gender;
-	private Image photo;
+	private byte[] photo;
 	private Address address;
 	private int ID;
 	
@@ -31,6 +31,7 @@ public abstract class Person {
 		this.gender = null;
 		this.address = new Address();
 		this.ID = 0;
+		this.photo = new byte[0];
 	}
 	
 	public String getUser() {
@@ -105,11 +106,11 @@ public abstract class Person {
 		this.gender = gender;
 	}
 
-	public Image getPhoto() {
+	public byte[] getPhoto() {
 		return photo;
 	}
 
-	public void setPhoto(Image photo) {
+	public void setPhoto(byte[] photo) {
 		this.photo = photo;
 	}
 
