@@ -316,5 +316,85 @@ public class QuerysInsert {
 		
 	}
 	
+		
+	public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
+		String query;
+
+		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance) values (?,?,?,?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, clinicalHistory.getAddictions());
+		st.setString(2, clinicalHistory.getObservations());
+		st.setDate(3, clinicalHistory.getLastModification());
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ABN)) {
+			st.setString(4,"AB negative");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ABP)) {
+			st.setString(4,"AB positive");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.AN)) {
+			st.setString(4,"A negative");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.AP)) {
+			st.setString(4,"AB positive");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.BN)) {
+			st.setString(4,"B negative");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.BP)) {
+			st.setString(4,"B positive");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ZN)) {
+			st.setString(4,"Zero negative");	
+		}
+		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ZP)) {
+			st.setString(4,"Zero positive");	
+		}
+		st.setInt(5, clinicalHistory.getMedicalInsurance());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	public void insertAppointment(Appointment appointment) throws SQLException {
+		String query;
+
+		query = "INSERT into appointment (date, hour, reason) values (?,?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+	    st.setDate(1, appointment.getDate());
+		st.setInt(2, appointment.getHour());
+		st.setString(3, appointment.getReason());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	public void insertAllergies(Allergies allergies) throws SQLException {
+		String query;
+
+		query = "INSERT into allergies (group, observations) values (?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, allergies.getGroup());
+		st.setString(2, allergies.getObservations());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	public void insertSurgeries (Surgeries surgeries) throws SQLException {
+		String query;
+
+		query = "INSERT into surgeries (date, type) values (?,?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setDate(1, surgeries.getDate());
+		st.setString(2, surgeries.getType());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
 	
 }

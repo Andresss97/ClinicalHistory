@@ -1,7 +1,9 @@
 package graphicInterface;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import creation.QuerysSelect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import pojos.Patient;
 
 public class ControllerMainView {
 
@@ -42,8 +45,25 @@ public class ControllerMainView {
     }
 
     @FXML
-    void onClickLogIn(ActionEvent event) {
-
+    void onClickLogIn(ActionEvent event) throws IOException {
+    	QuerysSelect qs = new QuerysSelect();
+    	Patient patient = null;
+    	try {
+			String[] data = qs.selectUser(user.getText(), password.getText());
+			patient = qs.selectPatient(data);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage() + "fallas aqui compañero");
+		}
+    	
+    	if(patient.getUser().equals(user.getText()) && patient.getPassword().equals(password.getText())) {
+    		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+        	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        	Scene scene = new Scene(root);
+        	window.setScene(scene);
+        	window.show();
+    	}
+    	
     }
 
     @FXML
