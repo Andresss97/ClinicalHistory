@@ -6,6 +6,7 @@ public class Allergies {
 	private int ID;
 	private String group;
 	private String observations;
+	private Patient patient;
 	
 	public Allergies () {
 		this.ID = 0;
@@ -33,6 +34,15 @@ public class Allergies {
 	   public void setObservations (String observations) {
 		   this.observations = observations;
 	   }
+	   
+
+public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
 
 @Override
 public int hashCode() {

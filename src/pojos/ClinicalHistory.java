@@ -10,6 +10,7 @@ public class ClinicalHistory {
    public enum BLOODGROUP {AP, BP, ABP, AN, BN, ABN, ZP, ZN};
    private BLOODGROUP bloodgroup;
    private int medicalInsurance;
+   private Patient patient;
  
    public ClinicalHistory () {
 	   this.ID = 0;
@@ -61,6 +62,14 @@ public class ClinicalHistory {
    public void setMedicalInsurance (int medicalInsurance) {
 	   this.medicalInsurance = medicalInsurance;
    }
+
+public Patient getPatient() {
+	return patient;
+}
+
+public void setPatient(Patient patient) {
+	this.patient = patient;
+}
 
 @Override
 public int hashCode() {

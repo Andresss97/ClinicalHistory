@@ -124,7 +124,7 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));
     	patient.setWeight(Float.parseFloat(weight.getText()));
     	patient.setHeight(Float.parseFloat(height.getText()));
-    	patient.setUser(user.getText());
+    	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
     	

@@ -10,6 +10,7 @@ import graphicInterface.Main;
 import pojos.Person.GENDER;
 import pojos.Treatment.typeTreatment;
 import pojos.*;
+import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
@@ -22,7 +23,7 @@ public class QuerysInsert {
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
-		st.setString(1, doctor.getUser());
+		st.setString(1, doctor.getUsername());
 		st.setString(2, doctor.getPassword());
 		st.setString(3, doctor.getEmail());
 		if(doctor.getGender().equals(GENDER.MALE)) {
@@ -144,7 +145,7 @@ public class QuerysInsert {
 			st.setString(8,"Female");
 		}
 		
-		st.setString(9, patient.getUser());
+		st.setString(9, patient.getUsername());
 		st.setString(10, patient.getPassword());
 		st.setFloat(11, patient.getWeight());
 		st.setFloat(12, patient.getHeight());
@@ -160,7 +161,7 @@ public class QuerysInsert {
 			String query;
 			query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query);
-			st.setString(1, patient.getUser());
+			st.setString(1, patient.getUsername());
 			st.setString(2, patient.getPassword());
 			st.setInt(3, 1);
 			
@@ -171,7 +172,7 @@ public class QuerysInsert {
 			String query2;
 			query2 = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query2);
-			st.setString(1, doctor.getUser());
+			st.setString(1, doctor.getUsername());
 			st.setString(2, doctor.getPassword());
 			st.setInt(3, 2);
 			
