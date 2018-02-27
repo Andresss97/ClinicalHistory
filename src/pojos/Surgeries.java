@@ -7,12 +7,14 @@ public class Surgeries {
 	private Date date;
 	private String type;
 	private Patient patient;
+	private Treatment treatment;
 	
 	public Surgeries () {
 		this.ID = 0;
 		this.date = null;
 		this.type = " ";
 		this.patient = null;
+		this.treatment = null;
 	}
 	
 	public int getID () {
@@ -43,6 +45,14 @@ public class Surgeries {
 		   this.patient = patient;
 	   }
 
+	public Treatment getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +75,7 @@ public class Surgeries {
 		return true;
 	}
 
+	
 	  
 
 }

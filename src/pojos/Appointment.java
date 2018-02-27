@@ -16,6 +16,8 @@ public class Appointment {
 		this.date = null;
 		this.hour = 0;
 		this.reason = " ";
+		this.patients = null;
+		this.doctors = null; 
 	}
 	
 	public int getID () {
@@ -84,6 +86,8 @@ public class Appointment {
 			return false;
 		return true;
 	}
+
+	
 	   
 	  
 	   

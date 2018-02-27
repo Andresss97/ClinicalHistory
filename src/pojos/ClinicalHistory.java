@@ -19,6 +19,7 @@ public class ClinicalHistory {
 	   this.lastModification = null;
 	   this.bloodgroup = null;
 	   this.medicalInsurance = 0;
+	   this.patient = null;
 	   }
    
    public int getID () {
@@ -92,7 +93,8 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
-   
+
+
 
 
 }
