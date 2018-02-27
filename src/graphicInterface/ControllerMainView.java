@@ -56,7 +56,7 @@ public class ControllerMainView {
 			System.out.println(e.getMessage() + "fallas aqui compañero");
 		}
     	
-    	if(patient.getUser().equals(user.getText()) && patient.getPassword().equals(password.getText())) {
+    	if(patient.getUsername().equals(user.getText()) && patient.getPassword().equals(password.getText())) {
     		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
         	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         	Scene scene = new Scene(root);

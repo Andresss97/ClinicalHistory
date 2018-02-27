@@ -40,7 +40,7 @@ public class QuerysSelect {
 			patient.setName(set.getString("Name"));
 			patient.setSurname(set.getString("Surname"));
 			patient.setEmail(set.getString("email"));
-			patient.setUser(set.getString("username"));
+			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
 		}
 		

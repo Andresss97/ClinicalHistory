@@ -6,11 +6,15 @@ public class Surgeries {
 	private int ID;
 	private Date date;
 	private String type;
+	private Patient patient;
+	private Treatment treatment;
 	
 	public Surgeries () {
 		this.ID = 0;
 		this.date = null;
 		this.type = " ";
+		this.patient = null;
+		this.treatment = null;
 	}
 	
 	public int getID () {
@@ -33,6 +37,21 @@ public class Surgeries {
 	   public void setType (String type) {
 		   this.type = type;
 	   }
+	   
+	  public Patient getPatient () {
+		   return patient;
+	   }
+	   public void setPatient(Patient patient) {
+		   this.patient = patient;
+	   }
+
+	public Treatment getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
+	}
 
 	@Override
 	public int hashCode() {
@@ -56,6 +75,7 @@ public class Surgeries {
 		return true;
 	}
 
+	
 	  
 
 }
