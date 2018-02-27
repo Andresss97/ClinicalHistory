@@ -11,6 +11,10 @@ public class Treatment {
 	private typeTreatment treatment;
 	private String description;
 	private String tresults;
+	private Illness illness;
+	private Surgeries surgery;
+	private Doctor doctor;
+	private Allergies allergy;
 	
 	public Treatment() {
 		this.IDtreatment=0;
@@ -29,12 +33,44 @@ public class Treatment {
 		IDtreatment = iDtreatment;
 	}
 	
+	public Doctor getDoctor() {
+		return this.doctor;
+	}
+	
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
+	public Allergies getAllergies() {
+		return this.allergy;
+	}
+	
+	public void setAllergies(Allergies allergy) {
+		this.allergy=allergy;
+	}
+	
+	public Surgeries getsurgery() {
+		return this.surgery;
+	}
+	
+	public void setSurgery(Surgeries surgery) {
+		this.surgery=surgery;
+	}
+	
 	public String getResults() {
 		return this.tresults;
 	}
 	
 	public void setResults(String results){
 		this.tresults = results;
+	}
+	
+	public Illness getIllness() {
+		return this.illness;
+	}
+	
+	public void setIllness(Illness illness) {
+		this.illness=illness;
 	}
 	
 	public Date getStartDate() {

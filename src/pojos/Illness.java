@@ -11,6 +11,7 @@ public class Illness {
 	private typeDisease type;
 	private String name;
 	private int IDdisease;
+	private Treatment treatment; 
 	
 	public Illness() {
 		this.name = null;
@@ -29,6 +30,14 @@ public class Illness {
 	
 	public int getIDdisease() {
 		return this.IDdisease;
+	}
+	
+	public Treatment getTreatment() {
+		return this.treatment;
+	}
+	
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
 	}
 	
 	public void setIDdisease(int num) {
