@@ -10,6 +10,7 @@ import graphicInterface.Main;
 import pojos.Person.GENDER;
 import pojos.Treatment.typeTreatment;
 import pojos.*;
+import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
@@ -330,7 +331,7 @@ public class QuerysInsert {
 			st.setString(4,"AB negative");	
 		}
 		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ABP)) {
-			st.setString(4,"AB positive");	
+			st.setString(4,"A positive");	
 		}
 		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.AN)) {
 			st.setString(4,"A negative");	
