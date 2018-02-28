@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 
@@ -36,21 +29,6 @@
             <Menu fx:id="logOff" mnemonicParsing="false" text="Log off" />
         </menus>
       </MenuBar>
-      <ImageView fx:id="image" fitHeight="150.0" fitWidth="122.0" layoutX="28.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="tName" layoutX="28.0" layoutY="232.0" text="Label" />
-      <Label fx:id="tSurname" layoutX="28.0" layoutY="259.0" text="Label" />
-      <Label fx:id="tNif" layoutX="28.0" layoutY="288.0" text="Label" />
-      <ScrollPane layoutX="194.0" layoutY="98.0" prefHeight="397.0" prefWidth="500.0">
-        <content>
-          <AnchorPane fx:id="appointmentView" minHeight="0.0" minWidth="0.0" prefHeight="395.0" prefWidth="498.0" />
-        </content>
-         <effect>
-            <DropShadow />
-         </effect>
-      </ScrollPane>
-      <Button fx:id="bPDF" layoutX="735.0" layoutY="98.0" mnemonicParsing="false" onAction="#onClickPdf" text="Export to PDF" />
-      <Button fx:id="bPrint" layoutX="735.0" layoutY="145.0" mnemonicParsing="false" onAction="#onClickPrint" prefHeight="25.0" prefWidth="89.0" text="Print" />
-      <ComboBox fx:id="orderBy" layoutX="572.0" layoutY="48.0" prefHeight="25.0" prefWidth="122.0" promptText="Order By:" />
-      <TextField fx:id="search" layoutX="473.0" layoutY="48.0" prefHeight="25.0" prefWidth="89.0" promptText="Search" />
+      <AnchorPane layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0" />
    </children>
 </AnchorPane>
