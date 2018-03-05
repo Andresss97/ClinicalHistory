@@ -2,6 +2,7 @@ package graphicInterface;
 
 import java.io.File;
 
+import pojos.*;
 import creation.Conector;
 import creation.DBCreation;
 import javafx.application.Application;
@@ -15,6 +16,8 @@ public class Main extends Application {
 	
 	private Stage window;
 	public static Conector conector;
+	public static Patient patient;
+	public static Doctor doctor;
 	
 	public static void main(String[] args) {
 		launch(args);

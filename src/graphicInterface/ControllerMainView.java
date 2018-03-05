@@ -47,16 +47,15 @@ public class ControllerMainView {
     @FXML
     void onClickLogIn(ActionEvent event) throws IOException {
     	QuerysSelect qs = new QuerysSelect();
-    	Patient patient = null;
     	try {
 			String[] data = qs.selectUser(user.getText(), password.getText());
-			patient = qs.selectPatient(data);
+			Main.patient = qs.selectPatient(data);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage() + "fallas aqui compañero");
 		}
     	
-    	if(patient.getUser().equals(user.getText()) && patient.getPassword().equals(password.getText())) {
+    	if(Main.patient.getUsername().equals(user.getText()) && Main.patient.getPassword().equals(password.getText())) {
     		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
         	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         	Scene scene = new Scene(root);
@@ -71,12 +70,16 @@ public class ControllerMainView {
     	Parent root = FXMLLoader.load(getClass().getResource("SignUpPatient.fxml"));
     	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	Stage modal = new Stage();
-    	modal.setTitle("Bbaylon Studio - Create profile");
+    	modal.setTitle("Babylon Studio - Create profile");
     	modal.setScene(new Scene(root));
     	modal.initOwner(window);
     	modal.setResizable(false);
+    	window.hide();
     	modal.initModality(Modality.APPLICATION_MODAL);
     	modal.showAndWait();
+    	if(modal.isShowing() == false) {
+    		window.show();
+    	}
     }
 
 }

@@ -81,8 +81,9 @@ public class ControllerHomePatients implements Initializable{
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
-		
+		tName.setText(Main.patient.getName());
+		tSurname.setText(Main.patient.getSurname());
+		tNif.setText(Main.patient.getNIF());
 	}
 
 }

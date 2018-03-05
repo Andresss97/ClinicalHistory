@@ -1,18 +1,23 @@
 package pojos;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Appointment {
 	private int ID;
 	private Date date;
 	private int hour;
 	private String reason;
+	private List <Patient> patients;
+	private List <Doctor> doctors;
 	
 	public Appointment () {
 		this.ID = 0;
 		this.date = null;
 		this.hour = 0;
 		this.reason = " ";
+		this.patients = null;
+		this.doctors = null; 
 	}
 	
 	public int getID () {
@@ -42,6 +47,23 @@ public class Appointment {
 	   public void setReason (String reason) {
 		   this.reason = reason;
 	   }
+	   
+
+	public List<Patient> getPatients() {
+		return patients;
+	}
+
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
+	}
+
+	public List<Doctor> getDoctors() {
+		return doctors;
+	}
+
+	public void setDoctors(List<Doctor> doctors) {
+		this.doctors = doctors;
+	}
 
 	@Override
 	public int hashCode() {
@@ -64,6 +86,8 @@ public class Appointment {
 			return false;
 		return true;
 	}
+
+	
 	   
 	  
 	   

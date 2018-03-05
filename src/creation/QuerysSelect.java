@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import graphicInterface.Main;
 import pojos.Patient;
+import pojos.Person.GENDER;
 
 public class QuerysSelect {
 	private Conector conn = Main.conector;
@@ -40,7 +41,17 @@ public class QuerysSelect {
 			patient.setName(set.getString("Name"));
 			patient.setSurname(set.getString("Surname"));
 			patient.setEmail(set.getString("email"));
-			patient.setUser(set.getString("username"));
+			patient.setNIF(set.getString("nif"));
+			patient.setMobilePhone(set.getInt("mobilephone"));
+			patient.setHousePhone(set.getInt("homephone"));
+			if(set.getString("gender").equals("Male")) {
+				patient.setGender(GENDER.MALE);
+			}else {
+				patient.setGender(GENDER.FEMALE);
+			}
+			patient.setWeight(set.getFloat("weight"));
+			patient.setHeight(set.getFloat("height"));
+			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
 		}
 		
