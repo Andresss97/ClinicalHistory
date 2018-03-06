@@ -8,61 +8,44 @@ public class Appointment {
 	private Date date;
 	private int hour;
 	private String reason;
-	private List <Patient> patients;
-	private List <Doctor> doctors;
-	
-	public Appointment () {
+
+	public Appointment() {
 		this.ID = 0;
 		this.date = null;
 		this.hour = 0;
-		this.reason = " ";
-		this.patients = null;
-		this.doctors = null; 
-	}
-	
-	public int getID () {
-		   return ID;
-	   }
-	   public void setID (int ID) {
-		   this.ID = ID;
-	   }
-	   
-	public Date getDate () {
-		   return date;
-	   }
-	public void setDate (Date date) {
-		   this.date= date;
-	   }
-	
-	public int getHour () {
-		   return hour;
-	   }
-	   public void setHour (int hour) {
-		   this.hour = hour;
-	   }
-	   
-	public String getReason () {
-		   return reason;
-	   }
-	   public void setReason (String reason) {
-		   this.reason = reason;
-	   }
-	   
-
-	public List<Patient> getPatients() {
-		return patients;
+		this.reason = null;
 	}
 
-	public void setPatients(List<Patient> patients) {
-		this.patients = patients;
+	public int getID() {
+		return ID;
 	}
 
-	public List<Doctor> getDoctors() {
-		return doctors;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
-	public void setDoctors(List<Doctor> doctors) {
-		this.doctors = doctors;
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public int getHour() {
+		return hour;
+	}
+
+	public void setHour(int hour) {
+		this.hour = hour;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 	@Override
@@ -86,10 +69,4 @@ public class Appointment {
 			return false;
 		return true;
 	}
-
-	
-	   
-	  
-	   
-	   
 }

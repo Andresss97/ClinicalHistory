@@ -3,16 +3,19 @@ package pojos;
 import java.sql.Date;
 
 public class Illness {
-	
-	
+
 	private String description;
-	private Date date_disease; 
-	public enum typeDisease{HEREDITARY,PERSONAL};
+	private Date date_disease;
+
+	public enum typeDisease {
+		HEREDITARY, PERSONAL
+	};
+
 	private typeDisease type;
 	private String name;
 	private int IDdisease;
-	private Treatment treatment; 
-	
+	private Treatment treatment;
+
 	public Illness() {
 		this.name = null;
 		this.description = null;
@@ -20,58 +23,58 @@ public class Illness {
 		this.type = null;
 		this.IDdisease = 0;
 	}
-	
+
 	public Illness(String name, String des, Date date, typeDisease type) {
 		this.name = name;
 		this.description = des;
 		this.date_disease = date;
 		this.type = type;
 	}
-	
+
 	public int getIDdisease() {
 		return this.IDdisease;
 	}
-	
+
 	public Treatment getTreatment() {
 		return this.treatment;
 	}
-	
+
 	public void setTreatment(Treatment treatment) {
 		this.treatment = treatment;
 	}
-	
+
 	public void setIDdisease(int num) {
 		this.IDdisease = num;
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public Date getDate() {
 		return this.date_disease;
 	}
-	
+
 	public void setDate(Date date) {
 		this.date_disease = date;
 	}
-	
+
 	public String getDescription() {
 		return this.description;
 	}
-	
+
 	public void setDescription(String description) {
-		this.description = description;	
+		this.description = description;
 	}
-	
+
 	public typeDisease getTypeDisease() {
 		return this.type;
 	}
-	
+
 	public void setTypeDisease(typeDisease type) {
 		this.type = type;
 	}

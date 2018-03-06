@@ -114,7 +114,7 @@ public class ControllerSignUpPatient implements Initializable{
     		WritableImage wiiU = null;
     		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     	    c = new VideoCapture(0);
-    		Mat matrix = new Mat();
+    		matrix = new Mat();
     		c.read(matrix);
     		
     		if(c.isOpened()) {
@@ -124,7 +124,6 @@ public class ControllerSignUpPatient implements Initializable{
     				DataBufferByte db = (DataBufferByte) r.getDataBuffer();
     				byte[] bd = db.getData();
     				matrix.get(0, 0, bd);
-    				this.matrix = matrix;
     				
     				wiiU = SwingFXUtils.toFXImage(img, null);
     			}
@@ -157,14 +156,13 @@ public class ControllerSignUpPatient implements Initializable{
 		}
 	}
 
-    @SuppressWarnings("deprecation")
+    @SuppressWarnings({ "deprecation", "static-access" })
 	@FXML
     void onCreateClick(ActionEvent event) {
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
     	Date date = null;
-    	String _date;
     	GENDER gender = null;
     	int addres = 0;
     	
@@ -202,6 +200,8 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
     	
+    	Main.patient = patient;
+    	
     	try {
 			query.insertPatient(patient, addres);
 			query.insertUser(null, patient, null, null);
@@ -209,6 +209,9 @@ public class ControllerSignUpPatient implements Initializable{
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
+    	
+    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	window.close();
     }
 
     @FXML

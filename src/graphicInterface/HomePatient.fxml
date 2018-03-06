@@ -17,35 +17,38 @@
    <children>
       <MenuBar fx:id="bar" layoutX="7.0" layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
-          <Menu fx:id="homeButton" mnemonicParsing="false" text="Home" />
+          <Menu fx:id="homeButton" mnemonicParsing="false" text="Home">
+               <items>
+                  <MenuItem fx:id="rHome" mnemonicParsing="false" text="Home Page" />
+               </items></Menu>
           <Menu fx:id="View" mnemonicParsing="false" text="View">
                <items>
                   <MenuItem fx:id="myCalendar" mnemonicParsing="false" text="My Calendar" />
+                  <MenuItem fx:id="mAppointments" mnemonicParsing="false" text="My Appointments" />
                </items>
           </Menu>
             <Menu fx:id="edit" mnemonicParsing="false" text="Edit">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem fx:id="mProfile" mnemonicParsing="false" text="My profile" />
               </items>
             </Menu>
-          <Menu fx:id="help" mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-            <Menu fx:id="logOff" mnemonicParsing="false" text="Log off" />
+          <Menu fx:id="help" mnemonicParsing="false" text="Help" />
+            <Menu fx:id="logOff" mnemonicParsing="false" onAction="#onClickLogOff" text="Close">
+               <items>
+                  <MenuItem fx:id="signOff" mnemonicParsing="false" onAction="#onClickLogOff" text="Sign off" />
+               </items></Menu>
         </menus>
       </MenuBar>
-      <AnchorPane layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane fx:id="mContainer" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
             <ImageView fx:id="image" fitHeight="150.0" fitWidth="118.0" layoutX="23.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/UserProfile.png" />
                </image>
             </ImageView>
-            <Label fx:id="tName" layoutX="39.0" layoutY="229.0" prefWidth="91.0" />
-            <Label fx:id="tSurname" layoutX="39.0" layoutY="267.0" prefHeight="17.0" prefWidth="91.0" />
-            <Label fx:id="tNif" ellipsisString="" layoutX="39.0" layoutY="307.0" prefHeight="17.0" prefWidth="91.0" />
+            <Label fx:id="tName" layoutX="37.0" layoutY="182.0" prefWidth="91.0" text="Name" />
+            <Label fx:id="tSurname" layoutX="37.0" layoutY="220.0" prefHeight="17.0" prefWidth="91.0" text="Surname" />
+            <Label fx:id="tNif" ellipsisString="" layoutX="37.0" layoutY="255.0" prefHeight="17.0" prefWidth="91.0" text="DNI" />
             <ScrollPane layoutX="210.0" layoutY="81.0" prefHeight="390.0" prefWidth="502.0">
               <content>
                 <AnchorPane fx:id="appointmentView" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="500.0" />

@@ -6,44 +6,38 @@ public class Surgeries {
 	private int ID;
 	private Date date;
 	private String type;
-	private Patient patient;
 	private Treatment treatment;
-	
-	public Surgeries () {
+
+	public Surgeries() {
 		this.ID = 0;
 		this.date = null;
 		this.type = " ";
-		this.patient = null;
 		this.treatment = null;
 	}
-	
-	public int getID () {
-		   return ID;
-	   }
-	   public void setID (int ID) {
-		   this.ID = ID;
-	   }
-	   
-	public Date getDate () {
-		   return date;
-	   }
-	public void setDate (Date date) {
-		   this.date= date;
-	   }
-	
-	public String getType () {
-		   return type;
-	   }
-	   public void setType (String type) {
-		   this.type = type;
-	   }
-	   
-	  public Patient getPatient () {
-		   return patient;
-	   }
-	   public void setPatient(Patient patient) {
-		   this.patient = patient;
-	   }
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int ID) {
+		this.ID = ID;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public Treatment getTreatment() {
 		return treatment;
@@ -74,8 +68,4 @@ public class Surgeries {
 			return false;
 		return true;
 	}
-
-	
-	  
-
 }

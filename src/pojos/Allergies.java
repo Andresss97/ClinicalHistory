@@ -1,52 +1,43 @@
 package pojos;
 
-
 public class Allergies {
 	private int ID;
 	private String group;
 	private String observations;
-	private Patient patient;
 	private Treatment treatment;
-	
-	public Allergies () {
+
+	public Allergies() {
 		this.ID = 0;
 		this.group = " ";
 		this.observations = " ";
-		this.patient = null;
 		this.treatment = null;
 	}
-	
-	public int getID () {
-		   return ID;
-	   }
-	   public void setID (int ID) {
-		   this.ID = ID;
-	   }
-	   
-	public String getGroup () {
-		   return group;
-	   }
-	public void setGroup (String group) {
-		   this.group = group;
-	   }
-	
-	public String getObservations () {
-		   return observations;
-	   }
-	   public void setObservations (String observations) {
-		   this.observations = observations;
-	   }
-	   
 
-public Patient getPatient() {
-		return patient;
+	public int getID() {
+		return ID;
 	}
 
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setID(int ID) {
+		this.ID = ID;
 	}
 
-public Treatment getTreatment() {
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+
+	public String getObservations() {
+		return observations;
+	}
+
+	public void setObservations(String observations) {
+		this.observations = observations;
+	}
+
+	public Treatment getTreatment() {
 		return treatment;
 	}
 
@@ -75,7 +66,4 @@ public Treatment getTreatment() {
 			return false;
 		return true;
 	}
-
-
-	   
 }

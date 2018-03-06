@@ -77,10 +77,17 @@ public class ControllerMainView {
     	window.hide();
     	modal.initModality(Modality.APPLICATION_MODAL);
     	modal.showAndWait();
+    	
+    	if(modal.isShowing() == false && !(Main.patient == null)) {
+    		Parent root2 = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+    		window.setScene(new Scene(root2));
+    		window.show();
+    		return;
+    	}
+    	
     	if(modal.isShowing() == false) {
     		window.show();
     	}
     }
-
 }
 

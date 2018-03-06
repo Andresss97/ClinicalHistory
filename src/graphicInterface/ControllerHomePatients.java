@@ -1,11 +1,18 @@
 package graphicInterface;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,10 +22,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class ControllerHomePatients implements Initializable{
 
-    @FXML
+	@FXML
     private AnchorPane container;
 
     @FXML
@@ -28,19 +36,31 @@ public class ControllerHomePatients implements Initializable{
     private Menu homeButton;
 
     @FXML
+    private MenuItem rHome;
+
+    @FXML
     private Menu View;
 
     @FXML
     private MenuItem myCalendar;
 
     @FXML
+    private MenuItem mAppointments;
+
+    @FXML
     private Menu edit;
+
+    @FXML
+    private MenuItem mProfile;
 
     @FXML
     private Menu help;
 
     @FXML
     private Menu logOff;
+
+    @FXML
+    private MenuItem signOff;
 
     @FXML
     private ImageView image;
@@ -58,16 +78,19 @@ public class ControllerHomePatients implements Initializable{
     private AnchorPane appointmentView;
 
     @FXML
-    private Button bPDF;
-
-    @FXML
-    private Button bPrint;
+    private TextField search;
 
     @FXML
     private ComboBox<?> orderBy;
 
     @FXML
-    private TextField search;
+    private Button bPDF;
+
+    @FXML
+    private Button bPrint;
+
+    
+    
 
     @FXML
     void onClickPdf(ActionEvent event) {
@@ -78,12 +101,24 @@ public class ControllerHomePatients implements Initializable{
     void onClickPrint(ActionEvent event) {
 
     }
+    
+	@FXML
+	void onClickLogOff(ActionEvent event) throws IOException {
+		Main.patient = null;
+		
+		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		
+		window.setScene(new Scene(root));
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tName.setText(Main.patient.getName());
 		tSurname.setText(Main.patient.getSurname());
 		tNif.setText(Main.patient.getNIF());
+		ObservableList list = FXCollections.observableArrayList("Alphabetically", "Date");
+		orderBy.setItems(list);
 	}
 
 }
