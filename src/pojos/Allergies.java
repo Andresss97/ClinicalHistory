@@ -5,6 +5,7 @@ public class Allergies {
 	private String group;
 	private String observations;
 	private Treatment treatment;
+	private Patient patient;
 
 	public Allergies() {
 		this.ID = 0;
@@ -65,5 +66,13 @@ public class Allergies {
 		if (ID != other.ID)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

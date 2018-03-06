@@ -6,7 +6,8 @@ public class Illness {
 
 	private String description;
 	private Date date_disease;
-
+	private Patient patient;
+	
 	public enum typeDisease {
 		HEREDITARY, PERSONAL
 	};
@@ -99,6 +100,14 @@ public class Illness {
 		if (IDdisease != other.IDdisease)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

@@ -12,6 +12,7 @@ public class Patient extends Person{
 	private LinkedList<Allergies> allergies;
 	private LinkedList<Surgeries> surgeries;
 	private LinkedList<Vaccine> vaccines;
+	private ClinicalHistory cHistory;
 	
 	public Patient() { 
 		super();

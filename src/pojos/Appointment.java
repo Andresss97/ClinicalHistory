@@ -8,7 +8,9 @@ public class Appointment {
 	private Date date;
 	private int hour;
 	private String reason;
-
+	private Patient patient;
+	private Doctor doctor;
+	
 	public Appointment() {
 		this.ID = 0;
 		this.date = null;
@@ -68,5 +70,21 @@ public class Appointment {
 		if (ID != other.ID)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
 	}
 }

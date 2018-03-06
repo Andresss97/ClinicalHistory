@@ -7,7 +7,8 @@ public class Surgeries {
 	private Date date;
 	private String type;
 	private Treatment treatment;
-
+	private Patient patient;
+	
 	public Surgeries() {
 		this.ID = 0;
 		this.date = null;
@@ -67,5 +68,13 @@ public class Surgeries {
 		if (ID != other.ID)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }

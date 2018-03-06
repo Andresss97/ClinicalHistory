@@ -7,7 +7,7 @@ public class Treatment {
 	private int IDtreatment;
 	private Date startDate;
 	private Date endDate;
-
+	private Patient patient;
 	public enum typeTreatment {
 		MEDICATION, REHAB
 	};
@@ -102,6 +102,14 @@ public class Treatment {
 		if (IDtreatment != other.IDtreatment)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 
 }

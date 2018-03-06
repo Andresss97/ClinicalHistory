@@ -7,7 +7,8 @@ public class ClinicalHistory {
 	private String addictions;
 	private String observations;
 	private Date lastModification;
-
+	private Patient patient;
+	
 	public enum BLOODGROUP {
 		AP, BP, ABP, AN, BN, ABN, ZP, ZN
 	};
@@ -92,5 +93,13 @@ public class ClinicalHistory {
 		if (ID != other.ID)
 			return false;
 		return true;
+	}
+
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
 	}
 }
