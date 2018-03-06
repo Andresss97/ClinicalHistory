@@ -24,91 +24,91 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class ControllerHomePatients implements Initializable{
+public class ControllerHomePatients implements Initializable {
 
 	@FXML
-    private AnchorPane container;
+	private AnchorPane container;
 
-    @FXML
-    private MenuBar bar;
+	@FXML
+	private MenuBar bar;
 
-    @FXML
-    private Menu homeButton;
+	@FXML
+	private Menu homeButton;
 
-    @FXML
-    private MenuItem rHome;
+	@FXML
+	private MenuItem rHome;
 
-    @FXML
-    private Menu View;
+	@FXML
+	private Menu View;
 
-    @FXML
-    private MenuItem myCalendar;
+	@FXML
+	private MenuItem myCalendar;
 
-    @FXML
-    private MenuItem mAppointments;
+	@FXML
+	private MenuItem mAppointments;
 
-    @FXML
-    private Menu edit;
+	@FXML
+	private Menu edit;
 
-    @FXML
-    private MenuItem mProfile;
+	@FXML
+	private MenuItem mProfile;
 
-    @FXML
-    private Menu help;
+	@FXML
+	private Menu help;
 
-    @FXML
-    private Menu logOff;
+	@FXML
+	private Menu logOff;
 
-    @FXML
-    private MenuItem signOff;
+	@FXML
+	private MenuItem signOff;
 
-    @FXML
-    private ImageView image;
+	@FXML
+	private AnchorPane mContainer;
 
-    @FXML
-    private Label tName;
+	@FXML
+	private ImageView image;
 
-    @FXML
-    private Label tSurname;
+	@FXML
+	private Label tName;
 
-    @FXML
-    private Label tNif;
+	@FXML
+	private Label tSurname;
 
-    @FXML
-    private AnchorPane appointmentView;
+	@FXML
+	private Label tNif;
 
-    @FXML
-    private TextField search;
+	@FXML
+	private AnchorPane appointmentView;
 
-    @FXML
-    private ComboBox<?> orderBy;
+	@FXML
+	private TextField search;
 
-    @FXML
-    private Button bPDF;
+	@FXML
+	private ComboBox<?> orderBy;
 
-    @FXML
-    private Button bPrint;
+	@FXML
+	private Button bPDF;
 
-    
-    
+	@FXML
+	private Button bPrint;
 
-    @FXML
-    void onClickPdf(ActionEvent event) {
+	@FXML
+	void onClickPdf(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void onClickPrint(ActionEvent event) {
+	@FXML
+	void onClickPrint(ActionEvent event) {
 
-    }
-    
+	}
+
 	@FXML
 	void onClickLogOff(ActionEvent event) throws IOException {
 		Main.patient = null;
-		
+
 		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
 		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-		
+
 		window.setScene(new Scene(root));
 	}
 
