@@ -1,15 +1,20 @@
 package graphicInterface;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 import creation.QuerysSelect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -22,7 +27,7 @@ import pojos.Patient;
 public class ControllerMainView {
 
     @FXML
-    private AnchorPane mainManel;
+    private AnchorPane mainPanel;
 
     @FXML
     private Button signIn;
@@ -40,8 +45,16 @@ public class ControllerMainView {
     private Hyperlink fPHyperlink;
 
     @FXML
-    void onClickHyperlink(ActionEvent event) {
-
+    void onClickHyperlink(ActionEvent event) throws IOException {
+    	Parent root = FXMLLoader.load(getClass().getResource("PasswordRecovery.fxml"));
+    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	Stage modal = new Stage();
+    	modal.setTitle("Babylon Studio - Recover Credentials");
+    	modal.setScene(new Scene(root));
+    	modal.initOwner(window);
+    	modal.setResizable(false);
+    	modal.initModality(Modality.APPLICATION_MODAL);
+    	modal.show();
     }
 
     @FXML
@@ -51,18 +64,17 @@ public class ControllerMainView {
 			String[] data = qs.selectUser(user.getText(), password.getText());
 			Main.patient = qs.selectPatient(data);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage() + "fallas aqui compañero");
+			
 		}
     	
     	if(Main.patient.getUsername().equals(user.getText()) && Main.patient.getPassword().equals(password.getText())) {
     		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
         	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        	window.setResizable(false);
         	Scene scene = new Scene(root);
         	window.setScene(scene);
         	window.show();
     	}
-    	
     }
 
     @FXML

@@ -36,9 +36,7 @@ import pojos.*;
 import pojos.Person.GENDER;
 
 
-public class ControllerSignUpPatient implements Initializable{
-	private Conector conn = Main.conector;
-	
+public class ControllerSignUpPatient implements Initializable{	
     @FXML
     private Button browse;
 
@@ -206,7 +204,6 @@ public class ControllerSignUpPatient implements Initializable{
 			query.insertPatient(patient, addres);
 			query.insertUser(null, patient, null, null);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
     	

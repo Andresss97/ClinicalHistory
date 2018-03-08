@@ -159,22 +159,24 @@ public class QuerysInsert {
 		
 		if(!patient.equals(null)) {
 			String query;
-			query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+			query = "INSERT into mappinglogin (username, password,usertype,email) values (?,?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query);
 			st.setString(1, patient.getUsername());
 			st.setString(2, patient.getPassword());
 			st.setInt(3, 1);
+			st.setString(4,patient.getEmail());
 			
 			st.executeUpdate();
 			st.close();
 		}
 		else if(!doctor.equals(null)) {
 			String query2;
-			query2 = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+			query2 = "INSERT into mappinglogin (username, password,usertype,email) values (?,?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query2);
 			st.setString(1, doctor.getUsername());
 			st.setString(2, doctor.getPassword());
 			st.setInt(3, 2);
+			st.setString(4,doctor.getEmail());
 			
 			st.executeUpdate();
 			st.close();
@@ -293,7 +295,6 @@ public class QuerysInsert {
 		st.close();	
 	}
 	
-	
 	public void insertTreatment(Treatment treatment) throws SQLException {
 		String query;
 		
@@ -316,7 +317,6 @@ public class QuerysInsert {
 		st.close();
 		
 	}
-	
 		
 	public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
 		String query;
@@ -396,6 +396,5 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
-	
-	
+
 }

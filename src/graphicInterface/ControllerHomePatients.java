@@ -89,7 +89,17 @@ public class ControllerHomePatients implements Initializable {
 
 	@FXML
 	private Button bPrint;
-
+	
+	@FXML
+	void onClickHome(ActionEvent event) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+		Scene scene = bar.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	Scene scene2 = new Scene(root);
+    	window.setScene(scene2);
+    	window.show();
+	}
+	
 	@FXML
 	void onClickPdf(ActionEvent event) {
 
@@ -97,20 +107,28 @@ public class ControllerHomePatients implements Initializable {
 
 	@FXML
 	void onClickPrint(ActionEvent event) {
-
+    	
 	}
-
+	
+	@FXML
+	void onClickAppointments(ActionEvent event) throws IOException {
+		mContainer.getChildren().clear();
+		AnchorPane lContainer = FXMLLoader.load(getClass().getResource("MenuAppointmentsPatient.fxml"));
+		mContainer.getChildren().add(lContainer);
+	}
+	
 	@FXML
 	void onClickLogOff(ActionEvent event) throws IOException {
 		Main.patient = null;
-
-		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-		window.setScene(new Scene(root));
-		window.show();
+		Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml")); 	
+		Scene scene = bar.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	Scene scene2 = new Scene(root);
+    	window.setScene(scene2);
+    	window.show();
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		tName.setText(Main.patient.getName());
@@ -119,5 +137,4 @@ public class ControllerHomePatients implements Initializable {
 		ObservableList list = FXCollections.observableArrayList("Alphabetically", "Date");
 		orderBy.setItems(list);
 	}
-
 }

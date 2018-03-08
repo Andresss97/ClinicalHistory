@@ -245,7 +245,7 @@ public abstract class DBCreation {
 		try {
 			st = con.getConnect().createStatement();
 			in = "CREATE TABLE MAPPINGLOGIN" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-					+ "USERNAME varchar(50)," + "PASSWORD varchar (50)," + "USERTYPE int NOT NULL)";
+					+ "USERNAME varchar(50)," + "PASSWORD varchar (50)," + "USERTYPE int NOT NULL, EMAIL varchar(100))";
 			st.execute(in);
 			st.close();
 		} catch (Exception ex) {

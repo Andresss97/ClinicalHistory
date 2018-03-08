@@ -3,10 +3,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -19,12 +19,12 @@
         <menus>
           <Menu fx:id="homeButton" mnemonicParsing="false" text="Home">
                <items>
-                  <MenuItem fx:id="rHome" mnemonicParsing="false" text="Home Page" />
+                  <MenuItem fx:id="rHome" mnemonicParsing="false" onAction="#onClickHome" text="Home Page" />
                </items></Menu>
           <Menu fx:id="View" mnemonicParsing="false" text="View">
                <items>
                   <MenuItem fx:id="myCalendar" mnemonicParsing="false" text="My Calendar" />
-                  <MenuItem fx:id="mAppointments" mnemonicParsing="false" text="My Appointments" />
+                  <MenuItem fx:id="mAppointments" mnemonicParsing="false" onAction="#onClickAppointments" text="My Appointments" />
                </items>
           </Menu>
             <Menu fx:id="edit" mnemonicParsing="false" text="Edit">
@@ -33,7 +33,7 @@
               </items>
             </Menu>
           <Menu fx:id="help" mnemonicParsing="false" text="Help" />
-            <Menu fx:id="logOff" mnemonicParsing="false" onAction="#onClickLogOff" text="Close">
+            <Menu fx:id="logOff" mnemonicParsing="false" text="Close">
                <items>
                   <MenuItem fx:id="signOff" mnemonicParsing="false" onAction="#onClickLogOff" text="Sign off" />
                </items></Menu>
@@ -49,18 +49,18 @@
             <Label fx:id="tName" layoutX="37.0" layoutY="182.0" prefWidth="91.0" text="Name" />
             <Label fx:id="tSurname" layoutX="37.0" layoutY="220.0" prefHeight="17.0" prefWidth="91.0" text="Surname" />
             <Label fx:id="tNif" ellipsisString="" layoutX="37.0" layoutY="255.0" prefHeight="17.0" prefWidth="91.0" text="DNI" />
-            <ScrollPane layoutX="210.0" layoutY="81.0" prefHeight="390.0" prefWidth="502.0">
-              <content>
-                <AnchorPane fx:id="appointmentView" minHeight="0.0" minWidth="0.0" prefHeight="388.0" prefWidth="500.0" />
-              </content>
-               <effect>
-                  <DropShadow />
-               </effect>
-            </ScrollPane>
             <TextField fx:id="search" layoutX="422.0" layoutY="40.0" prefHeight="25.0" prefWidth="118.0" promptText="Search" />
             <ComboBox fx:id="orderBy" layoutX="562.0" layoutY="40.0" prefWidth="150.0" promptText="Order by:" />
             <Button fx:id="bPDF" layoutX="742.0" layoutY="81.0" mnemonicParsing="false" onAction="#onClickPdf" prefHeight="25.0" prefWidth="91.0" text="Export to PDF" />
             <Button fx:id="bPrint" layoutX="742.0" layoutY="128.0" mnemonicParsing="false" onAction="#onClickPrint" prefHeight="25.0" prefWidth="91.0" text="Print" />
+            <AnchorPane layoutX="172.0" layoutY="82.0" prefHeight="364.0" prefWidth="540.0">
+               <children>
+                  <ListView prefHeight="364.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </AnchorPane>
          </children></AnchorPane>
    </children>
 </AnchorPane>
