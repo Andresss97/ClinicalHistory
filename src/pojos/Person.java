@@ -17,7 +17,7 @@ public abstract class Person {
 	private GENDER gender;
 	private byte[] photo;
 	private Address address;
-	private int ID;
+	private Integer ID;
 	
 	@SuppressWarnings("deprecation")
 	public Person() {

@@ -16,6 +16,30 @@ public class Address {
 		this.houseNumber = 0;
 	}
 	
+	public Integer getID() {
+		return this.ID;
+	}
+	
+	public void setID(Integer id) {
+		this.ID=id;
+	}
+	
+	public Patient getPatient() {
+		return this.patient;
+	}
+	
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+	
+	public Doctor getDoctor() {
+		return this.doctor;
+	}
+	
+	public void setDoctor(Doctor doctor) {
+		this.doctor=doctor;
+	}
+	
 	public int getPostalCode() {
 		return postalCode;
 	}

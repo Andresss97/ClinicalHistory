@@ -7,7 +7,6 @@ public class Illness {
 	private String description;
 	private Date date_disease;
 	private Patient patient;
-	private Integer ID;
 	
 	public enum typeDisease {
 		HEREDITARY, PERSONAL
@@ -15,7 +14,7 @@ public class Illness {
 
 	private typeDisease type;
 	private String name;
-	private int IDdisease;
+	private Integer IDdisease;
 	private Treatment treatment;
 
 	public Illness() {
