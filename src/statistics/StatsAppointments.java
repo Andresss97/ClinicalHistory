@@ -258,12 +258,5 @@ public class StatsAppointments {
 				default : break;
 			}
 		}
-		System.out.println(nine);
-		System.out.println(nine30);
-		System.out.println(ten);
-		System.out.println(ten30);
-		System.out.println(eleven);
-		System.out.println(eleven30);
-		System.out.println(five);
 	}
 }
