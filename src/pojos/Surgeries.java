@@ -3,7 +3,7 @@ package pojos;
 import java.sql.Date;
 
 public class Surgeries {
-	private int ID;
+	private Integer ID;
 	private Date date;
 	private String type;
 	private Treatment treatment;
