@@ -80,7 +80,12 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
+	@FXML
+	void onClickSpeciality(ActionEvent event) {
+		
+	}
+	
 	private Appointment obtainData() {
 		Appointment app = new Appointment();
 		Date date = null;
@@ -101,6 +106,14 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 				"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00",
 				"17:30", "18:00");
 		hApp.setItems(list);
+		
+		ObservableList list2 = FXCollections.observableArrayList("Allergy and Immunollogy",
+				"General Pathology", "Cardiology","Clinical Neurophisiology","Endocrinology",
+				"General Practice","Internal Medicine","Nephrology","Neurology","Ophthalmology",
+				"Orthopaedics","Paediatrics","Neonatology","Physical Medicine Rehabilitation",
+				"Pulmonology","Psychiatry","Radiology","General Surgery","Urology");
+		
+		speciality.setItems(list2);
 	}
 }
 
