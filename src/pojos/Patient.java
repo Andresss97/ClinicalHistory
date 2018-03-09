@@ -1,17 +1,30 @@
 package pojos;
 
+import java.util.LinkedList;
+
 public class Patient extends Person{
 	private float weight;
 	private float height;
 	private int housePhone;
-	private String addictions;
+	private LinkedList<Doctor> doctors;
+	private LinkedList<Appointment> appointments;
+	private LinkedList<Illness> illnesses;
+	private LinkedList<Allergies> allergies;
+	private LinkedList<Surgeries> surgeries;
+	private LinkedList<Vaccine> vaccines;
+	private ClinicalHistory cHistory;
 	
-	public Patient() {
+	public Patient() { 
 		super();
 		this.weight = 0.0F;
 		this.height = 0.0F;
 		this.housePhone = 0;
-		this.addictions = null;
+		this.doctors = new LinkedList<>();
+		this.appointments = new LinkedList<>();
+		this.illnesses = new LinkedList<>();
+		this.allergies = new LinkedList<>();
+		this.surgeries = new LinkedList<>();
+		this.vaccines = new LinkedList<>();
 	}
 
 	public float getWeight() {
@@ -38,47 +51,51 @@ public class Patient extends Person{
 		this.housePhone = housePhone;
 	}
 
-	public String getAddictions() {
-		return addictions;
+	public LinkedList<Doctor> getDoctors() {
+		return doctors;
 	}
 
-	public void setAddictions(String addictions) {
-		this.addictions = addictions;
+	public void setDoctors(LinkedList<Doctor> doctors) {
+		this.doctors = doctors;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((addictions == null) ? 0 : addictions.hashCode());
-		result = prime * result + Float.floatToIntBits(height);
-		result = prime * result + housePhone;
-		result = prime * result + Float.floatToIntBits(weight);
-		return result;
+	public LinkedList<Appointment> getAppointments() {
+		return appointments;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Patient other = (Patient) obj;
-		if (addictions == null) {
-			if (other.addictions != null)
-				return false;
-		} else if (!addictions.equals(other.addictions))
-			return false;
-		if (Float.floatToIntBits(height) != Float.floatToIntBits(other.height))
-			return false;
-		if (housePhone != other.housePhone)
-			return false;
-		if (Float.floatToIntBits(weight) != Float.floatToIntBits(other.weight))
-			return false;
-		return true;
+	public void setAppointments(LinkedList<Appointment> appointments) {
+		this.appointments = appointments;
 	}
-	
-	
+
+	public LinkedList<Illness> getIllnesses() {
+		return illnesses;
+	}
+
+	public void setIllnesses(LinkedList<Illness> illnesses) {
+		this.illnesses = illnesses;
+	}
+
+	public LinkedList<Allergies> getAllergies() {
+		return allergies;
+	}
+
+	public void setAllergies(LinkedList<Allergies> allergies) {
+		this.allergies = allergies;
+	}
+
+	public LinkedList<Surgeries> getSurgeries() {
+		return surgeries;
+	}
+
+	public void setSurgeries(LinkedList<Surgeries> surgeries) {
+		this.surgeries = surgeries;
+	}
+
+	public LinkedList<Vaccine> getVaccines() {
+		return vaccines;
+	}
+
+	public void setVaccines(LinkedList<Vaccine> vaccines) {
+		this.vaccines = vaccines;
+	}
 }

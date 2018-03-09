@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainManel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
+<AnchorPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerMainView">
    <children>
       <Label layoutX="307.0" layoutY="26.0" text="Babylon Studio" textFill="#0d0d0d">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Button fx:id="signIn" layoutX="764.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSignUp" text="Sign Up" />
+      <Button fx:id="signIn" layoutX="772.0" layoutY="40.0" mnemonicParsing="false" onAction="#onClickSignUp" text="Sign Up" />
       <TextField fx:id="user" layoutX="337.0" layoutY="207.0" prefHeight="25.0" prefWidth="211.0" promptText="Username">
          <effect>
             <DropShadow />

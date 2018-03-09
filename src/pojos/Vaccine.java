@@ -10,17 +10,29 @@ public class Vaccine {
 	private typeVaccine nameVaccine;
 	private Date date;
 	private String description;
+	private Patient patient;
+	private Treatment treatment;
 	
 	public Vaccine() {
 		this.IDvaccine = 0;
 		this.nameVaccine = null;
 		this.date = null;
+		this.patient = null;
+		this.treatment = null;
 	}
 	
 	public Vaccine(int ID, typeVaccine name, Date date) {
 		this.IDvaccine = ID;
 		this.nameVaccine = name;
 		this.date = date;
+	}
+	
+	public Patient getPatient() {
+		return this.patient;
+	}
+	
+	public void setPatient(Patient patient) {
+		this.patient=patient;
 	}
 	
 	public int getIDvaccine() {
@@ -85,6 +97,14 @@ public class Vaccine {
 		if (nameVaccine != other.nameVaccine)
 			return false;
 		return true;
+	}
+
+	public Treatment getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(Treatment treatment) {
+		this.treatment = treatment;
 	}
 	
 	

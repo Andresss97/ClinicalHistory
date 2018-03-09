@@ -5,7 +5,7 @@ import java.sql.Date;
 import javafx.scene.image.Image;
 
 public abstract class Person {
-	private String user;
+	private String username;
 	private String password;
 	private String email;
 	private String NIF;
@@ -21,7 +21,7 @@ public abstract class Person {
 	
 	@SuppressWarnings("deprecation")
 	public Person() {
-		this.user = null;
+		this.username = null;
 		this.password = null;
 		this.email = null;
 		this.mobilePhone = 0;
@@ -30,16 +30,16 @@ public abstract class Person {
 		this.dob = new Date(1,1,1);
 		this.gender = null;
 		this.address = new Address();
-		this.ID = 0;
+		this.setID(0);
 		this.photo = new byte[0];
 	}
 	
-	public String getUser() {
-		return user;
+	public String getUsername() {
+		return username;
 	}
 	
-	public void setUser(String user) {
-		this.user = user;
+	public void setUsername (String username) {
+		this.username = username;
 	}
 	
 	public String getPassword() {
@@ -120,5 +120,13 @@ public abstract class Person {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 }

@@ -1,29 +1,42 @@
 package graphicInterface;
 
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.awt.image.WritableRaster;
+import java.io.*;
 import java.net.URL;
-import java.sql.SQLException;
+import java.sql.Date;
 import java.util.ResourceBundle;
+
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.videoio.VideoCapture;
 
 import creation.Conector;
 import creation.QuerysInsert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import pojos.*;
 import pojos.Person.GENDER;
 
 
-public class ControllerSignUpPatient implements Initializable{
-	private Conector conn = Main.conector;
-	
+public class ControllerSignUpPatient implements Initializable{	
     @FXML
     private Button browse;
 
@@ -83,20 +96,73 @@ public class ControllerSignUpPatient implements Initializable{
     
     @FXML
     private ImageView image;
-
-    @FXML
-    void onBrowseClick(ActionEvent event) {
-
+    
+    private class Photo {
+    	private Mat matrix = null;
+    	private VideoCapture c = null;
+    	
+    	public void takePhoto() {
+    		Photo p = new Photo();
+    		WritableImage wii = p.capturePhoto();
+    		Image img = (Image) wii;
+    		image.setImage(img);
+    	}
+    	
+    	private WritableImage capturePhoto() {
+    		WritableImage wiiU = null;
+    		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+    	    c = new VideoCapture(0);
+    		matrix = new Mat();
+    		c.read(matrix);
+    		
+    		if(c.isOpened()) {
+    			if(c.read(matrix)) {
+    				BufferedImage img = new BufferedImage(matrix.width(), matrix.height(), BufferedImage.TYPE_3BYTE_BGR);
+    				WritableRaster r = img.getRaster();
+    				DataBufferByte db = (DataBufferByte) r.getDataBuffer();
+    				byte[] bd = db.getData();
+    				matrix.get(0, 0, bd);
+    				
+    				wiiU = SwingFXUtils.toFXImage(img, null);
+    			}
+    		}
+    		return wiiU;
+    	}
     }
+    
+	@FXML
+	void onBrowseClick(ActionEvent event) {
+		FileChooser fl = new FileChooser();
+		Image img = null;
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		fl.setTitle("Babylon Studio - Select a profile picture");
+		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+		fl.getExtensionFilters().addAll(extFilterPNG, extFilterJPG);
+		
+		File file = fl.showOpenDialog(window);
 
-    @FXML
+		if (file != null) {
+			try {
+				img = new Image(file.toURI().toURL().toString(), 161, 132, true, true);
+				this.image = new ImageView(img);
+			}
+			catch(Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+			
+		}
+	}
+
+    @SuppressWarnings({ "deprecation", "static-access" })
+	@FXML
     void onCreateClick(ActionEvent event) {
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
+    	Date date = null;
     	GENDER gender = null;
     	int addres = 0;
-    	
     	
     	address.setCity(city.getText());
     	address.setStreet(street.getText());
@@ -113,6 +179,7 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setSurname(surname.getText());
     	patient.setNIF(nif.getText());
     	patient.setAddress(address);
+    	
     	patient.setEmail(mail.getText());
     	if(this.gender.getSelectionModel().getSelectedItem().equals("Female")) {
     		patient.setGender(gender.FEMALE);
@@ -120,26 +187,34 @@ public class ControllerSignUpPatient implements Initializable{
     	else {
     		patient.setGender(gender.MALE);
     	}
+    	date = new Date(0,0,0);
+    	date.valueOf(dBirth.getValue());
+    	patient.setDob(date);
     	patient.setHousePhone(Integer.parseInt(hPhone.getText()));
     	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));
     	patient.setWeight(Float.parseFloat(weight.getText()));
     	patient.setHeight(Float.parseFloat(height.getText()));
-    	patient.setUser(user.getText());
+    	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
+    	
+    	Main.patient = patient;
     	
     	try {
 			query.insertPatient(patient, addres);
 			query.insertUser(null, patient, null, null);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
+    	
+    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	window.close();
     }
 
     @FXML
-    void onTakePhotoClick(ActionEvent event) {
-
+    void onTakePhotoClick(ActionEvent event) throws IOException {
+    	Photo p = new Photo();
+    	p.takePhoto();
     }
 
 	@SuppressWarnings("unchecked")
@@ -147,6 +222,7 @@ public class ControllerSignUpPatient implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("Male", "Female");
 		gender.setItems(list);
+		image = new ImageView();
 	}
 
 }
