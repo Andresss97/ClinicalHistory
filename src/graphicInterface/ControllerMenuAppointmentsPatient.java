@@ -1,16 +1,23 @@
 package graphicInterface;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import pojos.Appointment;
 
-public class ControllerMenuAppointmentsPatient {
+public class ControllerMenuAppointmentsPatient implements Initializable{
 
     @FXML
     private TextField search;
@@ -32,10 +39,15 @@ public class ControllerMenuAppointmentsPatient {
     
     @FXML
     private ListView<Appointment> list;
+    
+    @FXML
+    private AnchorPane container;
 
     @FXML
-    void onClickCreate(ActionEvent event) {
-
+    void onClickCreate(ActionEvent event) throws IOException {
+    	container.getChildren().clear();
+    	AnchorPane lContainer = FXMLLoader.load(getClass().getResource("CreateAppointmentMenu.fxml"));
+    	container.getChildren().add(lContainer);
     }
 
     @FXML
@@ -57,6 +69,13 @@ public class ControllerMenuAppointmentsPatient {
     void onClickUpdate(ActionEvent event) {
 
     }
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
+			list.getItems().add(Main.patient.getAppointments().get(i));
+		}
+	}
 
 }
 

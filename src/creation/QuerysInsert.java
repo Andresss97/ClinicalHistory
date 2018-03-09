@@ -364,7 +364,7 @@ public class QuerysInsert {
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 	    st.setDate(1, appointment.getDate());
-		st.setInt(2, appointment.getHour());
+		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
 		
 		st.executeUpdate();

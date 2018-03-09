@@ -91,4 +91,17 @@ public class QuerysSelect {
 		return data;
 	}
 	
+	public ArrayList appStats() throws SQLException {
+		String query = "SELECT hour from appointment";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ArrayList<String> list = new ArrayList<>();
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			list.add(set.getString("hour"));
+		}
+		
+		return list;
+	}
+	
 }

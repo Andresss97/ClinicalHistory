@@ -39,7 +39,7 @@
                </items></Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="mContainer" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <AnchorPane fx:id="mContainer" id= "mContainer" layoutY="25.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
             <ImageView fx:id="image" fitHeight="150.0" fitWidth="118.0" layoutX="23.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
