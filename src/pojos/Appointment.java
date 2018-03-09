@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class Appointment {
-	private int ID;
+	private Integer ID;
 	private Date date;
 	private String hour;
 	private String reason;

@@ -17,7 +17,7 @@ public class QuerysInsert {
 	
 	private Conector conn = Main.conector;
 	
-	public void insertDoctor(Doctor doctor, int iDAddress) throws SQLException {
+	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
 		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,photo,idaddress) values (?,?,?,?,?,?,?,?,?,?,?,?)";
 		
@@ -124,7 +124,7 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertPatient(Patient patient, int iDAddress) throws Exception {
+	public void insertPatient(Patient patient, Integer iDAddress) throws Exception {
 		String query;
 		query = "INSERT into patient (name,surname,nif,email,mobilephone,homephone,dob,gender,username,password,weight,height,idaddress) "
 				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";

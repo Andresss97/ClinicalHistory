@@ -1,7 +1,7 @@
 package pojos;
 
 public class Allergies {
-	private int ID;
+	private Integer ID;
 	private String group;
 	private String observations;
 	private Treatment treatment;
