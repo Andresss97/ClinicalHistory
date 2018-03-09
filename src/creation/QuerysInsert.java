@@ -197,21 +197,20 @@ public class QuerysInsert {
 	public void insertIllness(Illness illness) throws SQLException {
 		String query;
 
-		query = "INSERT into illness (name,type,description,date,Tresults) values (?,?,?,?,?)";
+		query = "INSERT into illness (name,type,description,date,Tresults) values (?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
-		st.setInt(1, illness.getIDdisease());
-		st.setString(2,illness.getName());
+		st.setString(1,illness.getName());
 		
 		if(illness.getTypeDisease().equals(typeDisease.HEREDITARY)) {
-			st.setString(3,"Hereditary");
+			st.setString(2,"Hereditary");
 		}
 		else {
-			st.setString(3, "Personal");
+			st.setString(2, "Personal");
 		}
 		
-		st.setString(4,illness.getDescription());
-		st.setDate(5,illness.getDate());;
+		st.setString(3,illness.getDescription());
+		st.setDate(4,illness.getDate());;
 		
 		st.executeUpdate();
 		st.close();

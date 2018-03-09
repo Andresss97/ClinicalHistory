@@ -98,4 +98,14 @@ public class Patient extends Person{
 	public void setVaccines(LinkedList<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 	}
+	
+	public ClinicalHistory getClinicalHistory() {
+		return this.cHistory;
+	}
+	
+	public void setClinicalHistory(ClinicalHistory cHistory) {
+		this.cHistory= cHistory;
+	}
+	
+	
 }
