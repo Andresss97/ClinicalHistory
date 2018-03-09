@@ -5,6 +5,9 @@ public class Address {
 	private String city;
 	private String street;
 	private int houseNumber;
+	private Integer ID;
+	private Patient patient;
+	private Doctor doctor;
 	
 	public Address() {
 		this.postalCode = 0;

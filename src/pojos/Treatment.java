@@ -4,7 +4,7 @@ import java.sql.Date;
 
 public class Treatment {
 
-	private int IDtreatment;
+	private Integer ID;
 	private Date startDate;
 	private Date endDate;
 	private Patient patient;
@@ -18,7 +18,7 @@ public class Treatment {
 	private Doctor doctor;
 
 	public Treatment() {
-		this.IDtreatment = 0;
+		this.ID = 0;
 		this.startDate = null;
 		this.endDate = null;
 		this.treatment = null;
@@ -27,11 +27,11 @@ public class Treatment {
 	}
 
 	public int getIDtreatment() {
-		return IDtreatment;
+		return ID;
 	}
 
 	public void setIDtreatment(int iDtreatment) {
-		IDtreatment = iDtreatment;
+		ID = iDtreatment;
 	}
 
 	public Doctor getDoctor() {
@@ -86,7 +86,7 @@ public class Treatment {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + IDtreatment;
+		result = prime * result + ID;
 		return result;
 	}
 
@@ -99,7 +99,7 @@ public class Treatment {
 		if (getClass() != obj.getClass())
 			return false;
 		Treatment other = (Treatment) obj;
-		if (IDtreatment != other.IDtreatment)
+		if (ID != other.ID)
 			return false;
 		return true;
 	}
