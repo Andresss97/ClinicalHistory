@@ -6,6 +6,7 @@ import java.awt.image.WritableRaster;
 import java.io.*;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import org.opencv.core.Core;
@@ -154,7 +155,6 @@ public class ControllerSignUpPatient implements Initializable{
 		}
 	}
 
-    @SuppressWarnings({ "deprecation", "static-access" })
 	@FXML
     void onCreateClick(ActionEvent event) {
     	Address address = new Address();
@@ -187,8 +187,10 @@ public class ControllerSignUpPatient implements Initializable{
     	else {
     		patient.setGender(gender.MALE);
     	}
-    	date = new Date(0,0,0);
-    	date.valueOf(dBirth.getValue());
+    	LocalDate d = dBirth.getValue();
+    	
+    	date = Date.valueOf(d);
+    	System.out.println(date);
     	patient.setDob(date);
     	patient.setHousePhone(Integer.parseInt(hPhone.getText()));
     	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));

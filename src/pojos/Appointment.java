@@ -6,7 +6,7 @@ import java.util.List;
 public class Appointment {
 	private int ID;
 	private Date date;
-	private int hour;
+	private String hour;
 	private String reason;
 	private Patient patient;
 	private Doctor doctor;
@@ -14,7 +14,7 @@ public class Appointment {
 	public Appointment() {
 		this.ID = 0;
 		this.date = null;
-		this.hour = 0;
+		this.hour = null;
 		this.reason = null;
 	}
 
@@ -34,11 +34,11 @@ public class Appointment {
 		this.date = date;
 	}
 
-	public int getHour() {
+	public String getHour() {
 		return hour;
 	}
 
-	public void setHour(int hour) {
+	public void setHour(String hour) {
 		this.hour = hour;
 	}
 
@@ -50,6 +50,22 @@ public class Appointment {
 		this.reason = reason;
 	}
 
+	public Patient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(Patient patient) {
+		this.patient = patient;
+	}
+
+	public Doctor getDoctor() {
+		return doctor;
+	}
+
+	public void setDoctor(Doctor doctor) {
+		this.doctor = doctor;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -71,20 +87,9 @@ public class Appointment {
 			return false;
 		return true;
 	}
-
-	public Patient getPatient() {
-		return patient;
-	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
-
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+	
+	@Override
+	public String toString() {
+		return "Appointment reason: " + this.reason + " date: " + this.date.toString() + " at " + this.hour ; 
 	}
 }
