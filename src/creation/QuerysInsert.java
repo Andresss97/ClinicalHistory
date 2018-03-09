@@ -10,6 +10,7 @@ import graphicInterface.Main;
 import pojos.Person.GENDER;
 import pojos.Treatment.typeTreatment;
 import pojos.*;
+import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
