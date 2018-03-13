@@ -23,6 +23,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -174,7 +176,7 @@ public class ControllerSignUpPatient implements Initializable{
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 1");
 		}
-    	
+
     	patient.setName(name.getText());
     	patient.setSurname(surname.getText());
     	patient.setNIF(nif.getText());
@@ -190,7 +192,6 @@ public class ControllerSignUpPatient implements Initializable{
     	LocalDate d = dBirth.getValue();
     	
     	date = Date.valueOf(d);
-    	System.out.println(date);
     	patient.setDob(date);
     	patient.setHousePhone(Integer.parseInt(hPhone.getText()));
     	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));
@@ -204,11 +205,15 @@ public class ControllerSignUpPatient implements Initializable{
     	
     	try {
 			query.insertPatient(patient, addres);
-			query.insertUser(null, patient, null, null);
+			query.insertUser1(null, patient);
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
-    	
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setContentText("Account succesfully created");
+    	alert.setHeaderText("Account information");
+    	alert.setTitle("Information");
+    	alert.showAndWait();
     	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	window.close();
     }
@@ -218,7 +223,20 @@ public class ControllerSignUpPatient implements Initializable{
     	Photo p = new Photo();
     	p.takePhoto();
     }
+    
+    private boolean checkNameSurname() {
+		if(name.getText().isEmpty()) {
+			return false;
+		}
+		else if(surname.getText().isEmpty()){
+			return false;
 
+		}
+		else {
+			return true;
+		}
+    }
+    
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

@@ -1,10 +1,14 @@
 package graphicInterface;
 
 import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
 
 import pojos.*;
 import creation.Conector;
 import creation.DBCreation;
+import creation.QuerysInsert;
+import creation.QuerysSelect;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -24,7 +28,9 @@ public class Main extends Application {
 	}
 	
 	@Override
-	public void start(Stage primaryStage) throws Exception{
+	public void start(Stage primaryStage) throws IOException {
+		QuerysInsert qi = new QuerysInsert();
+		
 		this.conector = new Conector();
 		File url = new File(".//Database//DBproject.db");
 		

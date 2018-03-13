@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="cBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerAdminView">
+   <top>
+      <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home">
+            <items>
+              <MenuItem fx:id="home" mnemonicParsing="false" onAction="#onClickHomePage" text="Home page" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem fx:id="mProfile" mnemonicParsing="false" onAction="#onClickEditProfile" text="My profile" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Close">
+            <items>
+              <MenuItem fx:id="signOff" mnemonicParsing="false" onAction="#onClickSignOff" text="Sign off" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <BorderPane fx:id="cContainer" prefHeight="509.0" prefWidth="855.0">
+         <center>
+            <ListView fx:id="list" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="25.0" left="50.0" right="25.0" top="10.0" />
+               </BorderPane.margin>
+            </ListView>
+         </center>
+         <right>
+            <VBox alignment="TOP_CENTER" prefHeight="487.0" prefWidth="183.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="modify" mnemonicParsing="false" onAction="#onClickModify" prefHeight="28.0" prefWidth="132.0" text="Modify account" />
+                  <Button fx:id="delete" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="29.0" prefWidth="130.0" text="Delete account">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" right="25.0" top="10.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+         <top>
+            <HBox alignment="TOP_RIGHT" BorderPane.alignment="TOP_LEFT">
+               <children>
+                  <Button fx:id="create" mnemonicParsing="false" onAction="#onClickCreate" text="Create doctor account" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField promptText="Search" />
+                  <ImageView fx:id="iButton" fitHeight="25.0" fitWidth="30.0" onMouseClicked="#onClickedSearch" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Search-WF.png" />
+                     </image>
+                  </ImageView>
+                  <Region>
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Region>
+                  <ComboBox fx:id="orderBy" onAction="#onClickOrderBy" prefWidth="150.0" promptText="Order by:" />
+               </children>
+               <BorderPane.margin>
+                  <Insets left="50.0" right="233.0" top="20.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top>
+      </BorderPane>
+   </center>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Database Project" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Babylon Studio" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="v1.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
+</BorderPane>

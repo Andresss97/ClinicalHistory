@@ -16,7 +16,7 @@ public abstract class DBCreation {
 	
 	public static void createDB(Conector conn) {
 		Conector con = conn;
-
+		QuerysInsert qi = new QuerysInsert();
 
 		cTAddress(con);
 		cTAllergies(con);
@@ -30,6 +30,13 @@ public abstract class DBCreation {
 		cTAppointment(con);
 		cTClinicalHistory(con);
 		cTMappingLogIn(con);
+		
+		try {
+			qi.insertUser2("admin", "indi");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private static void cTAddress(Conector conn) {
