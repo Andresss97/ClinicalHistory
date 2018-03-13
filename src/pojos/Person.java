@@ -5,19 +5,19 @@ import java.sql.Date;
 import javafx.scene.image.Image;
 
 public abstract class Person {
-	private String username;
-	private String password;
-	private String email;
-	private String NIF;
-	private int mobilePhone;
-	private String name;
-	private String surname;
-	private Date dob;
+	protected String username;
+	protected String password;
+	protected String email;
+	protected String NIF;
+	protected int mobilePhone;
+	protected String name;
+	protected String surname;
+	protected Date dob;
 	public enum GENDER {MALE, FEMALE};
-	private GENDER gender;
-	private byte[] photo;
-	private Address address;
-	private Integer ID;
+	protected GENDER gender;
+	protected byte[] photo;
+	protected Address address;
+	protected Integer ID;
 	
 	@SuppressWarnings("deprecation")
 	public Person() {

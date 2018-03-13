@@ -20,6 +20,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import pojos.Patient;
@@ -57,26 +58,58 @@ public class ControllerMainView {
     	modal.show();
     }
 
-    @FXML
-    void onClickLogIn(ActionEvent event) throws IOException {
-    	QuerysSelect qs = new QuerysSelect();
-    	try {
-			String[] data = qs.selectUser(user.getText(), password.getText());
-			Main.patient = qs.selectPatient(data);
-		} catch (SQLException e) {
-			
+	@FXML
+	void onClickLogIn(ActionEvent event) throws IOException {
+		QuerysSelect qs = new QuerysSelect();
+		int type = 0;
+		try {
+			type = qs.checkSecurityLevel(user.getText(), password.getText());
+			switch (type) {
+				case 1: {
+					String[] data = qs.selectUser(user.getText(), password.getText());
+					Main.patient = qs.selectPatient(data);
+					if (Main.patient.getUsername().equals(user.getText())
+							&& Main.patient.getPassword().equals(password.getText())) {
+						Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+						Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+						window.setResizable(false);
+						Scene scene = new Scene(root);
+						window.setScene(scene);
+						window.show();
+					}
+					break;
+				}
+				case 2 : {
+					break;
+				}
+				case 3 : {
+					String[] data = qs.selectUser(user.getText(), password.getText());
+					if(data[0].equals(user.getText()) && (data[1].equals(password.getText()))) {
+						Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+						BorderPane root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
+						window.setResizable(true);
+						Scene scene = new Scene(root);
+						window.setScene(scene);
+						window.show();
+					}
+					break;
+				}
+				
+				default : {
+					Alert alert = new Alert(AlertType.WARNING);
+					alert.setTitle("Credentials information");
+					alert.setTitle("Information");
+					alert.setContentText("Wrong credentials");                                                  
+					alert.showAndWait();
+					user.requestFocus();
+					break;
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-    	
-    	if(Main.patient.getUsername().equals(user.getText()) && Main.patient.getPassword().equals(password.getText())) {
-    		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
-        	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        	window.setResizable(false);
-        	Scene scene = new Scene(root);
-        	window.setScene(scene);
-        	window.show();
-    	}
-    }
-
+	}
+    
     @FXML
     void onClickSignUp(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("SignUpPatient.fxml"));
@@ -101,5 +134,6 @@ public class ControllerMainView {
     		window.show();
     	}
     }
+    
 }
 
