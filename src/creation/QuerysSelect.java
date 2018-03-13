@@ -59,11 +59,7 @@ public class QuerysSelect {
 			patient.setMobilePhone(set.getInt("mobilephone"));
 			patient.setHousePhone(set.getInt("homephone"));
 			patient.setDob(set.getDate("dob"));
-			if(set.getString("gender").equals("Male")) {
-				patient.setGender(GENDER.MALE);
-			}else {
-				patient.setGender(GENDER.FEMALE);
-			}
+			patient.setGender(Patient.GENDER.valueOf(set.getString("gender")));
 			patient.setWeight(set.getFloat("weight"));
 			patient.setHeight(set.getFloat("height"));
 			patient.setUsername(set.getString("username"));
@@ -91,73 +87,9 @@ public class QuerysSelect {
 			doctor.setNIF(set.getString("nif"));
 			doctor.setMobilePhone(set.getInt("mobilephone"));
 			doctor.setDob(set.getDate("dob"));
-			switch(doctor.getSpeciality()){
-			case ALLERGY_IMMUNOLLOGY:
-				doctor.setSpeciality(SPECIALITY.ALLERGY_IMMUNOLLOGY);
-				break;
-			case CARDIOLOGY:
-				doctor.setSpeciality(SPECIALITY.CARDIOLOGY);
-				break;
-			case CLINICAL_NEUROPHISIOLOGY:
-				doctor.setSpeciality(SPECIALITY.CLINICAL_NEUROPHISIOLOGY);
-				break;
-			case ENDOCRINOLOGY:
-				doctor.setSpeciality(SPECIALITY.ENDOCRINOLOGY);
-				break;
-			case GENERAL_PATHOLOGY:
-				doctor.setSpeciality(SPECIALITY.GENERAL_PATHOLOGY);
-				break;
-			case GENERAL_PRACTICE:
-				doctor.setSpeciality(SPECIALITY.GENERAL_PRACTICE);
-				break;
-			case GENERAL_SURGERY:
-				doctor.setSpeciality(SPECIALITY.GENERAL_SURGERY);
-				break;
-			case INTERNAL_MEDICINE:
-				doctor.setSpeciality(SPECIALITY.INTERNAL_MEDICINE);
-				break;
-			case NEONATOLOGY:
-				doctor.setSpeciality(SPECIALITY.NEONATOLOGY);
-				break;
-			case NEPHROLOGY:doctor.setSpeciality(SPECIALITY.NEPHROLOGY);
-				break;
-			case NEUROLOGY:
-				doctor.setSpeciality(SPECIALITY.NEUROLOGY);
-				break;
-			case OPHTHALMOLOGY:
-				doctor.setSpeciality(SPECIALITY.OPHTHALMOLOGY);
-				break;
-			case ORTHOPAEDICS:
-				doctor.setSpeciality(SPECIALITY.ORTHOPAEDICS);
-				break;
-			case PAEDIATRICS:
-				doctor.setSpeciality(SPECIALITY.PAEDIATRICS);
-				break;
-			case PHYSICAL_MEDICINE_REHABILITATION:
-				doctor.setSpeciality(SPECIALITY.PHYSICAL_MEDICINE_REHABILITATION);
-				break;
-			case PSYCHIATRY:
-				doctor.setSpeciality(SPECIALITY.PSYCHIATRY);
-				break;
-			case PULMONOLOGY:
-				doctor.setSpeciality(SPECIALITY.PULMONOLOGY);
-				break;
-			case RADIOLOGY:
-				doctor.setSpeciality(SPECIALITY.RADIOLOGY);
-				break;
-			case UROLOGY:
-				doctor.setSpeciality(SPECIALITY.UROLOGY);
-				break;
-			default:
-				break;
+			doctor.setSpeciality(Doctor.SPECIALITY.valueOf(set.getString("speciality")));
 			
-			}
-			
-			if(set.getString("gender").equals("Male")) {
-				doctor.setGender(GENDER.MALE);
-			}else {
-				doctor.setGender(GENDER.FEMALE);
-			}
+			doctor.setGender(Doctor.GENDER.valueOf(set.getString("gender")));
 			
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
