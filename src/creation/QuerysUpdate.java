@@ -3,6 +3,8 @@ package creation;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import com.sun.jndi.cosnaming.IiopUrl.Address;
+
 import graphicInterface.Main;
 import pojos.Illness;
 import pojos.Illness.typeDisease;
@@ -15,10 +17,10 @@ public class QuerysUpdate {
 		String query;
 
 		query = "UPDATE illness"
-				+ "SET  name =?"
-				+ "SET  description= ?"
-				+ "SET  type= ? "
-				+ "SET  date= ?"
+				+ "SET  name =?,"
+				+ "SET  description= ?,"
+				+ "SET  type= ?,"
+				+ "SET  date= ?,"
 				+ "WHERE id =?";
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -42,6 +44,10 @@ public class QuerysUpdate {
 		st.close();
 	
 	}	
+	
+	public void addressDoctorAssigment(Address address) {}
+	
+	
 
 
 }
