@@ -1,7 +1,11 @@
 package graphicInterface;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 
+import creation.QuerysInsert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,88 +19,113 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import pojos.*;
+import pojos.Person.GENDER;
 
 public class ControllerCreateDoctor {
 
-    @FXML
-    private MenuItem home;
-    
-    @FXML
-    private MenuBar bar;
-    
-    @FXML
-    private MenuItem myProfile;
+	@FXML
+	private MenuBar bar;
 
-    @FXML
-    private MenuItem signOff;
+	@FXML
+	private MenuItem home;
 
-    @FXML
-    private Button create;
+	@FXML
+	private MenuItem myProfile;
 
-    @FXML
-    private Button browse;
+	@FXML
+	private MenuItem signOff;
 
-    @FXML
-    private Button takePhoto;
+	@FXML
+	private Button create;
 
-    @FXML
-    private ComboBox<?> gender;
+	@FXML
+	private Button browse;
 
-    @FXML
-    private TextField user;
+	@FXML
+	private Button takePhoto;
 
-    @FXML
-    private TextField dni;
+	@FXML
+	private ComboBox<?> gender;
 
-    @FXML
-    private TextField surname;
+	@FXML
+	private TextField name;
 
-    @FXML
-    private TextField email;
+	@FXML
+	private TextField dni;
 
-    @FXML
-    private TextField mPhone;
+	@FXML
+	private TextField surname;
 
-    @FXML
-    private TextField hPhone;
+	@FXML
+	private TextField email;
 
-    @FXML
-    private DatePicker dBirth;
+	@FXML
+	private TextField mPhone;
 
-    @FXML
-    private ComboBox<?> nick;
+	@FXML
+	private TextField hPhone;
 
-    @FXML
-    private ComboBox<?> speciality;
+	@FXML
+	private DatePicker dBirth;
 
-    @FXML
-    private TextField city;
+	@FXML
+	private ComboBox<?> nick;
 
-    @FXML
-    private TextField street;
+	@FXML
+	private ComboBox<?> speciality;
 
-    @FXML
-    private TextField houseNumber;
+	@FXML
+	private TextField city;
 
-    @FXML
-    private TextField pCode;
+	@FXML
+	private TextField street;
 
-    @FXML
-    private PasswordField password;
+	@FXML
+	private TextField houseNumber;
 
-    @FXML
-    void onClickBrowse(ActionEvent event) {
+	@FXML
+	private TextField pCode;
 
-    }
+	@FXML
+	private TextField user;
 
-    @FXML
-    void onClickCreate(ActionEvent event) {
+	@FXML
+	void onClickBrowse(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void onClickHomePage(ActionEvent event) {
-    	Parent root = null;
+	@FXML
+	void onClickCreate(ActionEvent event) {
+		Address address = new Address();
+		Doctor doctor = new Doctor();
+		QuerysInsert query = new QuerysInsert();
+		Date date = null;
+		GENDER gender = null;
+
+		address.setCity(city.getText());
+		address.setStreet(street.getText());
+		address.setHouseNumber(Integer.parseInt(houseNumber.getText()));
+		address.setPostalCode(Integer.parseInt(pCode.getText()));
+
+		try {
+			query.insertAddress(address);
+		} catch (SQLException ex) {
+			System.out.println(ex.getMessage());
+		}
+
+		doctor.setName(name.getText());
+		doctor.setSurname(surname.getText());
+		doctor.setNIF(dni.getText());
+		LocalDate ld = dBirth.getValue();
+		date.valueOf(ld);
+		doctor.setDob(date);
+		
+	}
+
+	@FXML
+	void onClickHomePage(ActionEvent event) {
+		Parent root = null;
 		try {
 			root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
 			Scene scene = bar.getScene();
@@ -107,11 +136,11 @@ public class ControllerCreateDoctor {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-    }
+	}
 
-    @FXML
-    void onClickMyProfile(ActionEvent event) {
-    	Parent root;
+	@FXML
+	void onClickMyProfile(ActionEvent event) {
+		Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("EditAdminAccount.fxml"));
 			Scene scene = bar.getScene();
@@ -122,11 +151,11 @@ public class ControllerCreateDoctor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void onClickSignOff(ActionEvent event) {
-    	Parent root;
+	@FXML
+	void onClickSignOff(ActionEvent event) {
+		Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
 			Scene scene = bar.getScene();
@@ -137,10 +166,10 @@ public class ControllerCreateDoctor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
 
-    @FXML
-    void onClickTPhoto(ActionEvent event) {
+	@FXML
+	void onClickTPhoto(ActionEvent event) {
 
-    }
+	}
 }
