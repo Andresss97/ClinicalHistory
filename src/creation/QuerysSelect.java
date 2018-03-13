@@ -9,6 +9,8 @@ import java.util.List;
 import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import pojos.Doctor;
+import pojos.Doctor.SPECIALITY;
 import pojos.Patient;
 import pojos.Person.GENDER;
 
@@ -56,6 +58,7 @@ public class QuerysSelect {
 			patient.setNIF(set.getString("nif"));
 			patient.setMobilePhone(set.getInt("mobilephone"));
 			patient.setHousePhone(set.getInt("homephone"));
+			patient.setDob(set.getDate("dob"));
 			if(set.getString("gender").equals("Male")) {
 				patient.setGender(GENDER.MALE);
 			}else {
@@ -65,12 +68,106 @@ public class QuerysSelect {
 			patient.setHeight(set.getFloat("height"));
 			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
+			patient.setPhoto(set.getBytes("photo"));
 		}
 		
 		st.close();
 		set.close();
 		
 		return patient;
+	}
+	public Doctor selectDoctor(String[] data) throws SQLException {
+		Doctor doctor = null;
+		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		ResultSet set = st.executeQuery();
+		while(set.next()) {
+			doctor = new Doctor();
+			
+			doctor.setName(set.getString("Name"));
+			doctor.setSurname(set.getString("Surname"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			doctor.setDob(set.getDate("dob"));
+			switch(doctor.getSpeciality()){
+			case ALLERGY_IMMUNOLLOGY:
+				doctor.setSpeciality(SPECIALITY.ALLERGY_IMMUNOLLOGY);
+				break;
+			case CARDIOLOGY:
+				doctor.setSpeciality(SPECIALITY.CARDIOLOGY);
+				break;
+			case CLINICAL_NEUROPHISIOLOGY:
+				doctor.setSpeciality(SPECIALITY.CLINICAL_NEUROPHISIOLOGY);
+				break;
+			case ENDOCRINOLOGY:
+				doctor.setSpeciality(SPECIALITY.ENDOCRINOLOGY);
+				break;
+			case GENERAL_PATHOLOGY:
+				doctor.setSpeciality(SPECIALITY.GENERAL_PATHOLOGY);
+				break;
+			case GENERAL_PRACTICE:
+				doctor.setSpeciality(SPECIALITY.GENERAL_PRACTICE);
+				break;
+			case GENERAL_SURGERY:
+				doctor.setSpeciality(SPECIALITY.GENERAL_SURGERY);
+				break;
+			case INTERNAL_MEDICINE:
+				doctor.setSpeciality(SPECIALITY.INTERNAL_MEDICINE);
+				break;
+			case NEONATOLOGY:
+				doctor.setSpeciality(SPECIALITY.NEONATOLOGY);
+				break;
+			case NEPHROLOGY:doctor.setSpeciality(SPECIALITY.NEPHROLOGY);
+				break;
+			case NEUROLOGY:
+				doctor.setSpeciality(SPECIALITY.NEUROLOGY);
+				break;
+			case OPHTHALMOLOGY:
+				doctor.setSpeciality(SPECIALITY.OPHTHALMOLOGY);
+				break;
+			case ORTHOPAEDICS:
+				doctor.setSpeciality(SPECIALITY.ORTHOPAEDICS);
+				break;
+			case PAEDIATRICS:
+				doctor.setSpeciality(SPECIALITY.PAEDIATRICS);
+				break;
+			case PHYSICAL_MEDICINE_REHABILITATION:
+				doctor.setSpeciality(SPECIALITY.PHYSICAL_MEDICINE_REHABILITATION);
+				break;
+			case PSYCHIATRY:
+				doctor.setSpeciality(SPECIALITY.PSYCHIATRY);
+				break;
+			case PULMONOLOGY:
+				doctor.setSpeciality(SPECIALITY.PULMONOLOGY);
+				break;
+			case RADIOLOGY:
+				doctor.setSpeciality(SPECIALITY.RADIOLOGY);
+				break;
+			case UROLOGY:
+				doctor.setSpeciality(SPECIALITY.UROLOGY);
+				break;
+			default:
+				break;
+			
+			}
+			
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender(GENDER.MALE);
+			}else {
+				doctor.setGender(GENDER.FEMALE);
+			}
+			
+			doctor.setUsername(set.getString("username"));
+			doctor.setPassword(set.getString("password"));
+			doctor.setPhoto(set.getBytes("photo"));
+		}
+		
+		st.close();
+		set.close();
+		
+		return doctor;
 	}
 	
 	@SuppressWarnings("rawtypes")
