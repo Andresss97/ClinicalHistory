@@ -16,7 +16,7 @@ import pojos.Illness.typeDisease;
 public class QuerysInsert {
 	
 	private Conector conn = Main.conector;
-	
+	//change the Integer you are changing
 	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
 		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,photo,idaddress) values (?,?,?,?,?,?,?,?,?,?,?,?)";

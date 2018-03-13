@@ -17,20 +17,28 @@ import pojos.Person.GENDER;
 public class QuerysSelect {
 	private Conector conn = Main.conector;
 	
-	public String[] selectUser(String user, String psw) throws SQLException {
+	public String[] selectUser(String user, String psw) {
 		String[] data = new String[2];
 		String query = "SELECT USERNAME, PASSWORD from mappinglogin where username = '" + user + "' and password = '"
 				+ psw + "'";
 		PreparedStatement st;
-		st = conn.getConnect().prepareStatement(query);
-		ResultSet set = st.executeQuery();
-		while (set.next()) {
-			data[0] = set.getString("username");
-			data[1] = set.getString("password");
-		}
+		try {
+			st = conn.getConnect().prepareStatement(query);
+			ResultSet set = st.executeQuery();
+			while (set.next()) {
+				data[0] = set.getString("username");
+				data[1] = set.getString("password");
+			}
 
-		st.close();
-		set.close();
+			st.close();
+			set.close();
+		} catch (SQLException e) {
+			Alert alert  = new Alert(AlertType.WARNING);
+			alert.setHeaderText("Credentials Information");
+			alert.setContentText("Wrong credentials");
+			alert.setTitle("Credentials information");
+			alert.show();
+		}
 
 		return data;
 	}
@@ -60,6 +68,7 @@ public class QuerysSelect {
 			patient.setHeight(set.getFloat("height"));
 			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
+			patient.setPhoto(set.getBytes("photo"));
 		}
 		
 		st.close();
@@ -189,44 +198,7 @@ public class QuerysSelect {
 			list.add(set.getString("hour"));
 		}
 		
-		st.close();
-		set.close();
-		
 		return list;
 	}
 	
-	public int checkSecurityLevel(String user, String psw) throws SQLException {
-		String query = "SELECT usertype from mappinglogin where username = '" + user + "' and password = '" + psw + "'";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		ResultSet set = st.executeQuery();
-		int sLevel = 0;
-		
-		while(set.next()) {
-			sLevel = set.getInt("usertype");
-		}
-		
-		st.close();
-		set.close();
-		
-		return sLevel;
-	}
-	
-	public ArrayList<Doctor> selectDoctorNSSpeciality(String speciality) throws SQLException {
-		String query = "SELECT name, surname from doctor where speciality = '" + speciality + "'";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		ResultSet set = st.executeQuery();
-		ArrayList<Doctor> list = new ArrayList<>();
-		
-		while(set.next()) {
-			Doctor doctor = new Doctor();
-			doctor.setName(set.getString("name"));
-			doctor.setSurname(set.getString("surname"));
-			list.add(doctor);
-		}
-		
-		st.close();
-		set.close();
-		
-		return list;
-	}
 }
