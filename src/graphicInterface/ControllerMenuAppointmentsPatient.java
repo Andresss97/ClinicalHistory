@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,8 +77,11 @@ public class ControllerMenuAppointmentsPatient implements Initializable{
 		for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
 			list.getItems().add(Main.patient.getAppointments().get(i));
 		}
+		
+		ObservableList list2 = FXCollections.observableArrayList("Date", "Alphabetically");
+		
+		order.setItems(list2);
 	}
-
 }
 
 
