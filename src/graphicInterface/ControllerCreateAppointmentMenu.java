@@ -5,9 +5,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import creation.QuerysInsert;
+import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import pojos.Appointment;
+import pojos.Doctor;
 
 public class ControllerCreateAppointmentMenu implements Initializable {
 	
@@ -83,6 +86,16 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 	
 	@FXML
 	void onClickSpeciality(ActionEvent event) {
+		String speciality = this.speciality.getSelectionModel().getSelectedItem().toString();
+		try {
+			this.setDoctors(speciality);
+		} catch (SQLException e) {
+
+		}
+	}
+	
+	@FXML
+	void onClickDoctor(ActionEvent event) {
 		
 	}
 	
@@ -98,6 +111,17 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 		System.out.println(app);
 		
 		return app;
+	}
+	
+	private void setDoctors(String speciality) throws SQLException {
+		QuerysSelect qs = new QuerysSelect();
+		ArrayList<Doctor> list;
+		ObservableList list2 = FXCollections.observableArrayList();
+		list = qs.selectDoctorNSSpeciality(speciality);
+		
+		list2.addAll(list);
+		
+		doctorApp.setItems(list2);
 	}
 
 	@Override
