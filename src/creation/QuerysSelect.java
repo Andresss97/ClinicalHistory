@@ -200,5 +200,33 @@ public class QuerysSelect {
 		
 		return list;
 	}
-	
+
+	public int checkSecurityLevel(String user, String psw) throws SQLException {
+		String query = "SELECT usertype from mappinglogin where username = '" + user + "' and password = '" + psw + "'";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		int sLevel = 0;
+		while (set.next()) {
+			sLevel = set.getInt("usertype");
+		}
+		st.close();
+		set.close();
+		return sLevel;
+	}
+
+	public ArrayList<Doctor> selectDoctorNSSpeciality(String speciality) throws SQLException {
+		String query = "SELECT name, surname from doctor where speciality = '" + speciality + "'";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<Doctor> list = new ArrayList<>();
+		while (set.next()) {
+			Doctor doctor = new Doctor();
+			doctor.setName(set.getString("name"));
+			doctor.setSurname(set.getString("surname"));
+			list.add(doctor);
+		}
+		st.close();
+		set.close();
+		return list;
+	}
 }

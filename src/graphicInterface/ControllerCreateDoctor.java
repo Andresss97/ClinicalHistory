@@ -134,6 +134,7 @@ public class ControllerCreateDoctor implements Initializable{
 			doctor.setGender(GENDER.FEMALE);
 		}
 		doctor.setMobilePhone(Integer.parseInt(mPhone.getText()));
+		doctor.setEmail(email.getText());
 		doctor.setUsername(user.getText());
 		doctor.setPassword(password.getText());
 		
