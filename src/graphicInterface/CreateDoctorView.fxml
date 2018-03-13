@@ -136,12 +136,11 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <TextField fx:id="user" promptText="Name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <TextField fx:id="name" promptText="Name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                               <Label text="Surname:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <Label text="DNI:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                               <TextField fx:id="dni" promptText="12345678A" GridPane.columnIndex="5" GridPane.rowIndex="2" />
@@ -150,14 +149,10 @@
                               <TextField fx:id="email" prefHeight="25.0" prefWidth="399.0" promptText="you@hotmail.com" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="3" />
                               <Label text="M.Phone:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="mPhone" promptText="612345678" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                              <Label text="H.Phone:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-                              <TextField fx:id="hPhone" promptText="912345678" GridPane.columnIndex="5" GridPane.rowIndex="4" />
                               <Label text="D.Birth:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="dBirth" prefHeight="25.0" prefWidth="406.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Label text="Nick:" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <ComboBox fx:id="nick" prefHeight="25.0" prefWidth="439.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                              <ComboBox fx:id="speciality" prefHeight="25.0" prefWidth="487.0" GridPane.columnIndex="5" GridPane.rowIndex="5" />
-                              <Label text="Speciality:" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="speciality" prefHeight="25.0" prefWidth="487.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+                              <Label text="Speciality:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </content>
