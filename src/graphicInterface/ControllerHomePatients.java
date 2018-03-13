@@ -137,8 +137,4 @@ public class ControllerHomePatients implements Initializable {
 		ObservableList list = FXCollections.observableArrayList("Alphabetically", "Date");
 		orderBy.setItems(list);
 	}
-	
-	public AnchorPane getmContainer() {
-		return mContainer;
-	}
 }

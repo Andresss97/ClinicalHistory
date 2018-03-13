@@ -8,6 +8,7 @@ import pojos.Illness;
 import pojos.Illness.typeDisease;
 
 public class QuerysUpdate {
+
 	private Conector conn = Main.conector;
 	
 	public void updateIllness(Illness illness) throws SQLException {

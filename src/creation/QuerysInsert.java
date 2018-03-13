@@ -155,9 +155,8 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertUser(Doctor doctor, Patient patient, String user, String password) throws SQLException{
-		
-		if(!patient.equals(null)) {
+	public void insertUser1(Doctor doctor, Patient patient) throws SQLException{
+		if(!(patient == null)) {
 			String query;
 			query = "INSERT into mappinglogin (username, password,usertype,email) values (?,?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -169,7 +168,7 @@ public class QuerysInsert {
 			st.executeUpdate();
 			st.close();
 		}
-		else if(!doctor.equals(null)) {
+		else if(!(doctor == null)) {
 			String query2;
 			query2 = "INSERT into mappinglogin (username, password,usertype,email) values (?,?,?,?)";
 			PreparedStatement st = conn.getConnect().prepareStatement(query2);
@@ -181,17 +180,19 @@ public class QuerysInsert {
 			st.executeUpdate();
 			st.close();
 		}
-		else {
-			String query3;
-			query3 = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
-			PreparedStatement st = conn.getConnect().prepareStatement(query3);
-			st.setString(1, user);
-			st.setString(2, password);
-			st.setInt(3, 3);
-			
-			st.executeUpdate();
-			st.close();
-		}
+	}
+	
+	public void insertUser2(String user, String password) throws SQLException {
+		String query;
+		query = "INSERT into mappinglogin (username, password,usertype) values (?,?,?)";
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+
+		st.setString(1, user);
+		st.setString(2, password);
+		st.setInt(3, 3);
+		st.executeUpdate();
+		st.close();
 	}
 	
 	public void insertIllness(Illness illness) throws SQLException {

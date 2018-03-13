@@ -1,14 +1,9 @@
 package pojos;
 
 public class Doctor extends Person {
-<<<<<<< HEAD
 
 	private Integer primarykey;
 
-=======
-	
-	
->>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
 	public enum SPECIALITY {
 		ALLERGY_IMMUNOLLOGY, GENERAL_PATHOLOGY, CARDIOLOGY, CLINICAL_NEUROPHISIOLOGY,
 		ENDOCRINOLOGY, GENERAL_PRACTICE, INTERNAL_MEDICINE, NEPHROLOGY, NEUROLOGY, OPHTHALMOLOGY, 
@@ -29,5 +24,9 @@ public class Doctor extends Person {
 
 	public void setSpeciality(SPECIALITY speciality) {
 		this.speciality = speciality;
+	}
+	
+	public String toString() {
+		return "Dr:" + name + " " + surname;
 	}
 }
