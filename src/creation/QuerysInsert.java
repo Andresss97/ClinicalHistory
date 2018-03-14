@@ -93,7 +93,6 @@ public class QuerysInsert {
 			break;
 		default:
 			break;
-		
 		}
 		
 		st.setInt(6,doctor.getMobilePhone());

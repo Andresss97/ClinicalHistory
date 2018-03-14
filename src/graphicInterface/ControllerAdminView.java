@@ -2,8 +2,11 @@ package graphicInterface;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,19 +15,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import pojos.Doctor;
+import pojos.Patient;
+import pojos.Person;
 
 public class ControllerAdminView implements Initializable{
 
@@ -47,7 +49,7 @@ public class ControllerAdminView implements Initializable{
     private BorderPane cContainer;
 
     @FXML
-    private ListView<?> list;
+    private ListView<Person> list;
 
     @FXML
     private Button modify;
@@ -63,7 +65,11 @@ public class ControllerAdminView implements Initializable{
 
     @FXML
     private ComboBox<?> orderBy;
-
+    
+    private Doctor doctor;
+    
+    private Patient patient;
+    
     @FXML
     void onClickCreate(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("CreateDoctorView.fxml"));
@@ -98,12 +104,37 @@ public class ControllerAdminView implements Initializable{
 
     @FXML
     void onClickModify(ActionEvent event) {
-
-    }
+    	if(list.getSelectionModel().getSelectedItem() instanceof Doctor) {
+    		this.doctor = (Doctor) list.getSelectionModel().getSelectedItem();
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateDoctorsAccount.fxml"));
+    		Parent root = null;
+			try {
+				root = loader.load();
+				ControllerUpdateDoctors controller = loader.<ControllerUpdateDoctors>getController();
+				controller.initComponents(doctor);
+				Scene scene = bar.getScene();
+				Stage window = (Stage) scene.getWindow();
+				Scene scene2 = new Scene(root);
+				window.setScene(scene2);
+				window.show();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+    	}
+    	else {
+    		patient = (Patient) list.getSelectionModel().getSelectedItem();
+    		System.out.println("Paciente");
+    	}
+     }
 
     @FXML
     void onClickOrderBy(ActionEvent event) {
+    	if(orderBy.getSelectionModel().getSelectedItem().equals("Alphabetically")) {
 
+    	}
+    	else {
+    		
+    	}
     }
 
     @FXML
@@ -120,10 +151,24 @@ public class ControllerAdminView implements Initializable{
 
     }
     
+    public Doctor getDoctor() {
+    	return doctor;
+    }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("Alphabetically", "User type");
+		QuerysSelect qs = new QuerysSelect();
 		orderBy.setItems(list);
+		
+		ArrayList<Person> accounts = new ArrayList<>();
+		try {
+			accounts.addAll(qs.selectDoctorsAccount());
+			accounts.addAll(qs.selectPatientsAccounts());
+			this.list.getItems().addAll(accounts);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
 

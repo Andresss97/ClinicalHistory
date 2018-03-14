@@ -124,7 +124,7 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setSurname(surname.getText());
 		doctor.setNIF(dni.getText());
 		LocalDate ld = dBirth.getValue();
-		date.valueOf(ld);
+		date = date.valueOf(ld);
 		doctor.setDob(date);
 		doctor.setSpeciality(this.getSpeciality());
 		if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
@@ -140,6 +140,7 @@ public class ControllerCreateDoctor implements Initializable{
 		
 		try {
 			query.insertDoctor(doctor, 0);
+			query.insertUser1(doctor, null);
 		}
 		catch(SQLException ex) {
 			System.out.println(ex.getMessage());
