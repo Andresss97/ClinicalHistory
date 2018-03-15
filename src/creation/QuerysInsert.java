@@ -19,7 +19,7 @@ public class QuerysInsert {
 	//change the Integer you are changing
 	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
-		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,photo,idaddress) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,idaddress) values (?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
@@ -93,7 +93,6 @@ public class QuerysInsert {
 			break;
 		default:
 			break;
-		
 		}
 		
 		st.setInt(6,doctor.getMobilePhone());
@@ -101,11 +100,11 @@ public class QuerysInsert {
 		st.setString(8, doctor.getSurname());
 		st.setString(9,doctor.getNIF());
 		st.setDate(10, doctor.getDob());
-		Blob blob = new SerialBlob(doctor.getPhoto());
-		st.setBlob(11, blob);
-		st.setInt(12, iDAddress);
+		//Blob blob = new SerialBlob(doctor.getPhoto());
+		//st.setBlob(11, blob);
+		st.setInt(11, iDAddress);
 		
-		st.executeQuery();
+		st.executeUpdate();
 		st.close();
 	}
 	

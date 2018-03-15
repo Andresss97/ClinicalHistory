@@ -107,5 +107,8 @@ public class Patient extends Person{
 		this.cHistory= cHistory;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Patient: "+ name + " " + surname;
+	}
 }

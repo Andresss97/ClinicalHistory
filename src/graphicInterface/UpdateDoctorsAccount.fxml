@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerCreateDoctor">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctors">
    <top>
       <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
         <menus>
@@ -67,7 +67,7 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
          <top>
-            <Label text="Create Doctor account" BorderPane.alignment="CENTER">
+            <Label text="Update Doctor account" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -79,7 +79,7 @@
          <bottom>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="create" mnemonicParsing="false" onAction="#onClickCreate" text="Create account">
+                  <Button fx:id="update" mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="25.0" prefWidth="121.0" text="Update account">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -93,7 +93,7 @@
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="154.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="154.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/UserProfile.png" />
                      </image>
