@@ -2,6 +2,7 @@ package creation;
 
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -110,7 +111,7 @@ public class QuerysInsert {
 	
 	public void insertAddress(Address address) throws SQLException {
 		String query;
-
+		ResultSet set = null;
 		query = "INSERT into address (city,street,cp,housenumber) values (?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
@@ -120,6 +121,7 @@ public class QuerysInsert {
 		st.setInt(4, address.getHouseNumber());
 		
 		st.executeUpdate();
+
 		st.close();
 	}
 	

@@ -1,5 +1,6 @@
 package graphicInterface;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -10,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -18,6 +21,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import pojos.Doctor;
 import pojos.Doctor.SPECIALITY;
 
@@ -97,8 +101,13 @@ public class ControllerUpdateDoctors implements Initializable{
     }
 
     @FXML
-    void onClickHomePage(ActionEvent event) {
-
+    void onClickHomePage(ActionEvent event) throws IOException {
+    	Parent root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
+		Scene scene = bar.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	Scene scene2 = new Scene(root);
+    	window.setScene(scene2);
+    	window.show();
     }
 
     @FXML
@@ -107,8 +116,12 @@ public class ControllerUpdateDoctors implements Initializable{
     }
 
     @FXML
-    void onClickSignOff(ActionEvent event) {
-
+    void onClickSignOff(ActionEvent event) throws IOException {
+    	Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
+    	Scene scene = bar.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	window.setScene(new Scene(root));
+    	window.show();
     }
 
     @FXML

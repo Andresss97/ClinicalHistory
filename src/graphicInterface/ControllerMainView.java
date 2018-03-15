@@ -119,7 +119,7 @@ public class ControllerMainView {
     	modal.setTitle("Babylon Studio - Create profile");
     	modal.setScene(new Scene(root));
     	modal.initOwner(window);
-    	modal.setResizable(false);
+    	modal.setResizable(true);
     	window.hide();
     	modal.initModality(Modality.APPLICATION_MODAL);
     	modal.showAndWait();
