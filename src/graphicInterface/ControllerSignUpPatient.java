@@ -11,10 +11,8 @@ import java.util.ResourceBundle;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
-import creation.Conector;
 import creation.QuerysInsert;
 import creation.QuerysSelect;
 import javafx.collections.FXCollections;
@@ -260,21 +258,27 @@ public class ControllerSignUpPatient implements Initializable{
     
     private boolean checkPersonalData() {
     	if(name.getText().isEmpty()) {
+    		name.requestFocus();
     		return false;
     	}
     	else if(surname.getText().isEmpty()) {
+    		surname.requestFocus();
     		return false;
     	}
     	else if(nif.getText().isEmpty()) {
+    		nif.requestFocus();
     		return false;
     	}
     	else if(mail.getText().isEmpty()) {
+    		mail.requestFocus();
     		return false;
     	}
     	else if(gender == null ) {
+    		gender.requestFocus();
     		return false;
     	}
     	else if(dBirth == null) {
+    		dBirth.requestFocus();
     		return false;
     	}
     	else {
@@ -284,15 +288,19 @@ public class ControllerSignUpPatient implements Initializable{
     
     private boolean checkAddressData() {
     	if(city.getText().isEmpty()) {
+    		city.requestFocus();
     		return false;
     	}
     	else if(street.getText().isEmpty()) {
+    		street.requestFocus();
     		return false;
     	}
     	else if(hNumber.getText().isEmpty()) {
+    		hNumber.requestFocus();
     		return false;
     	}
     	else if(cp.getText().isEmpty()) {
+    		cp.requestFocus();
     		return false;
     	}
     	else {
@@ -302,8 +310,10 @@ public class ControllerSignUpPatient implements Initializable{
     
 	private boolean checkCredentials() {
 		if (user.getText().isEmpty()) {
+			user.requestFocus();
 			return false;
 		} else if (password.getText().isEmpty()) {
+			password.requestFocus();
 			return false;
 		} else {
 			return true;
@@ -316,5 +326,4 @@ public class ControllerSignUpPatient implements Initializable{
 		ObservableList list = FXCollections.observableArrayList("Male", "Female");
 		gender.setItems(list);
 	}
-
 }
