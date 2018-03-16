@@ -51,7 +51,11 @@ public class QuerysSelect {
 			patient.setMobilePhone(set.getInt("mobilephone"));
 			patient.setHousePhone(set.getInt("homephone"));
 			patient.setDob(set.getDate("dob"));
-			patient.setGender(Patient.GENDER.valueOf(set.getString("gender")));
+			if(set.getString("gender").equals("Male")) {
+				patient.setGender(GENDER.MALE);
+			}else {
+				patient.setGender(GENDER.FEMALE);
+			}
 			patient.setWeight(set.getFloat("weight"));
 			patient.setHeight(set.getFloat("height"));
 			patient.setUsername(set.getString("username"));
@@ -79,14 +83,6 @@ public class QuerysSelect {
 			doctor.setNIF(set.getString("nif"));
 			doctor.setMobilePhone(set.getInt("mobilephone"));
 			doctor.setDob(set.getDate("dob"));
-<<<<<<< HEAD
-
-			doctor.setSpeciality(Doctor.SPECIALITY.valueOf(set.getString("speciality")));
-
-			
-
-			doctor.setGender(Doctor.GENDER.valueOf(set.getString("gender")));
-=======
 			switch(doctor.getSpeciality()){
 			case ALLERGY_IMMUNOLLOGY:
 				doctor.setSpeciality(SPECIALITY.ALLERGY_IMMUNOLLOGY);
@@ -147,6 +143,7 @@ public class QuerysSelect {
 				break;
 			default:
 				break;
+			
 			}
 			
 			if(set.getString("gender").equals("Male")) {
@@ -154,7 +151,6 @@ public class QuerysSelect {
 			}else {
 				doctor.setGender(GENDER.FEMALE);
 			}
->>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory.git
 			
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));

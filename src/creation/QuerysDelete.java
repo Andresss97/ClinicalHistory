@@ -3,10 +3,7 @@ package creation;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-<<<<<<< HEAD
 
-=======
->>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory.git
 import graphicInterface.Main;
 import pojos.*;
 
@@ -16,6 +13,58 @@ public class QuerysDelete {
 	
 	public QuerysDelete() {
 		this.con = Main.conector;
+	}	
+
+	public void deleteAppointment (Appointment appointment) {
+		String query;
+		query = "DELETE FROM appointment WHERE id = ?";
+		PreparedStatement st;
+		try {
+			st = con.getConnect().prepareStatement(query);
+			st.setInt(1, appointment.getID());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
+		String query;
+		query = "DELETE FROM clinicalHistory WHERE id = ?";
+	    PreparedStatement st;
+	    try {
+		st= con.getConnect().prepareStatement(query);
+		st.setInt(1, clinicalHistory.getID());
+	}
+	    catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+	}
+	
+	private void deleteSurgery (Surgeries surgery) {
+		String query;
+		query = "DELETE FROM surgeries WHERE id = ?";
+		PreparedStatement st;
+		try {
+			st = con.getConnect().prepareStatement(query);
+			st.setInt(1, surgery.getID());
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteAllergy (Allergies allergy) {
+		String query;
+		query = "DELETE FROM allergies WHERE id = ?";
+		PreparedStatement st;
+		try {
+			st = con.getConnect().prepareStatement(query);
+			st.setInt(1, allergy.getID());
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteDoctorAccount(Doctor doctor) throws SQLException {
