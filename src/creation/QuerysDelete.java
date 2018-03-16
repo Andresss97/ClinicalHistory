@@ -93,6 +93,22 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	public void deleteVaccine(Vaccine vaccine) throws SQLException {
+		String query = "DELETE from vaccine where id = " + vaccine.getIDvaccine();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	public void deleteTreatment(Treatment treatment) throws SQLException {
+		String query = "DELETE from treatment where id = " + treatment.getIDtreatment();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
 	
 	
 }
