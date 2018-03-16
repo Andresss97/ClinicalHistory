@@ -2,10 +2,6 @@ package creation;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
-import graphicInterface.Main;
-import pojos.*;
-
 import graphicInterface.Main;
 import pojos.*;
 public class QuerysDelete {
