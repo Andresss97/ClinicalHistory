@@ -3,7 +3,10 @@ package creation;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+<<<<<<< HEAD
 
+=======
+>>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory.git
 import graphicInterface.Main;
 import pojos.*;
 
