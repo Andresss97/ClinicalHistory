@@ -4,8 +4,6 @@ import java.sql.PreparedStatement;
 import pojos.*;
 import java.sql.SQLException;
 
-import com.sun.jndi.cosnaming.IiopUrl.Address;
-
 import graphicInterface.Main;
 import pojos.Illness.typeDisease;
 
@@ -45,10 +43,10 @@ public class QuerysUpdate {
 	
 	}	
 	
-	public void addressDoctorAssigment(Address address, Doctor doctor) {
+	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
 
-		query = "UPDATE doctor"
+		query = "UPDATE doctor "
 				+ "SET  addressID =?,"
 				+ "WHERE id=?";
 			
