@@ -62,6 +62,63 @@ public class QuerysUpdate {
 		
 	}
 	
+	private void updateAppointment (Appointment appointment) throws SQLException {
+		String query;
+		query = "UPDATE appointment " 
+				+ "SET date = ? "
+				+ "SET hour = ? "
+				+ "SET reason = ? "
+				+ "SET iddoctor = ? "
+				+ "WHERE id = ?";
+		
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setDate(1, appointment.getDate());
+		st.setString(2, appointment.getHour());
+		st.setString(3, appointment.getReason());
+		st.setInt(4, appointment.getDoctor().getID());
+		st.setInt(5, appointment.getID());
+		
+	    st.executeUpdate();
+	    st.close();
+		
+	}
+	
+	private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
+		String query;
+		query = "UPDATE clinicalHistory "
+				+ " SET addictions = ? "
+				+ " SET observations = ? "
+				+ " SET lastModication = ? "
+				+ " WHERE id = ?";
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setString(1, clinicalHistory.getAddictions());
+		st.setString(2, clinicalHistory.getObservations());
+		st.setDate(3, clinicalHistory.getLastModification());
+		st.setInt(4, clinicalHistory.getID());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	private void updateAllergy (Allergies allergy) throws SQLException {
+		String query;
+		query = "UPDATE allergy "
+				+ " SET group = ? "
+				+ " SET observations = ? "
+				+ " SET idtreatment = ? "
+				+ " WHERE id = ?";
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setString(1, allergy.getGroup());
+		st.setString(2, allergy.getObservations());
+		st.setInt(3, allergy.getTreatment().getIDtreatment());
+		st.setInt(4, allergy.getID());
+		
+		st.executeUpdate();
+		st.close();
+	}
 	
 
 
