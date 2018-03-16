@@ -44,4 +44,17 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	
+	
+	public void deleteIllness(Illness illness)throws SQLException {
+		String query ="DELETE FROM illness WHERE id = ?";
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.setInt(1, illness.getIDdisease());
+		st.executeQuery();
+		st.close();
+		
+	}
+	
+	
 }

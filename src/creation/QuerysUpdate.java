@@ -14,7 +14,7 @@ public class QuerysUpdate {
 	public void updateIllness(Illness illness) throws SQLException {
 		String query;
 
-		query = "UPDATE illness"
+		query = "UPDATE illnesses"
 				+ "SET  name =?,"
 				+ "SET  description= ?,"
 				+ "SET  type= ?,"
@@ -43,6 +43,7 @@ public class QuerysUpdate {
 	
 	}	
 	
+	//*Does not make sense since Address id cant be null however it works for other updates that can be null
 	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
 
@@ -61,6 +62,8 @@ public class QuerysUpdate {
 		
 		
 	}
+	
+	
 	
 	
 
