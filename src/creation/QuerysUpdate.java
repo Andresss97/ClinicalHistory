@@ -1,12 +1,12 @@
 package creation;
 
 import java.sql.PreparedStatement;
+import pojos.*;
 import java.sql.SQLException;
 
 import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 import graphicInterface.Main;
-import pojos.Illness;
 import pojos.Illness.typeDisease;
 
 public class QuerysUpdate {
@@ -45,7 +45,24 @@ public class QuerysUpdate {
 	
 	}	
 	
-	public void addressDoctorAssigment(Address address) {}
+	public void addressDoctorAssigment(Address address, Doctor doctor) {
+		String query;
+
+		query = "UPDATE doctor"
+				+ "SET  addressID =?,"
+				+ "WHERE id=?";
+			
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, address.getID());
+		st.setInt(2, doctor.getID());
+		
+		
+		st.executeUpdate();
+		st.close();
+		
+		
+	}
 	
 	
 
