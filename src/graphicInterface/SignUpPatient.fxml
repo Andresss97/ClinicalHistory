@@ -32,23 +32,24 @@
       </Label>
    </top>
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="image" fitHeight="150.0" fitWidth="174.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="NEVER">
                <image>
                   <Image url="@../images/UserProfile.png" />
                </image>
             </ImageView>
-            <HBox>
+            <HBox prefHeight="25.0" prefWidth="308.0">
                <children>
                   <Button fx:id="browse" mnemonicParsing="false" onAction="#onBrowseClick" prefHeight="25.0" prefWidth="80.0" text="Browse" />
+                  <Region HBox.hgrow="ALWAYS" />
                   <Button fx:id="takePhoto" mnemonicParsing="false" onAction="#onTakePhotoClick" prefHeight="25.0" prefWidth="84.0" text="Take photo" />
                </children>
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
             </HBox>
-            <ComboBox fx:id="gender" prefWidth="150.0" promptText="Gender">
+            <ComboBox fx:id="gender" prefHeight="25.0" prefWidth="371.0" promptText="Gender">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>

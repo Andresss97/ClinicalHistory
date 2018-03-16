@@ -160,12 +160,38 @@ public class ControllerSignUpPatient implements Initializable{
 
 	@FXML
     void onCreateClick(ActionEvent event) {
+		if(checkPersonalData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every personal data must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkAddressData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every data regarding your address must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkCredentials() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Credentials are missing.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
     	QuerysSelect query2 = new QuerysSelect();
     	Date date = null;
-    	Image imageTaken;
     	GENDER gender = null;
     	int ad = 0;
     	
@@ -203,7 +229,7 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setHeight(Float.parseFloat(height.getText()));
     	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
-    	imageTaken = image.getImage();
+
     	//patient.setPhoto(image.getD);
 
     	try {
@@ -232,17 +258,57 @@ public class ControllerSignUpPatient implements Initializable{
     	p.takePhoto();
     }
     
-    private boolean checkNameSurname() {
-		if(name.getText().isEmpty()) {
+    private boolean checkPersonalData() {
+    	if(name.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(surname.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(nif.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(mail.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(gender == null ) {
+    		return false;
+    	}
+    	else if(dBirth == null) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+    private boolean checkAddressData() {
+    	if(city.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(street.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(hNumber.getText().isEmpty()) {
+    		return false;
+    	}
+    	else if(cp.getText().isEmpty()) {
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+	private boolean checkCredentials() {
+		if (user.getText().isEmpty()) {
 			return false;
-		}
-		else if(surname.getText().isEmpty()){
+		} else if (password.getText().isEmpty()) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
-    }
+	}
     
 	@SuppressWarnings("unchecked")
 	@Override
