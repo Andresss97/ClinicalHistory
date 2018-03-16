@@ -106,7 +106,6 @@ public class QuerysDelete {
 	}
 	
 	
-	}
 	public void deleteVaccine(Vaccine vaccine) throws SQLException {
 		String query = "DELETE from vaccine where id = " + vaccine.getIDvaccine();
 		PreparedStatement st = con.getConnect().prepareStatement(query);
