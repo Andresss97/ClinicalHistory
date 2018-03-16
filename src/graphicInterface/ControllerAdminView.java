@@ -90,7 +90,7 @@ public class ControllerAdminView implements Initializable{
     @FXML
     void onClickDelete(ActionEvent event) throws IOException {
     	QuerysDelete qs = new QuerysDelete();
-    	
+    	int id = 0;
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setContentText("Are you sure you want to delete this account?");
     	alert.setTitle("Information");
@@ -102,6 +102,8 @@ public class ControllerAdminView implements Initializable{
     			Doctor doctor = (Doctor) list.getSelectionModel().getSelectedItem();
     			try {
 					qs.deleteDoctorAccount(doctor);
+					id = doctor.getID() + 1;
+					qs.deleteUser(id);
 					this.accounts.remove(doctor);
 			    	this.refreshList();
 				} catch (SQLException e) {
@@ -111,6 +113,8 @@ public class ControllerAdminView implements Initializable{
     		else {
     			Patient patient = (Patient) list.getSelectionModel().getSelectedItem();
     			try {
+    				id = patient.getID() + 1;
+					qs.deleteUser(id);
 					qs.deletePatientAccount(patient);
 					this.accounts.remove(patient);
 			    	this.refreshList();

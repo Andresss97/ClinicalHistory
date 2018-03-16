@@ -204,14 +204,19 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
     	
-    	Main.patient = patient;
+    	
     	
     	try {
 			query.insertPatient(patient, ad);
+			ad = query2.selectLastId("patient");
 			query.insertUser1(null, patient);
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
+    	
+    	patient.setID(ad);
+    	Main.patient = patient;
+    	
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setContentText("Account succesfully created");
     	alert.setHeaderText("Account information");

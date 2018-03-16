@@ -35,4 +35,13 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	
+	public void deleteUser(int id) throws SQLException {
+		String query = "DELETE from mappinglogin where id = " + id;
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
 }
