@@ -1,10 +1,10 @@
 package creation;
 
 import java.sql.PreparedStatement;
+import pojos.*;
 import java.sql.SQLException;
 
 import graphicInterface.Main;
-import pojos.Illness;
 import pojos.Illness.typeDisease;
 
 public class QuerysUpdate {
@@ -15,10 +15,10 @@ public class QuerysUpdate {
 		String query;
 
 		query = "UPDATE illness"
-				+ "SET  name =?"
-				+ "SET  description= ?"
-				+ "SET  type= ? "
-				+ "SET  date= ?"
+				+ "SET  name =?,"
+				+ "SET  description= ?,"
+				+ "SET  type= ?,"
+				+ "SET  date= ?,"
 				+ "WHERE id =?";
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -42,6 +42,27 @@ public class QuerysUpdate {
 		st.close();
 	
 	}	
+	
+	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
+		String query;
+
+		query = "UPDATE doctor "
+				+ "SET  addressID =?,"
+				+ "WHERE id=?";
+			
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, address.getID());
+		st.setInt(2, doctor.getID());
+		
+		
+		st.executeUpdate();
+		st.close();
+		
+		
+	}
+	
+	
 
 
 }
