@@ -14,7 +14,7 @@ public class QuerysUpdate {
 	public void updateIllness(Illness illness) throws SQLException {
 		String query;
 
-		query = "UPDATE illness"
+		query = "UPDATE illnesses"
 				+ "SET  name =?,"
 				+ "SET  description= ?,"
 				+ "SET  type= ?,"
@@ -43,6 +43,7 @@ public class QuerysUpdate {
 	
 	}	
 	
+	//*Does not make sense since Address id cant be null however it works for other updates that can be null
 	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
 
@@ -61,6 +62,7 @@ public class QuerysUpdate {
 		
 		
 	}
+<<<<<<< HEAD
 	
 	private void updateAppointment (Appointment appointment) throws SQLException {
 		String query;
@@ -120,6 +122,42 @@ public class QuerysUpdate {
 		st.close();
 	}
 	
+=======
+	public void updateTreatment(Treatment treatment, Doctor doctor) throws SQLException {
+		String query;
+>>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
 
+		query = "UPDATE treatment"
+				+ "SET  name =?,"
+				+ "SET  description= ?,"
+				+ "SET  type= ?,"
+				+ "SET  StartDate= ?,"
+				+ "SET  EndDate= ?,"
+				+ "SET  Results= ?,"
+				+ "SET  Doctor= ?,"	
+				+ "WHERE id =?";
+			
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1,treatment.getName());
+		st.setString(2, treatment.getDescrpition());
+		
+		if(treatment.getTreatment().equals("MEDICATION")) {
+			st.setString(3,"MEDICATION");
+		}
+		else {
+			st.setString(3, "REHAB");
+		}
+		st.setDate(4, treatment.getStartDate());
+		st.setDate(5, treatment.getEndDate());
+		st.setString(6, treatment.getResults());
+		st.setInt(7,doctor.getID());
+		
+		st.setInt(8,treatment.getIDtreatment());
+		
+		st.executeUpdate();
+		st.close();
+			
+	}
 
 }

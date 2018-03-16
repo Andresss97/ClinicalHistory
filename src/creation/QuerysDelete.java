@@ -1,13 +1,12 @@
 package creation;
 
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import graphicInterface.Main;
 import pojos.*;
 
-import graphicInterface.Main;
-import pojos.*;
 public class QuerysDelete {
 	
 	private Conector con;
@@ -82,4 +81,35 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	
+	
+	public void deleteIllness(Illness illness)throws SQLException {
+		String query ="DELETE FROM illness WHERE id = ?";
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.setInt(1, illness.getIDdisease());
+		st.executeQuery();
+		st.close();
+		
+	}
+	
+	
+	public void deleteVaccine(Vaccine vaccine) throws SQLException {
+		String query = "DELETE from vaccine where id = " + vaccine.getIDvaccine();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	public void deleteTreatment(Treatment treatment) throws SQLException {
+		String query = "DELETE from treatment where id = " + treatment.getIDtreatment();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	
+	
 }

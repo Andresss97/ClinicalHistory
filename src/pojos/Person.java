@@ -122,7 +122,7 @@ public abstract class Person {
 		this.address = address;
 	}
 
-	public int getID() {
+	public  int getID() {
 		return ID;
 	}
 
