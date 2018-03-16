@@ -2,6 +2,7 @@ package creation;
 
 import java.sql.Blob;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.sql.rowset.serial.SerialBlob;
@@ -16,10 +17,10 @@ import pojos.Illness.typeDisease;
 public class QuerysInsert {
 	
 	private Conector conn = Main.conector;
-	
+	//change the Integer you are changing
 	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
-		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,photo,idaddress) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,idaddress) values (?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
@@ -93,7 +94,6 @@ public class QuerysInsert {
 			break;
 		default:
 			break;
-		
 		}
 		
 		st.setInt(6,doctor.getMobilePhone());
@@ -101,17 +101,17 @@ public class QuerysInsert {
 		st.setString(8, doctor.getSurname());
 		st.setString(9,doctor.getNIF());
 		st.setDate(10, doctor.getDob());
-		Blob blob = new SerialBlob(doctor.getPhoto());
-		st.setBlob(11, blob);
-		st.setInt(12, iDAddress);
+		//Blob blob = new SerialBlob(doctor.getPhoto());
+		//st.setBlob(11, blob);
+		st.setInt(11, iDAddress);
 		
-		st.executeQuery();
+		st.executeUpdate();
 		st.close();
 	}
 	
 	public void insertAddress(Address address) throws SQLException {
 		String query;
-
+		ResultSet set = null;
 		query = "INSERT into address (city,street,cp,housenumber) values (?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
@@ -121,6 +121,7 @@ public class QuerysInsert {
 		st.setInt(4, address.getHouseNumber());
 		
 		st.executeUpdate();
+
 		st.close();
 	}
 	

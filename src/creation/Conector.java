@@ -27,8 +27,8 @@ public class Conector {
     public Connection getConnect() {
         return connect;
     }
-
-    public void setConnect(Connection connect) {
+    
+    private void setConnect(Connection connect) {
         this.connect = connect;
     }
     
