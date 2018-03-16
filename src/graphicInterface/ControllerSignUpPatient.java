@@ -130,6 +130,7 @@ public class ControllerSignUpPatient implements Initializable{
     				wiiU = SwingFXUtils.toFXImage(img, null);
     			}
     		}
+    		c.release();
     		return wiiU;
     	}
     }
@@ -148,13 +149,12 @@ public class ControllerSignUpPatient implements Initializable{
 
 		if (file != null) {
 			try {
-				img = new Image(file.toURI().toURL().toString(), 161, 132, true, true);
-				this.image = new ImageView(img);
+				img = new Image(file.toURI().toURL().toString());
+				this.image.setImage(img);
 			}
 			catch(Exception ex) {
-				System.out.println(ex.getMessage());
+				ex.printStackTrace();
 			}
-			
 		}
 	}
 
@@ -165,6 +165,7 @@ public class ControllerSignUpPatient implements Initializable{
     	QuerysInsert query = new QuerysInsert();
     	QuerysSelect query2 = new QuerysSelect();
     	Date date = null;
+    	Image imageTaken;
     	GENDER gender = null;
     	int ad = 0;
     	
@@ -202,6 +203,7 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setHeight(Float.parseFloat(height.getText()));
     	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
+    	imageTaken = image.getImage();
     	//patient.setPhoto(image.getD);
 
     	try {
@@ -247,7 +249,6 @@ public class ControllerSignUpPatient implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("Male", "Female");
 		gender.setItems(list);
-		image = new ImageView();
 	}
 
 }

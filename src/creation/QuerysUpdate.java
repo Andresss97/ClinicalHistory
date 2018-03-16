@@ -62,8 +62,7 @@ public class QuerysUpdate {
 		
 		
 	}
-<<<<<<< HEAD
-	
+
 	private void updateAppointment (Appointment appointment) throws SQLException {
 		String query;
 		query = "UPDATE appointment " 
@@ -122,19 +121,17 @@ public class QuerysUpdate {
 		st.close();
 	}
 	
-=======
 	public void updateTreatment(Treatment treatment, Doctor doctor) throws SQLException {
 		String query;
->>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
 
 		query = "UPDATE treatment"
-				+ "SET  name =?,"
-				+ "SET  description= ?,"
-				+ "SET  type= ?,"
-				+ "SET  StartDate= ?,"
-				+ "SET  EndDate= ?,"
-				+ "SET  Results= ?,"
-				+ "SET  Doctor= ?,"	
+				+ "SET  name = ?,"
+				+ "SET  description = ?,"
+				+ "SET  type = ?,"
+				+ "SET  StartDate = ?,"
+				+ "SET  EndDate = ?,"
+				+ "SET  Results = ?,"
+				+ "SET  Doctor = ?,"	
 				+ "WHERE id =?";
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -159,5 +156,4 @@ public class QuerysUpdate {
 		st.close();
 			
 	}
-
 }
