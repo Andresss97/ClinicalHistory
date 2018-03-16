@@ -203,9 +203,7 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
-    	
-    	
-    	
+
     	try {
 			query.insertPatient(patient, ad);
 			ad = query2.selectLastId("patient");

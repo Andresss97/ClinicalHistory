@@ -91,12 +91,22 @@ public class ControllerAdminView implements Initializable{
     void onClickDelete(ActionEvent event) throws IOException {
     	QuerysDelete qs = new QuerysDelete();
     	int id = 0;
+    	
+    	if(list.getSelectionModel().getSelectedItem() == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+        	alert.setContentText("You must select an account");
+        	alert.setTitle("Warning delete");
+        	alert.setHeaderText("Delete information");
+        	alert.show();
+        	return;
+    	}
+    	
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setContentText("Are you sure you want to delete this account?");
     	alert.setTitle("Information");
     	alert.setHeaderText("Delete account");
     	Optional<ButtonType> result = alert.showAndWait();
-    	
+
     	if(result.get() == ButtonType.OK) {
     		if(list.getSelectionModel().getSelectedItem() instanceof Doctor) {
     			Doctor doctor = (Doctor) list.getSelectionModel().getSelectedItem();
@@ -110,7 +120,7 @@ public class ControllerAdminView implements Initializable{
 
 				}
     		}
-    		else {
+    		else if(list.getSelectionModel().getSelectedItem() instanceof Patient){
     			Patient patient = (Patient) list.getSelectionModel().getSelectedItem();
     			try {
     				id = patient.getID() + 1;
@@ -161,7 +171,7 @@ public class ControllerAdminView implements Initializable{
 				System.out.println(e.getMessage());
 			}
     	}
-    	else {
+    	else if(list.getSelectionModel().getSelectedItem() instanceof Patient) {
     		patient = (Patient) list.getSelectionModel().getSelectedItem();
     		System.out.println("Paciente");
     	}
@@ -172,7 +182,7 @@ public class ControllerAdminView implements Initializable{
     	if(orderBy.getSelectionModel().getSelectedItem().equals("Alphabetically")) {
 
     	}
-    	else {
+    	else if(orderBy.getSelectionModel().getSelectedItem().equals("User type")){
     		
     	}
     }
