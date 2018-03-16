@@ -16,11 +16,11 @@ public class Address {
 		this.houseNumber = 0;
 	}
 	
-	public Integer getID() {
+	public int getID() {
 		return this.ID;
 	}
 	
-	public void setID(Integer id) {
+	public void setID(int id) {
 		this.ID=id;
 	}
 	
