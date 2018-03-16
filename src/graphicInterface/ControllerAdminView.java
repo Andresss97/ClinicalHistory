@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import creation.QuerysDelete;
 import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,7 +17,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
@@ -70,6 +75,8 @@ public class ControllerAdminView implements Initializable{
     
     private Patient patient;
     
+    private ArrayList<Person> accounts;
+    
     @FXML
     void onClickCreate(ActionEvent event) throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("CreateDoctorView.fxml"));
@@ -82,7 +89,40 @@ public class ControllerAdminView implements Initializable{
 
     @FXML
     void onClickDelete(ActionEvent event) throws IOException {
+    	QuerysDelete qs = new QuerysDelete();
+    	int id = 0;
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setContentText("Are you sure you want to delete this account?");
+    	alert.setTitle("Information");
+    	alert.setHeaderText("Delete account");
+    	Optional<ButtonType> result = alert.showAndWait();
     	
+    	if(result.get() == ButtonType.OK) {
+    		if(list.getSelectionModel().getSelectedItem() instanceof Doctor) {
+    			Doctor doctor = (Doctor) list.getSelectionModel().getSelectedItem();
+    			try {
+					qs.deleteDoctorAccount(doctor);
+					id = doctor.getID() + 1;
+					qs.deleteUser(id);
+					this.accounts.remove(doctor);
+			    	this.refreshList();
+				} catch (SQLException e) {
+
+				}
+    		}
+    		else {
+    			Patient patient = (Patient) list.getSelectionModel().getSelectedItem();
+    			try {
+    				id = patient.getID() + 1;
+					qs.deleteUser(id);
+					qs.deletePatientAccount(patient);
+					this.accounts.remove(patient);
+			    	this.refreshList();
+				} catch (SQLException e) {
+
+				}
+    		}
+    	}
     }
 
     @FXML
@@ -151,8 +191,9 @@ public class ControllerAdminView implements Initializable{
 
     }
     
-    public Doctor getDoctor() {
-    	return doctor;
+    private void refreshList() {
+    	this.list.getItems().clear();
+    	this.list.getItems().addAll(accounts);
     }
     
 	@Override
@@ -161,10 +202,11 @@ public class ControllerAdminView implements Initializable{
 		QuerysSelect qs = new QuerysSelect();
 		orderBy.setItems(list);
 		
-		ArrayList<Person> accounts = new ArrayList<>();
+		this.accounts = new ArrayList<>();
+		
 		try {
-			accounts.addAll(qs.selectDoctorsAccount());
-			accounts.addAll(qs.selectPatientsAccounts());
+			this.accounts.addAll(qs.selectDoctorsAccount());
+			this.accounts.addAll(qs.selectPatientsAccounts());
 			this.list.getItems().addAll(accounts);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

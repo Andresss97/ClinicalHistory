@@ -215,7 +215,8 @@ public abstract class DBCreation {
 
 		try {
 			st = con.getConnect().createStatement();
-			in = "CREATE TABLE APPOINTMENT" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "HOUR int NOT NULL,"
+			in = "CREATE TABLE APPOINTMENT" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," 
+					+ "HOUR varchar(10) NOT NULL,"
 					+ "DATE date NOT NULL,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,"
 					+ "IDDOCTOR int CONSTRAINT rDoctor REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL,"

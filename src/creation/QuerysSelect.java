@@ -18,28 +18,19 @@ import pojos.Person.GENDER;
 public class QuerysSelect {
 	private Conector conn = Main.conector;
 	
-	public String[] selectUser(String user, String psw) {
+	public String[] selectUser(String user, String psw) throws SQLException {
 		String[] data = new String[2];
 		String query = "SELECT USERNAME, PASSWORD from mappinglogin where username = '" + user + "' and password = '"
 				+ psw + "'";
-		PreparedStatement st;
-		try {
-			st = conn.getConnect().prepareStatement(query);
-			ResultSet set = st.executeQuery();
-			while (set.next()) {
-				data[0] = set.getString("username");
-				data[1] = set.getString("password");
-			}
-
-			st.close();
-			set.close();
-		} catch (SQLException e) {
-			Alert alert  = new Alert(AlertType.WARNING);
-			alert.setHeaderText("Credentials Information");
-			alert.setContentText("Wrong credentials");
-			alert.setTitle("Credentials information");
-			alert.show();
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		while (set.next()) {
+			data[0] = set.getString("username");
+			data[1] = set.getString("password");
 		}
+
+		st.close();
+		set.close();
 
 		return data;
 	}
@@ -269,11 +260,29 @@ public class QuerysSelect {
 			Patient patient = new Patient();
 			patient.setName(set.getString("name"));
 			patient.setSurname(set.getString("surname"));
+			patient.setUsername(set.getString("username"));
+			patient.setPassword(set.getString("password"));
+			patient.setID(set.getInt("id"));
+			patient.setDob(set.getDate("dob"));
+			patient.setEmail(set.getString("email"));
+			patient.setNIF(set.getString("nif"));
+			patient.setMobilePhone(set.getInt("mobilephone"));
+			patient.setHousePhone(set.getInt("homephone"));
 			list.add(patient);
 		}
 		
 		st.close();
 		set.close();
+		
 		return list;
+	}
+	
+	public int selectLastId(String table) throws SQLException {
+		String query = "SELECT MAX(id) from " + table;
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		int id = set.getInt(1);
+		
+		return id;
 	}
 }

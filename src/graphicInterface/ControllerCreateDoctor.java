@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import creation.QuerysInsert;
+import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,9 +107,11 @@ public class ControllerCreateDoctor implements Initializable{
 		Address address = new Address();
 		Doctor doctor = new Doctor();
 		QuerysInsert query = new QuerysInsert();
+		QuerysSelect query2 = new QuerysSelect();
 		Date date = null;
 		GENDER gender = null;
-
+		int id = 0;
+		
 		address.setCity(city.getText());
 		address.setStreet(street.getText());
 		address.setHouseNumber(Integer.parseInt(houseNumber.getText()));
@@ -116,6 +119,7 @@ public class ControllerCreateDoctor implements Initializable{
 
 		try {
 			query.insertAddress(address);
+			id = query2.selectLastId("address");
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -139,7 +143,7 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setPassword(password.getText());
 		
 		try {
-			query.insertDoctor(doctor, 0);
+			query.insertDoctor(doctor, id);
 			query.insertUser1(doctor, null);
 		}
 		catch(SQLException ex) {
