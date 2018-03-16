@@ -11,6 +11,7 @@ public class Treatment {
 	public enum typeTreatment {
 		MEDICATION, REHAB
 	};
+	private String name;
 
 	private typeTreatment treatment;
 	private String description;
@@ -18,6 +19,7 @@ public class Treatment {
 	private Doctor doctor;
 
 	public Treatment() {
+		this.name = null;
 		this.ID = 0;
 		this.startDate = null;
 		this.endDate = null;
@@ -110,6 +112,13 @@ public class Treatment {
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

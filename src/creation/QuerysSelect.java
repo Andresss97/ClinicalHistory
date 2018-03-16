@@ -143,6 +143,7 @@ public class QuerysSelect {
 				break;
 			default:
 				break;
+			
 			}
 			
 			if(set.getString("gender").equals("Male")) {

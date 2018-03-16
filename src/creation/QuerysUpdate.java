@@ -14,7 +14,7 @@ public class QuerysUpdate {
 	public void updateIllness(Illness illness) throws SQLException {
 		String query;
 
-		query = "UPDATE illness"
+		query = "UPDATE illnesses"
 				+ "SET  name =?,"
 				+ "SET  description= ?,"
 				+ "SET  type= ?,"
@@ -43,6 +43,7 @@ public class QuerysUpdate {
 	
 	}	
 	
+	//*Does not make sense since Address id cant be null however it works for other updates that can be null
 	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
 
@@ -61,4 +62,102 @@ public class QuerysUpdate {
 		
 		
 	}
+<<<<<<< HEAD
+	
+	private void updateAppointment (Appointment appointment) throws SQLException {
+		String query;
+		query = "UPDATE appointment " 
+				+ "SET date = ? "
+				+ "SET hour = ? "
+				+ "SET reason = ? "
+				+ "SET iddoctor = ? "
+				+ "WHERE id = ?";
+		
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setDate(1, appointment.getDate());
+		st.setString(2, appointment.getHour());
+		st.setString(3, appointment.getReason());
+		st.setInt(4, appointment.getDoctor().getID());
+		st.setInt(5, appointment.getID());
+		
+	    st.executeUpdate();
+	    st.close();
+		
+	}
+	
+	private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
+		String query;
+		query = "UPDATE clinicalHistory "
+				+ " SET addictions = ? "
+				+ " SET observations = ? "
+				+ " SET lastModication = ? "
+				+ " WHERE id = ?";
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setString(1, clinicalHistory.getAddictions());
+		st.setString(2, clinicalHistory.getObservations());
+		st.setDate(3, clinicalHistory.getLastModification());
+		st.setInt(4, clinicalHistory.getID());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	private void updateAllergy (Allergies allergy) throws SQLException {
+		String query;
+		query = "UPDATE allergy "
+				+ " SET group = ? "
+				+ " SET observations = ? "
+				+ " SET idtreatment = ? "
+				+ " WHERE id = ?";
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setString(1, allergy.getGroup());
+		st.setString(2, allergy.getObservations());
+		st.setInt(3, allergy.getTreatment().getIDtreatment());
+		st.setInt(4, allergy.getID());
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+=======
+	public void updateTreatment(Treatment treatment, Doctor doctor) throws SQLException {
+		String query;
+>>>>>>> branch 'master' of https://github.com/Andresss97/ClinicalHistory
+
+		query = "UPDATE treatment"
+				+ "SET  name =?,"
+				+ "SET  description= ?,"
+				+ "SET  type= ?,"
+				+ "SET  StartDate= ?,"
+				+ "SET  EndDate= ?,"
+				+ "SET  Results= ?,"
+				+ "SET  Doctor= ?,"	
+				+ "WHERE id =?";
+			
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1,treatment.getName());
+		st.setString(2, treatment.getDescrpition());
+		
+		if(treatment.getTreatment().equals("MEDICATION")) {
+			st.setString(3,"MEDICATION");
+		}
+		else {
+			st.setString(3, "REHAB");
+		}
+		st.setDate(4, treatment.getStartDate());
+		st.setDate(5, treatment.getEndDate());
+		st.setString(6, treatment.getResults());
+		st.setInt(7,doctor.getID());
+		
+		st.setInt(8,treatment.getIDtreatment());
+		
+		st.executeUpdate();
+		st.close();
+			
+	}
+
 }

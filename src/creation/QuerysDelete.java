@@ -1,9 +1,12 @@
 package creation;
 
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 import graphicInterface.Main;
 import pojos.*;
+
 public class QuerysDelete {
 	
 	private Conector con;
@@ -12,56 +15,44 @@ public class QuerysDelete {
 		this.con = Main.conector;
 	}	
 
-	public void deleteAppointment (Appointment appointment) {
+	public void deleteAppointment (Appointment appointment) throws SQLException {
 		String query;
 		query = "DELETE FROM appointment WHERE id = ?";
 		PreparedStatement st;
-		try {
 			st = con.getConnect().prepareStatement(query);
 			st.setInt(1, appointment.getID());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			st.executeUpdate();
+			st.close();
 	}
 	
 	private void deleteClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
 		String query;
 		query = "DELETE FROM clinicalHistory WHERE id = ?";
 	    PreparedStatement st;
-	    try {
 		st= con.getConnect().prepareStatement(query);
 		st.setInt(1, clinicalHistory.getID());
-	}
-	    catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
+		st.executeUpdate();
+		st.close();
 	}
 	
-	private void deleteSurgery (Surgeries surgery) {
+	private void deleteSurgery (Surgeries surgery) throws SQLException {
 		String query;
 		query = "DELETE FROM surgeries WHERE id = ?";
 		PreparedStatement st;
-		try {
 			st = con.getConnect().prepareStatement(query);
 			st.setInt(1, surgery.getID());
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+			st.executeUpdate();
+			st.close();
 	}
 	
-	private void deleteAllergy (Allergies allergy) {
+	private void deleteAllergy (Allergies allergy) throws SQLException {
 		String query;
 		query = "DELETE FROM allergies WHERE id = ?";
 		PreparedStatement st;
-		try {
 			st = con.getConnect().prepareStatement(query);
 			st.setInt(1, allergy.getID());
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+			st.executeUpdate();
+			st.close();		
 	}
 	
 	public void deleteDoctorAccount(Doctor doctor) throws SQLException {
@@ -90,4 +81,35 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	
+	
+	public void deleteIllness(Illness illness)throws SQLException {
+		String query ="DELETE FROM illness WHERE id = ?";
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.setInt(1, illness.getIDdisease());
+		st.executeQuery();
+		st.close();
+		
+	}
+	
+	
+	public void deleteVaccine(Vaccine vaccine) throws SQLException {
+		String query = "DELETE from vaccine where id = " + vaccine.getIDvaccine();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	public void deleteTreatment(Treatment treatment) throws SQLException {
+		String query = "DELETE from treatment where id = " + treatment.getIDtreatment();
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	
+	
 }
