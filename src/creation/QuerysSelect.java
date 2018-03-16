@@ -12,6 +12,7 @@ import javafx.scene.control.Alert.AlertType;
 import pojos.Doctor;
 import pojos.Doctor.SPECIALITY;
 import pojos.Patient;
+import pojos.Person;
 import pojos.Person.GENDER;
 
 public class QuerysSelect {
@@ -21,8 +22,7 @@ public class QuerysSelect {
 		String[] data = new String[2];
 		String query = "SELECT USERNAME, PASSWORD from mappinglogin where username = '" + user + "' and password = '"
 				+ psw + "'";
-		PreparedStatement st;
-		st = conn.getConnect().prepareStatement(query);
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		while (set.next()) {
 			data[0] = set.getString("username");
@@ -60,6 +60,7 @@ public class QuerysSelect {
 			patient.setHeight(set.getFloat("height"));
 			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
+			patient.setPhoto(set.getBytes("photo"));
 		}
 		
 		st.close();
@@ -110,7 +111,8 @@ public class QuerysSelect {
 			case NEONATOLOGY:
 				doctor.setSpeciality(SPECIALITY.NEONATOLOGY);
 				break;
-			case NEPHROLOGY:doctor.setSpeciality(SPECIALITY.NEPHROLOGY);
+			case NEPHROLOGY:
+				doctor.setSpeciality(SPECIALITY.NEPHROLOGY);
 				break;
 			case NEUROLOGY:
 				doctor.setSpeciality(SPECIALITY.NEUROLOGY);
@@ -189,44 +191,98 @@ public class QuerysSelect {
 			list.add(set.getString("hour"));
 		}
 		
-		st.close();
-		set.close();
-		
 		return list;
 	}
-	
+
 	public int checkSecurityLevel(String user, String psw) throws SQLException {
 		String query = "SELECT usertype from mappinglogin where username = '" + user + "' and password = '" + psw + "'";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		int sLevel = 0;
-		
-		while(set.next()) {
+		while (set.next()) {
 			sLevel = set.getInt("usertype");
 		}
-		
 		st.close();
 		set.close();
-		
 		return sLevel;
 	}
-	
+
 	public ArrayList<Doctor> selectDoctorNSSpeciality(String speciality) throws SQLException {
 		String query = "SELECT name, surname from doctor where speciality = '" + speciality + "'";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		ArrayList<Doctor> list = new ArrayList<>();
-		
-		while(set.next()) {
+		while (set.next()) {
 			Doctor doctor = new Doctor();
 			doctor.setName(set.getString("name"));
 			doctor.setSurname(set.getString("surname"));
 			list.add(doctor);
+		}
+		st.close();
+		set.close();
+		return list;
+	}
+	
+	public ArrayList<Person> selectDoctorsAccount() throws SQLException {
+		String query = "SELECT * from doctor";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<Person> list = new ArrayList<>();
+		
+		while (set.next()) {
+			Doctor doctor = new Doctor();
+			doctor.setName(set.getString("name"));
+			doctor.setSurname(set.getString("surname"));
+			doctor.setDob(set.getDate("dob"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			//doctor.setSpeciality(SPECIALITY.valueOf(set.getString("speciality")));
+			doctor.setUsername(set.getString("username"));
+			doctor.setPassword(set.getString("password"));
+			doctor.setID(set.getInt("id"));
+			//doctor.setGender(GENDER.valueOf(set.getString("gender")));
+			list.add(doctor);
+		}
+		st.close();
+		set.close();
+		
+		return list;
+	}
+	
+	public ArrayList<Person> selectPatientsAccounts() throws SQLException {
+		String query = "SELECT * from patient";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<Person> list = new ArrayList<>();
+		
+		while (set.next()) {
+			Patient patient = new Patient();
+			patient.setName(set.getString("name"));
+			patient.setSurname(set.getString("surname"));
+			patient.setUsername(set.getString("username"));
+			patient.setPassword(set.getString("password"));
+			patient.setID(set.getInt("id"));
+			patient.setDob(set.getDate("dob"));
+			patient.setEmail(set.getString("email"));
+			patient.setNIF(set.getString("nif"));
+			patient.setMobilePhone(set.getInt("mobilephone"));
+			patient.setHousePhone(set.getInt("homephone"));
+			list.add(patient);
 		}
 		
 		st.close();
 		set.close();
 		
 		return list;
+	}
+	
+	public int selectLastId(String table) throws SQLException {
+		String query = "SELECT MAX(id) from " + table;
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		int id = set.getInt(1);
+		
+		return id;
 	}
 }

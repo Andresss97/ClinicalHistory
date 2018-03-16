@@ -34,7 +34,7 @@ public class ControllerSplashScreen implements Initializable{
 							Scene scene = new Scene(window);
 							Stage stage = new Stage();
 							stage.setTitle("Babylon Studio");
-							stage.setResizable(false);
+							stage.setResizable(true);
 							stage.setScene(scene);
 							stage.show();
 				

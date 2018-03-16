@@ -16,6 +16,7 @@ import org.opencv.videoio.VideoCapture;
 
 import creation.Conector;
 import creation.QuerysInsert;
+import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -162,9 +163,10 @@ public class ControllerSignUpPatient implements Initializable{
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
+    	QuerysSelect query2 = new QuerysSelect();
     	Date date = null;
     	GENDER gender = null;
-    	int addres = 0;
+    	int ad = 0;
     	
     	address.setCity(city.getText());
     	address.setStreet(street.getText());
@@ -172,7 +174,8 @@ public class ControllerSignUpPatient implements Initializable{
     	address.setPostalCode(Integer.parseInt(cp.getText()));
     	
     	try {
-			query.insertAddress(address);	
+			query.insertAddress(address);
+			ad = query2.selectLastId("address");
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 1");
 		}
@@ -201,14 +204,19 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setPassword(password.getText());
     	//patient.setPhoto(image.getD);
     	
-    	Main.patient = patient;
+    	
     	
     	try {
-			query.insertPatient(patient, addres);
+			query.insertPatient(patient, ad);
+			ad = query2.selectLastId("patient");
 			query.insertUser1(null, patient);
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 2");
 		}
+    	
+    	patient.setID(ad);
+    	Main.patient = patient;
+    	
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setContentText("Account succesfully created");
     	alert.setHeaderText("Account information");
@@ -230,7 +238,6 @@ public class ControllerSignUpPatient implements Initializable{
 		}
 		else if(surname.getText().isEmpty()){
 			return false;
-
 		}
 		else {
 			return true;
