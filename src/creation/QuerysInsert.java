@@ -127,8 +127,8 @@ public class QuerysInsert {
 	
 	public void insertPatient(Patient patient, Integer iDAddress) throws Exception {
 		String query;
-		query = "INSERT into patient (name,surname,nif,email,mobilephone,homephone,dob,gender,username,password,weight,height,idaddress) "
-				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		query = "INSERT into patient (name,surname,nif,email,mobilephone,homephone,dob,gender,username,password,weight,height,idaddress, photo) "
+				+ "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		st.setString(1, patient.getName());
@@ -151,7 +151,7 @@ public class QuerysInsert {
 		st.setFloat(11, patient.getWeight());
 		st.setFloat(12, patient.getHeight());
 		st.setInt(13, iDAddress);
-		
+		st.setBytes(14, patient.getPhoto());
 		st.executeUpdate();
 		st.close();
 	}

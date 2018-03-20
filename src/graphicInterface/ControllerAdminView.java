@@ -175,6 +175,14 @@ public class ControllerAdminView implements Initializable{
     		patient = (Patient) list.getSelectionModel().getSelectedItem();
     		System.out.println("Paciente");
     	}
+    	else {
+    		Alert alert = new Alert(AlertType.WARNING);
+        	alert.setContentText("You must select an account");
+        	alert.setTitle("Warning Update");
+        	alert.setHeaderText("Update information");
+        	alert.show();
+        	return;
+    	}
      }
 
     @FXML

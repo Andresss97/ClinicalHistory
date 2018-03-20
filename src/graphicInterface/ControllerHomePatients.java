@@ -1,11 +1,17 @@
   package graphicInterface;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,81 +20,62 @@ import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class ControllerHomePatients implements Initializable {
 
-	@FXML
-	private AnchorPane container;
+	 @FXML
+	    private MenuBar bar;
 
-	@FXML
-	private MenuBar bar;
+	    @FXML
+	    private Menu rHome;
 
-	@FXML
-	private Menu homeButton;
+	    @FXML
+	    private MenuItem homeButton;
 
-	@FXML
-	private MenuItem rHome;
+	    @FXML
+	    private MenuItem mAppointments;
 
-	@FXML
-	private Menu View;
+	    @FXML
+	    private MenuItem myCalendar;
 
-	@FXML
-	private MenuItem myCalendar;
+	    @FXML
+	    private MenuItem mProfile;
 
-	@FXML
-	private MenuItem mAppointments;
+	    @FXML
+	    private MenuItem signOff;
 
-	@FXML
-	private Menu edit;
+	    @FXML
+	    private ImageView image;
 
-	@FXML
-	private MenuItem mProfile;
+	    @FXML
+	    private Label tName;
 
-	@FXML
-	private Menu help;
+	    @FXML
+	    private Label tSurname;
 
-	@FXML
-	private Menu logOff;
+	    @FXML
+	    private Label tNif;
 
-	@FXML
-	private MenuItem signOff;
+	    @FXML
+	    private ListView<?> View;
 
-	@FXML
-	private AnchorPane mContainer;
+	    @FXML
+	    private ComboBox<?> orderBy;
 
-	@FXML
-	private ImageView image;
+	    @FXML
+	    private Button bPrint;
 
-	@FXML
-	private Label tName;
-
-	@FXML
-	private Label tSurname;
-
-	@FXML
-	private Label tNif;
-
-	@FXML
-	private AnchorPane appointmentView;
-
-	@FXML
-	private TextField search;
-
-	@FXML
-	private ComboBox<?> orderBy;
-
-	@FXML
-	private Button bPDF;
-
-	@FXML
-	private Button bPrint;
+	    @FXML
+	    private Button bPDF;
 	
 	@FXML
 	void onClickHome(ActionEvent event) throws IOException {
@@ -112,9 +99,12 @@ public class ControllerHomePatients implements Initializable {
 	
 	@FXML
 	void onClickAppointments(ActionEvent event) throws IOException {
-		mContainer.getChildren().clear();
-		AnchorPane lContainer = FXMLLoader.load(getClass().getResource("MenuAppointmentsPatient.fxml"));
-		mContainer.getChildren().add(lContainer);
+		Parent root = FXMLLoader.load(getClass().getResource("CreateAppointmentMenu.fxml"));
+		Scene scene = bar.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	Scene scene2 = new Scene(root);
+    	window.setScene(scene2);
+    	window.show();
 	}
 	
 	@FXML
@@ -134,6 +124,17 @@ public class ControllerHomePatients implements Initializable {
 		tName.setText(Main.patient.getName());
 		tSurname.setText(Main.patient.getSurname());
 		tNif.setText(Main.patient.getNIF());
+		
+		InputStream in = new ByteArrayInputStream(Main.patient.getPhoto());
+		BufferedImage i = null;
+		try {
+			i = ImageIO.read(in);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Image img = SwingFXUtils.toFXImage(i, null);
+		this.image.setImage(img);
+	
 		ObservableList list = FXCollections.observableArrayList("Alphabetically", "Date");
 		orderBy.setItems(list);
 	}

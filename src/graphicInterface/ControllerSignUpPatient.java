@@ -9,6 +9,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
@@ -20,8 +22,11 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,8 +37,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import pojos.*;
 import pojos.Person.GENDER;
 
@@ -227,8 +234,18 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setHeight(Float.parseFloat(height.getText()));
     	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
-
-    	//patient.setPhoto(image.getD);
+    	
+    	BufferedImage bffI = SwingFXUtils.fromFXImage(image.getImage(), null);
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	
+    	try {
+			ImageIO.write(bffI, "jpg", baos);
+			byte[] photo = baos.toByteArray();
+			patient.setPhoto(photo);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
     	try {
 			query.insertPatient(patient, ad);
