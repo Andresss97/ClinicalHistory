@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import graphicInterface.Main;
 import pojos.Illness.typeDisease;
+import pojos.Person.GENDER;
 
 public class QuerysUpdate {
 
@@ -156,4 +157,39 @@ public class QuerysUpdate {
 		st.close();
 			
 	}
+	
+	public void updateDoctor(Doctor doctor) throws SQLException {
+		String query = "UPDATE doctor"
+				+ "SET name = ?,"
+				+ "SET surname = ?"
+				+ "SET  nif = ?,"
+				+ "SET dob = ?,"
+				+ "SET photo = ?,"
+				+ "SET mobilephone = ?,"
+				+ "SET username = ?,"
+				+ "SET password = ?,"
+				+ "SET email = ?,"
+				+ "SET gender = ?,"
+				+ "SET speciality = ?";
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, doctor.getName());
+		st.setString(2, doctor.getSurname());
+		st.setString(3, doctor.getNIF());
+		st.setDate(4, doctor.getDob());
+		st.setBytes(5, doctor.getPhoto());
+		st.setInt(6, doctor.getMobilePhone());
+		st.setString(7, doctor.getUsername());
+		st.setString(8, doctor.getPassword());
+		st.setString(9, doctor.getEmail());
+		if(doctor.getGender().equals(GENDER.MALE)) {
+			st.setString(10, "Male");
+		}
+		else {
+			st.setString(10, "Female");
+		}
+		st.executeUpdate();
+	}
+	
 }

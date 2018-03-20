@@ -59,7 +59,7 @@ public class ControllerPasswordRecovery {
     
     private void sendEmail(String user, String password) {
     	String to = email.getText();
-    	String from = "andresdeperedacruz@hotmail.com";
+    	String from = "espartacoalaparatopereda@gmail.com";
     	String host = "localhost";
     	Properties properties = System.getProperties();
     	properties.put("mail.smtp.host", host);
