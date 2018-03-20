@@ -11,10 +11,8 @@ import java.util.ResourceBundle;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.videoio.VideoCapture;
 
-import creation.Conector;
 import creation.QuerysInsert;
 import creation.QuerysSelect;
 import javafx.collections.FXCollections;
@@ -130,6 +128,7 @@ public class ControllerSignUpPatient implements Initializable{
     				wiiU = SwingFXUtils.toFXImage(img, null);
     			}
     		}
+    		c.release();
     		return wiiU;
     	}
     }
@@ -148,18 +147,44 @@ public class ControllerSignUpPatient implements Initializable{
 
 		if (file != null) {
 			try {
-				img = new Image(file.toURI().toURL().toString(), 161, 132, true, true);
-				this.image = new ImageView(img);
+				img = new Image(file.toURI().toURL().toString());
+				this.image.setImage(img);
 			}
 			catch(Exception ex) {
-				System.out.println(ex.getMessage());
+				ex.printStackTrace();
 			}
-			
 		}
 	}
 
 	@FXML
     void onCreateClick(ActionEvent event) {
+		if(checkPersonalData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every personal data must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkAddressData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every data regarding your address must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkCredentials() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Credentials are missing.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
@@ -202,10 +227,9 @@ public class ControllerSignUpPatient implements Initializable{
     	patient.setHeight(Float.parseFloat(height.getText()));
     	patient.setUsername(user.getText());
     	patient.setPassword(password.getText());
+
     	//patient.setPhoto(image.getD);
-    	
-    	
-    	
+
     	try {
 			query.insertPatient(patient, ad);
 			ad = query2.selectLastId("patient");
@@ -232,24 +256,74 @@ public class ControllerSignUpPatient implements Initializable{
     	p.takePhoto();
     }
     
-    private boolean checkNameSurname() {
-		if(name.getText().isEmpty()) {
+    private boolean checkPersonalData() {
+    	if(name.getText().isEmpty()) {
+    		name.requestFocus();
+    		return false;
+    	}
+    	else if(surname.getText().isEmpty()) {
+    		surname.requestFocus();
+    		return false;
+    	}
+    	else if(nif.getText().isEmpty()) {
+    		nif.requestFocus();
+    		return false;
+    	}
+    	else if(mail.getText().isEmpty()) {
+    		mail.requestFocus();
+    		return false;
+    	}
+    	else if(gender == null ) {
+    		gender.requestFocus();
+    		return false;
+    	}
+    	else if(dBirth == null) {
+    		dBirth.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+    private boolean checkAddressData() {
+    	if(city.getText().isEmpty()) {
+    		city.requestFocus();
+    		return false;
+    	}
+    	else if(street.getText().isEmpty()) {
+    		street.requestFocus();
+    		return false;
+    	}
+    	else if(hNumber.getText().isEmpty()) {
+    		hNumber.requestFocus();
+    		return false;
+    	}
+    	else if(cp.getText().isEmpty()) {
+    		cp.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+	private boolean checkCredentials() {
+		if (user.getText().isEmpty()) {
+			user.requestFocus();
 			return false;
-		}
-		else if(surname.getText().isEmpty()){
+		} else if (password.getText().isEmpty()) {
+			password.requestFocus();
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
-    }
+	}
     
 	@SuppressWarnings("unchecked")
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("Male", "Female");
 		gender.setItems(list);
-		image = new ImageView();
 	}
-
 }

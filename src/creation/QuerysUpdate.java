@@ -61,7 +61,7 @@ public class QuerysUpdate {
 		
 		
 	}
-	
+
 	private void updateAppointment (Appointment appointment) throws SQLException {
 		String query;
 		query = "UPDATE appointment " 
@@ -119,17 +119,17 @@ public class QuerysUpdate {
 		st.executeUpdate();
 		st.close();
 	}
-	
+
 private void updateTreatment (Treatment treatment) throws SQLException {
 		String query;
-	    query = "UPDATE treatment"
-				+ "SET  name =?,"
-				+ "SET  description= ?,"
-				+ "SET  type= ?,"
-				+ "SET  StartDate= ?,"
-				+ "SET  EndDate= ?,"
-				+ "SET  Results= ?,"
-				+ "SET  Doctor= ?,"	
+		query = "UPDATE treatment"
+				+ "SET  name = ?,"
+				+ "SET  description = ?,"
+				+ "SET  type = ?,"
+				+ "SET  StartDate = ?,"
+				+ "SET  EndDate = ?,"
+				+ "SET  Results = ?,"
+				+ "SET  Doctor = ?,"	
 				+ "WHERE id =?";
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -154,5 +154,4 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		st.close();
 			
 	}
-
 }
