@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import creation.QuerysInsert;
@@ -15,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -29,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import pojos.*;
-import pojos.Doctor.SPECIALITY;
 import pojos.Person.GENDER;
 
 public class ControllerCreateDoctor implements Initializable{
@@ -109,7 +108,6 @@ public class ControllerCreateDoctor implements Initializable{
 		QuerysInsert query = new QuerysInsert();
 		QuerysSelect query2 = new QuerysSelect();
 		Date date = null;
-		GENDER gender = null;
 		int id = 0;
 		
 		address.setCity(city.getText());
@@ -130,7 +128,7 @@ public class ControllerCreateDoctor implements Initializable{
 		LocalDate ld = dBirth.getValue();
 		date = date.valueOf(ld);
 		doctor.setDob(date);
-		doctor.setSpeciality(this.getSpeciality());
+		doctor.setSpeciality(String.valueOf(this.speciality.getSelectionModel().getSelectedItem()));
 		if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
 			doctor.setGender(GENDER.MALE);
 		}
@@ -158,49 +156,6 @@ public class ControllerCreateDoctor implements Initializable{
     	this.onClickHomePage(event);
 	}
 	
-	private SPECIALITY getSpeciality() {
-		if (this.speciality.getSelectionModel().getSelectedItem().equals("Allergy and Immunollogy")) {
-			return SPECIALITY.ALLERGY_IMMUNOLLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("General Pathology")) {
-			return SPECIALITY.GENERAL_PATHOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Cardiology")) {
-			return SPECIALITY.CARDIOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Clinical Neurophisiology")) {
-			return SPECIALITY.CLINICAL_NEUROPHISIOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Endocrinology")) {
-			return SPECIALITY.ENDOCRINOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("General Practice")) {
-			return SPECIALITY.GENERAL_PRACTICE;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Internal Medicine")) {
-			return SPECIALITY.INTERNAL_MEDICINE;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Nephrology")) {
-			return SPECIALITY.NEPHROLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Neurology")) {
-			return SPECIALITY.NEUROLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Ophthalmology")) {
-			return SPECIALITY.OPHTHALMOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Orthopaedics")) {
-			return SPECIALITY.ORTHOPAEDICS;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Paediatrics")) {
-			return SPECIALITY.PAEDIATRICS;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Neonatology")) {
-			return SPECIALITY.NEONATOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Physical Medicine Rehabilitation")) {
-			return SPECIALITY.PHYSICAL_MEDICINE_REHABILITATION;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Pulmonology")) {
-			return SPECIALITY.PULMONOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Psychiatry")) {
-			return SPECIALITY.PSYCHIATRY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Radiology")) {
-			return SPECIALITY.RADIOLOGY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("General Surgery")) {
-			return SPECIALITY.GENERAL_SURGERY;
-		} else if (this.speciality.getSelectionModel().getSelectedItem().equals("Urology")) {
-			return SPECIALITY.UROLOGY;
-		}
-		return null;
-	}
-
 	@FXML
 	void onClickHomePage(ActionEvent event) {
 		Parent root = null;
@@ -253,11 +208,15 @@ public class ControllerCreateDoctor implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ObservableList list = FXCollections.observableArrayList("Allergy and Immunollogy",
-				"General Pathology", "Cardiology","Clinical Neurophisiology","Endocrinology",
-				"General Practice","Internal Medicine","Nephrology","Neurology","Ophthalmology",
-				"Orthopaedics","Paediatrics","Neonatology","Physical Medicine Rehabilitation",
-				"Pulmonology","Psychiatry","Radiology","General Surgery","Urology");
+		QuerysSelect qs = new QuerysSelect();
+		ArrayList<String> specialities = null;
+		try {
+			specialities = qs.selectSpecialities();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList list = FXCollections.observableArrayList(specialities);
 		
 		speciality.setItems(list);	
 		

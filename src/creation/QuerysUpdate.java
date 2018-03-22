@@ -2,6 +2,7 @@ package creation;
 
 import java.sql.PreparedStatement;
 import pojos.*;
+
 import java.sql.SQLException;
 
 import graphicInterface.Main;
@@ -159,6 +160,7 @@ public class QuerysUpdate {
 	}
 	
 	public void updateDoctor(Doctor doctor) throws SQLException {
+		QuerysSelect qs= new QuerysSelect();
 		String query = "UPDATE doctor"
 				+ "SET name = ?,"
 				+ "SET surname = ?"
@@ -189,7 +191,13 @@ public class QuerysUpdate {
 		else {
 			st.setString(10, "Female");
 		}
+		
+		int id = qs.selectIdSpeciality(doctor.getSpeciality());
+		
+		st.setInt(11, id);
+		
+		st.close();
+		
 		st.executeUpdate();
 	}
-	
 }

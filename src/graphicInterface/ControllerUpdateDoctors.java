@@ -2,9 +2,12 @@ package graphicInterface;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,7 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import pojos.Doctor;
-import pojos.Doctor.SPECIALITY;
+import pojos.Person.GENDER;
 
 public class ControllerUpdateDoctors implements Initializable{
 
@@ -52,7 +55,7 @@ public class ControllerUpdateDoctors implements Initializable{
     private Button takePhoto;
 
     @FXML
-    private ComboBox<?> gender;
+    private ComboBox<String> gender;
 
     @FXML
     private TextField name;
@@ -92,8 +95,6 @@ public class ControllerUpdateDoctors implements Initializable{
 
     @FXML
     private PasswordField password;
-    
-    private Doctor doctor;
     
     @FXML
     void onClickBrowse(ActionEvent event) {
@@ -136,23 +137,39 @@ public class ControllerUpdateDoctors implements Initializable{
     
     public void initComponents(Doctor doctor) {
     	LocalDate ld = null;
-    	this.doctor = doctor;
-    	name.setText(this.doctor.getName());
-    	surname.setText(this.doctor.getSurname());
-    	ld = this.doctor.getDob().toLocalDate();
+    	name.setText(doctor.getName());
+    	surname.setText(doctor.getSurname());
+    	ld = doctor.getDob().toLocalDate();
     	dBirth.setValue(ld);
-    	dni.setText(this.doctor.getNIF());
-    	email.setText(this.doctor.getEmail());
-    	
+    	dni.setText(doctor.getNIF());
+    	email.setText(doctor.getEmail());
+    	mPhone.setText(String.valueOf(doctor.getMobilePhone()));
+    	city.setText(doctor.getAddress().getCity());
+    	speciality.getSelectionModel().select(doctor.getSpeciality());
+    	if(doctor.getGender().equals(GENDER.MALE)) {
+    		gender.getSelectionModel().select("Male");
+    	}
+    	else {
+    		gender.getSelectionModel().select("Female");
+    	}
+    	street.setText(doctor.getAddress().getStreet());
+    	houseNumber.setText(String.valueOf(doctor.getAddress().getHouseNumber()));
+    	pCode.setText(String.valueOf(doctor.getAddress().getPostalCode()));
+    	user.setText(doctor.getUsername());
+    	password.setText(doctor.getPassword());
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		ObservableList list = FXCollections.observableArrayList("Allergy and Immunollogy",
-				"General Pathology", "Cardiology","Clinical Neurophisiology","Endocrinology",
-				"General Practice","Internal Medicine","Nephrology","Neurology","Ophthalmology",
-				"Orthopaedics","Paediatrics","Neonatology","Physical Medicine Rehabilitation",
-				"Pulmonology","Psychiatry","Radiology","General Surgery","Urology");
+		QuerysSelect qs = new QuerysSelect();
+		ArrayList<String> specialities = null;
+		try {
+			specialities = qs.selectSpecialities();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList list = FXCollections.observableArrayList(specialities);
 		
 		speciality.setItems(list);	
 		
