@@ -9,8 +9,8 @@ import java.util.List;
 import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import pojos.Address;
 import pojos.Doctor;
-import pojos.Doctor.SPECIALITY;
 import pojos.Patient;
 import pojos.Person;
 import pojos.Person.GENDER;
@@ -73,78 +73,17 @@ public class QuerysSelect {
 		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
+		
 		ResultSet set = st.executeQuery();
 		while(set.next()) {
 			doctor = new Doctor();
-			
 			doctor.setName(set.getString("Name"));
 			doctor.setSurname(set.getString("Surname"));
 			doctor.setEmail(set.getString("email"));
 			doctor.setNIF(set.getString("nif"));
 			doctor.setMobilePhone(set.getInt("mobilephone"));
 			doctor.setDob(set.getDate("dob"));
-			switch(doctor.getSpeciality()){
-			case ALLERGY_IMMUNOLLOGY:
-				doctor.setSpeciality(SPECIALITY.ALLERGY_IMMUNOLLOGY);
-				break;
-			case CARDIOLOGY:
-				doctor.setSpeciality(SPECIALITY.CARDIOLOGY);
-				break;
-			case CLINICAL_NEUROPHISIOLOGY:
-				doctor.setSpeciality(SPECIALITY.CLINICAL_NEUROPHISIOLOGY);
-				break;
-			case ENDOCRINOLOGY:
-				doctor.setSpeciality(SPECIALITY.ENDOCRINOLOGY);
-				break;
-			case GENERAL_PATHOLOGY:
-				doctor.setSpeciality(SPECIALITY.GENERAL_PATHOLOGY);
-				break;
-			case GENERAL_PRACTICE:
-				doctor.setSpeciality(SPECIALITY.GENERAL_PRACTICE);
-				break;
-			case GENERAL_SURGERY:
-				doctor.setSpeciality(SPECIALITY.GENERAL_SURGERY);
-				break;
-			case INTERNAL_MEDICINE:
-				doctor.setSpeciality(SPECIALITY.INTERNAL_MEDICINE);
-				break;
-			case NEONATOLOGY:
-				doctor.setSpeciality(SPECIALITY.NEONATOLOGY);
-				break;
-			case NEPHROLOGY:
-				doctor.setSpeciality(SPECIALITY.NEPHROLOGY);
-				break;
-			case NEUROLOGY:
-				doctor.setSpeciality(SPECIALITY.NEUROLOGY);
-				break;
-			case OPHTHALMOLOGY:
-				doctor.setSpeciality(SPECIALITY.OPHTHALMOLOGY);
-				break;
-			case ORTHOPAEDICS:
-				doctor.setSpeciality(SPECIALITY.ORTHOPAEDICS);
-				break;
-			case PAEDIATRICS:
-				doctor.setSpeciality(SPECIALITY.PAEDIATRICS);
-				break;
-			case PHYSICAL_MEDICINE_REHABILITATION:
-				doctor.setSpeciality(SPECIALITY.PHYSICAL_MEDICINE_REHABILITATION);
-				break;
-			case PSYCHIATRY:
-				doctor.setSpeciality(SPECIALITY.PSYCHIATRY);
-				break;
-			case PULMONOLOGY:
-				doctor.setSpeciality(SPECIALITY.PULMONOLOGY);
-				break;
-			case RADIOLOGY:
-				doctor.setSpeciality(SPECIALITY.RADIOLOGY);
-				break;
-			case UROLOGY:
-				doctor.setSpeciality(SPECIALITY.UROLOGY);
-				break;
-			default:
-				break;
-			
-			}
+			doctor.setSpeciality(this.selectIdSpeciality(set.getInt("idspeciality")));
 			
 			if(set.getString("gender").equals("Male")) {
 				doctor.setGender(GENDER.MALE);
@@ -228,6 +167,8 @@ public class QuerysSelect {
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		ArrayList<Person> list = new ArrayList<>();
+		Address address;
+		int idAddress;
 		
 		while (set.next()) {
 			Doctor doctor = new Doctor();
@@ -237,11 +178,21 @@ public class QuerysSelect {
 			doctor.setEmail(set.getString("email"));
 			doctor.setNIF(set.getString("nif"));
 			doctor.setMobilePhone(set.getInt("mobilephone"));
-			//doctor.setSpeciality(SPECIALITY.valueOf(set.getString("speciality")));
+			doctor.setSpeciality(set.getString("idspeciality"));
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender(GENDER.MALE);
+			}
+			else {
+				doctor.setGender(GENDER.FEMALE);
+			}
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
 			doctor.setID(set.getInt("id"));
+			idAddress = set.getInt("idaddress");
+			address = this.selectAddress(idAddress);
+			doctor.setAddress(address);
 			//doctor.setGender(GENDER.valueOf(set.getString("gender")));
+			
 			list.add(doctor);
 		}
 		st.close();
@@ -283,6 +234,77 @@ public class QuerysSelect {
 		ResultSet set = st.executeQuery();
 		int id = set.getInt(1);
 		
+		st.close();
+		set.close();
 		return id;
+	}
+	
+	public Address selectAddress(int id) throws SQLException {
+		String query = "SELECT city, street, housenumber, cp from address where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, id);
+		ResultSet set = st.executeQuery();
+		Address address = new Address();
+		
+		address.setCity(set.getString("city"));
+		address.setStreet(set.getString("street"));
+		address.setHouseNumber(set.getInt("housenumber"));
+		address.setPostalCode(set.getInt("cp"));
+		
+		st.close();
+		set.close();
+		
+		return address;
+	}
+	
+	
+	public ArrayList<String> selectSpecialities() throws SQLException {
+		String query;
+		
+		query = "SELECT * from speciality";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<String> specialities = new ArrayList<>();
+		
+		while(set.next()) {
+			specialities.add(set.getString("type"));
+		}
+		
+		st.close();
+		set.close();
+		
+		return specialities;
+	}
+	
+	public int selectIdSpeciality(String spec) throws SQLException {
+		String query;
+		
+		query = "SELECT id from speciality where type = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setString(1, spec);
+		ResultSet set = st.executeQuery();
+		int id = 0;
+		
+		id = set.getInt("id");
+		
+		st.close();
+		set.close();
+		
+		return id;
+	}
+	
+	public String selectIdSpeciality(int id) throws SQLException {
+		String query;
+		
+		query = "SELECT type from speciality where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, id);
+		ResultSet set = st.executeQuery();
+		String type = set.getString("type");
+		System.out.println(type);
+		st.close();
+		set.close();
+		
+		return type;
 	}
 }

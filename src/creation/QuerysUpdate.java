@@ -2,6 +2,7 @@ package creation;
 
 import java.sql.PreparedStatement;
 import pojos.*;
+
 import java.sql.SQLException;
 
 import graphicInterface.Main;
@@ -157,6 +158,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 	}
 	
 	public void updateDoctor(Doctor doctor) throws SQLException {
+		QuerysSelect qs= new QuerysSelect();
 		String query = "UPDATE doctor"
 				+ "SET name = ?,"
 				+ "SET surname = ?"
@@ -187,7 +189,13 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		else {
 			st.setString(10, "Female");
 		}
+		
+		int id = qs.selectIdSpeciality(doctor.getSpeciality());
+		
+		st.setInt(11, id);
+		
+		st.close();
+		
 		st.executeUpdate();
 	}
-	
 }
