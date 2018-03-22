@@ -2,6 +2,7 @@ package graphicInterface;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -132,7 +133,18 @@ public class ControllerUpdateDoctors implements Initializable{
 
     @FXML
     void onClickUpdate(ActionEvent event) {
-
+    	Doctor doctor = new Doctor();
+    	Date date;
+    	LocalDate ld;
+    	doctor.setName(name.getText());
+    	doctor.setSurname(surname.getText());
+    	doctor.setEmail(email.getText());
+    	doctor.setNIF(dni.getText());
+    	ld = dBirth.getValue();
+    	date = Date.valueOf(ld);
+    	doctor.setDob(date);
+    	doctor.setMobilePhone(Integer.parseInt(mPhone.getText()));
+    	
     }
     
     public void initComponents(Doctor doctor) {
