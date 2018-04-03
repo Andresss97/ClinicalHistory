@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctors">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="539.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctors">
    <top>
       <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
         <menus>
@@ -67,7 +67,7 @@
    <center>
       <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="TOP_CENTER">
          <top>
-            <Label text="Update Doctor account" BorderPane.alignment="CENTER">
+            <Label text="Update Doctor account" textFill="#249ce8" BorderPane.alignment="CENTER">
                <font>
                   <Font size="24.0" />
                </font>
@@ -79,7 +79,7 @@
          <bottom>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="update" mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="25.0" prefWidth="121.0" text="Update account">
+                  <Button fx:id="update" mnemonicParsing="false" onAction="#onClickUpdate" prefHeight="25.0" prefWidth="121.0" style="-fx-background-color: #249ce8;" text="Update account" textFill="WHITE">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -98,11 +98,9 @@
                         <Image url="@../images/UserProfile.png" />
                      </image>
                   </ImageView>
-                  <HBox>
+                  <HBox alignment="TOP_CENTER">
                      <children>
-                        <Button fx:id="browse" mnemonicParsing="false" onAction="#onClickBrowse" prefHeight="25.0" prefWidth="74.0" text="Browse" />
-                        <Region prefHeight="25.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                        <Button fx:id="takePhoto" mnemonicParsing="false" onAction="#onClickTPhoto" prefHeight="25.0" prefWidth="76.0" text="Take photo" />
+                        <Button fx:id="browse" mnemonicParsing="false" onAction="#onClickBrowse" prefHeight="25.0" prefWidth="74.0" style="-fx-background-color: #249ce8;" text="Browse" textFill="WHITE" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="20.0" top="10.0" />
@@ -139,20 +137,20 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Name:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="Name:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="name" promptText="Name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label text="Surname:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                              <Label text="DNI:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Label text="Surname:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Label text="DNI:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                               <TextField fx:id="dni" promptText="12345678A" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                               <TextField fx:id="surname" promptText="Surname" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                              <Label text="E-mail:" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label text="E-mail:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               <TextField fx:id="email" prefHeight="25.0" prefWidth="399.0" promptText="you@hotmail.com" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.rowIndex="3" />
-                              <Label text="M.Phone:" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label text="M.Phone:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               <TextField fx:id="mPhone" promptText="612345678" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                              <Label text="D.Birth:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="D.Birth:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <DatePicker fx:id="dBirth" prefHeight="25.0" prefWidth="406.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <ComboBox fx:id="speciality" prefHeight="25.0" prefWidth="487.0" GridPane.columnIndex="5" GridPane.rowIndex="4" />
-                              <Label text="Speciality:" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                              <Label text="Speciality:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="4" />
                            </children>
                         </GridPane>
                      </content>
@@ -176,13 +174,13 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="City:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label text="City:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               <TextField fx:id="city" promptText="London" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label text="Street:" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <Label text="Street:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                               <TextField fx:id="street" promptText="Baker street" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                              <Label text="House Number:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label text="House Number:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <TextField fx:id="houseNumber" promptText="221B" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                              <Label text="Postal code:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <Label text="Postal code:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="2" />
                               <TextField fx:id="pCode" promptText="12345" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
@@ -206,8 +204,8 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="User:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label text="Password:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                              <Label text="User:" textFill="#249ce8" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Label text="Password:" textFill="#249ce8" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <TextField fx:id="user" promptText="user" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                               <PasswordField fx:id="password" promptText="password" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                            </children>

@@ -58,11 +58,8 @@ public class QuerysUpdate {
 		st.setInt(1, address.getID());
 		st.setInt(2, doctor.getID());
 		
-		
 		st.executeUpdate();
 		st.close();
-		
-		
 	}
 
 	private void updateAppointment (Appointment appointment) throws SQLException {
@@ -84,7 +81,6 @@ public class QuerysUpdate {
 		
 	    st.executeUpdate();
 	    st.close();
-		
 	}
 	
 	private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
@@ -161,21 +157,21 @@ public class QuerysUpdate {
 	
 	public void updateDoctor(Doctor doctor) throws SQLException {
 		QuerysSelect qs= new QuerysSelect();
-		String query = "UPDATE doctor"
+		String query = "UPDATE doctor "
 				+ "SET name = ?,"
-				+ "SET surname = ?"
-				+ "SET  nif = ?,"
-				+ "SET dob = ?,"
-				+ "SET photo = ?,"
-				+ "SET mobilephone = ?,"
-				+ "SET username = ?,"
-				+ "SET password = ?,"
-				+ "SET email = ?,"
-				+ "SET gender = ?,"
-				+ "SET speciality = ?";
+				+ "surname = ?,"
+				+ "nif = ?,"
+				+ "dob = ?,"
+				+ "photo = ?,"
+				+ "mobilephone = ?,"
+				+ "username = ?,"
+				+ "password = ?,"
+				+ "email = ?,"
+				+ "gender = ?,"
+				+ "idspeciality = ? "
+				+ "where id = ?";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
 		st.setString(1, doctor.getName());
 		st.setString(2, doctor.getSurname());
 		st.setString(3, doctor.getNIF());
@@ -195,9 +191,53 @@ public class QuerysUpdate {
 		int id = qs.selectIdSpeciality(doctor.getSpeciality());
 		
 		st.setInt(11, id);
-		
-		st.close();
+		st.setInt(12, doctor.getID());
 		
 		st.executeUpdate();
+		
+		st.close();		
+	}
+	
+	public void updatePatient(Patient patient) throws SQLException {
+		String query = "UPDATE patient "
+				+ "SET name = ?,"
+				+ "surname = ?,"
+				+ "nif = ?,"
+				+ "dob = ?,"
+				+ "photo = ?,"
+				+ "mobilephone = ?,"
+				+ "homephone = ?,"
+				+ "username = ?,"
+				+ "password = ?,"
+				+ "email = ?,"
+				+ "gender = ?,"
+				+ "weight = ?,"
+				+ "height = ?,"
+				+ "where id = ?";
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setString(1, patient.getName());
+		st.setString(2, patient.getSurname());
+		st.setString(3, patient.getNIF());
+		st.setDate(4, patient.getDob());
+		st.setBytes(5, patient.getPhoto());
+		st.setInt(6, patient.getMobilePhone());
+		st.setInt(7, patient.getHousePhone());
+		st.setString(8, patient.getUsername());
+		st.setString(9, patient.getPassword());
+		st.setString(10, patient.getEmail());
+		if(patient.getGender().equals(GENDER.MALE)) {
+			st.setString(11, "Male");
+		}
+		else {
+			st.setString(11, "Female");
+		}
+		st.setFloat(12, patient.getWeight());
+		st.setFloat(13, patient.getHeight());
+		st.setInt(14, patient.getID());
+		
+		st.executeUpdate();
+		
+		st.close();
 	}
 }

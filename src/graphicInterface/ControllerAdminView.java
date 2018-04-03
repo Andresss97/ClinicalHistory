@@ -173,7 +173,20 @@ public class ControllerAdminView implements Initializable{
     	}
     	else if(list.getSelectionModel().getSelectedItem() instanceof Patient) {
     		patient = (Patient) list.getSelectionModel().getSelectedItem();
-    		System.out.println("Paciente");
+    		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePatientAdmin.fxml"));
+    		Parent root = null;
+    		try {
+				root = loader.load();
+				ControllerUpdatePatientAdmin controller = loader.<ControllerUpdatePatientAdmin>getController();
+				controller.initComponents(patient);
+				Scene scene = bar.getScene();
+				Stage window = (Stage) scene.getWindow();
+				Scene scene2 = new Scene(root);
+				window.setScene(scene2);
+				window.show();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
     	}
     	else {
     		Alert alert = new Alert(AlertType.WARNING);

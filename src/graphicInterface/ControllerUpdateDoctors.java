@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import creation.QuerysSelect;
+import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +18,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -97,6 +100,7 @@ public class ControllerUpdateDoctors implements Initializable{
     @FXML
     private PasswordField password;
     
+    private Doctor doctor;
     @FXML
     void onClickBrowse(ActionEvent event) {
 
@@ -134,6 +138,8 @@ public class ControllerUpdateDoctors implements Initializable{
     @FXML
     void onClickUpdate(ActionEvent event) {
     	Doctor doctor = new Doctor();
+    	doctor.setID(this.doctor.getID());
+    	QuerysUpdate qu = new QuerysUpdate();
     	Date date;
     	LocalDate ld;
     	doctor.setName(name.getText());
@@ -144,10 +150,35 @@ public class ControllerUpdateDoctors implements Initializable{
     	date = Date.valueOf(ld);
     	doctor.setDob(date);
     	doctor.setMobilePhone(Integer.parseInt(mPhone.getText()));
+    	doctor.setSpeciality(this.speciality.getSelectionModel().getSelectedItem());
+    	if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
+    		doctor.setGender(GENDER.MALE);
+    	}
+    	else {
+    		doctor.setGender(GENDER.FEMALE);
+    	}
+    	doctor.setUsername(user.getText());
+    	doctor.setPassword(password.getText());
+    	try {
+			qu.updateDoctor(doctor);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setContentText("Correctly update");
+    	alert.setTitle("Information");
+    	alert.setHeaderText("Update doctor account");
+    	alert.showAndWait();
     	
+    	try {
+			this.onClickHomePage(event);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public void initComponents(Doctor doctor) {
+    	this.doctor = doctor;
     	LocalDate ld = null;
     	name.setText(doctor.getName());
     	surname.setText(doctor.getSurname());
@@ -178,7 +209,6 @@ public class ControllerUpdateDoctors implements Initializable{
 		try {
 			specialities = qs.selectSpecialities();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ObservableList list = FXCollections.observableArrayList(specialities);

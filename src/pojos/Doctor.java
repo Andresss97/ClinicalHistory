@@ -2,8 +2,6 @@ package pojos;
 
 public class Doctor extends Person {
 
-	private Integer primarykey;
-
 	private String speciality;
 
 	public Doctor() {

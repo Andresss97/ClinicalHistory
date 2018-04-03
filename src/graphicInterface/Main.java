@@ -2,13 +2,11 @@ package graphicInterface;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import pojos.*;
 import creation.Conector;
 import creation.DBCreation;
 import creation.QuerysInsert;
-import creation.QuerysSelect;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -49,5 +47,4 @@ public class Main extends Application {
 		this.window.setScene(new Scene(root));
 		this.window.show();
 	}
-
 }

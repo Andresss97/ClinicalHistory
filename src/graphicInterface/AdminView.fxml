@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -8,7 +9,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="cBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerAdminView">
+<BorderPane fx:id="cBar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerAdminView">
    <top>
       <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
         <menus>
@@ -50,8 +50,8 @@
          <right>
             <VBox alignment="TOP_CENTER" prefHeight="487.0" prefWidth="183.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="modify" mnemonicParsing="false" onAction="#onClickModify" prefHeight="28.0" prefWidth="132.0" text="Modify account" />
-                  <Button fx:id="delete" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="29.0" prefWidth="130.0" text="Delete account">
+                  <Button fx:id="modify" mnemonicParsing="false" onAction="#onClickModify" prefHeight="28.0" prefWidth="132.0" style="-fx-background-color: #249ce8;" text="Modify account" textFill="WHITE" />
+                  <Button fx:id="delete" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="29.0" prefWidth="130.0" style="-fx-background-color: #249ce8;" text="Delete account" textFill="WHITE">
                      <VBox.margin>
                         <Insets top="25.0" />
                      </VBox.margin>
@@ -65,9 +65,9 @@
          <top>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="TOP_LEFT">
                <children>
-                  <Button fx:id="create" mnemonicParsing="false" onAction="#onClickCreate" text="Create doctor account" />
+                  <Button fx:id="create" mnemonicParsing="false" onAction="#onClickCreate" style="-fx-background-color: #249ce8;" text="Create doctor account" textFill="WHITE" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <TextField promptText="Search" />
+                  <JFXTextField focusColor="#249ce8" labelFloat="true" promptText="Search" unFocusColor="BLACK" />
                   <ImageView fx:id="iButton" fitHeight="25.0" fitWidth="30.0" onMouseClicked="#onClickedSearch" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/Search-WF.png" />
@@ -78,7 +78,7 @@
                         <Insets left="15.0" />
                      </padding>
                   </Region>
-                  <ComboBox fx:id="orderBy" onAction="#onClickOrderBy" prefWidth="150.0" promptText="Order by:" />
+                  <ComboBox fx:id="orderBy" onAction="#onClickOrderBy" prefWidth="150.0" promptText="Order by:" style="-fx-background-color: #249ce8;" />
                </children>
                <BorderPane.margin>
                   <Insets left="50.0" right="233.0" top="20.0" />
