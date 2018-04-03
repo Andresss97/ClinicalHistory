@@ -12,5 +12,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="ClinicalHistory/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jfoenix-8.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

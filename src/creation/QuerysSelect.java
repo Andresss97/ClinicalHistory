@@ -97,6 +97,7 @@ public class QuerysSelect {
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
 			doctor.setPhoto(set.getBytes("photo"));
+			doctor.setID(set.getInt("id"));
 		}
 		
 		st.close();
@@ -181,7 +182,8 @@ public class QuerysSelect {
 			doctor.setEmail(set.getString("email"));
 			doctor.setNIF(set.getString("nif"));
 			doctor.setMobilePhone(set.getInt("mobilephone"));
-			doctor.setSpeciality(set.getString("idspeciality"));
+			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
+			doctor.setSpeciality(sp);
 			if(set.getString("gender").equals("Male")) {
 				doctor.setGender(GENDER.MALE);
 			}
@@ -194,7 +196,6 @@ public class QuerysSelect {
 			idAddress = set.getInt("idaddress");
 			address = this.selectAddress(idAddress);
 			doctor.setAddress(address);
-			//doctor.setGender(GENDER.valueOf(set.getString("gender")));
 			
 			list.add(doctor);
 		}
@@ -209,6 +210,8 @@ public class QuerysSelect {
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		ArrayList<Person> list = new ArrayList<>();
+		int idAddress;
+		Address address;
 		
 		while (set.next()) {
 			Patient patient = new Patient();
@@ -220,8 +223,21 @@ public class QuerysSelect {
 			patient.setDob(set.getDate("dob"));
 			patient.setEmail(set.getString("email"));
 			patient.setNIF(set.getString("nif"));
+			patient.setWeight(set.getFloat("weight"));
+			patient.setHeight(set.getFloat("height"));
 			patient.setMobilePhone(set.getInt("mobilephone"));
 			patient.setHousePhone(set.getInt("homephone"));
+			patient.setPhoto(set.getBytes("photo"));
+			if(set.getString("gender").equals("Male")) {
+				patient.setGender(GENDER.MALE);
+			}
+			else {
+				patient.setGender(GENDER.FEMALE);
+			}
+			idAddress = set.getInt("idaddress");
+			address = this.selectAddress(idAddress);
+			patient.setAddress(address);
+			patient.getAddress().setID(idAddress);
 			list.add(patient);
 		}
 		
@@ -304,7 +320,6 @@ public class QuerysSelect {
 		st.setInt(1, id);
 		ResultSet set = st.executeQuery();
 		String type = set.getString("type");
-		System.out.println(type);
 		st.close();
 		set.close();
 		
