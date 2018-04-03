@@ -1,15 +1,18 @@
 package creation;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pojos.Address;
+import pojos.ClinicalHistory;
 import pojos.Doctor;
 import pojos.Patient;
 import pojos.Person;
@@ -307,4 +310,36 @@ public class QuerysSelect {
 		
 		return type;
 	}
+	public ClinicalHistory selectClinicalHistory (String[] data) throws SQLException { 
+		String query;
+		
+		query = "SELECT * FROM ClinicalHistory";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		st.close();
+		set.close();
+		while(set.next()){
+			ClinicalHistory clinicalHistory = new ClinicalHistory();
+			clinicalHistory.setAddictions(set.getString("additions"));
+			clinicalHistory.setID(set.getInt("ID"));
+			clinicalHistory.setLastModification(set.getDate("date"));
+			clinicalHistory.setMedicalInsurance(set.getInt("medicalInsurance"));
+			clinicalHistory.setObservations(set.getString("observations"));
+			
+			if(set.getString("bloodGroup").equals("A")) {
+				clinicalHistory.setBloodgroup("A");
+			}if(set.getString("bloodGroup").equals("AB")) {
+				clinicalHistory.setBloodgroup("AB");
+			}
+			List<ClinicalHistory> clinicalH =new LinkedList();
+			
+			
+			
+			clinicalH.add(clinicalHistory);
+		}
+		
+		return clinicalHistory;
+				
+	}
+	
 }
