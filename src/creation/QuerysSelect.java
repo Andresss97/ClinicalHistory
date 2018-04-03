@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pojos.Address;
 import pojos.ClinicalHistory;
+import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Doctor;
 import pojos.Patient;
 import pojos.Person;
@@ -325,14 +326,15 @@ public class QuerysSelect {
 		
 		return type;
 	}
-	public ClinicalHistory selectClinicalHistory (String[] data) throws SQLException { 
+	public List<ClinicalHistory> selectClinicalHistory () throws SQLException { 
 		String query;
 		
 		query = "SELECT * FROM ClinicalHistory";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		st.close();
-		set.close();
+		
+		List<ClinicalHistory> clinicalH =new LinkedList();
 		while(set.next()){
 			ClinicalHistory clinicalHistory = new ClinicalHistory();
 			clinicalHistory.setAddictions(set.getString("additions"));
@@ -341,19 +343,29 @@ public class QuerysSelect {
 			clinicalHistory.setMedicalInsurance(set.getInt("medicalInsurance"));
 			clinicalHistory.setObservations(set.getString("observations"));
 			
-			if(set.getString("bloodGroup").equals("A")) {
-				clinicalHistory.setBloodgroup("A");
-			}if(set.getString("bloodGroup").equals("AB")) {
-				clinicalHistory.setBloodgroup("AB");
+			if(set.getString("bloodGroup").equals("AP")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.AP);
+			}if(set.getString("bloodGroup").equals("AN")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.AN);
+			}if(set.getString("bloodGroup").equals("ABP")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.ABP);
+			}if(set.getString("bloodGroup").equals("ABN")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.ABN);
+			}if(set.getString("bloodGroup").equals("BP")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.BP);
+			}if(set.getString("bloodGroup").equals("BN")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.BN);
+			}if(set.getString("bloodGroup").equals("ZP")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.ZP);
+			}if(set.getString("bloodGroup").equals("ZN")) {
+				clinicalHistory.setBloodgroup(BLOODGROUP.ZN);
 			}
-			List<ClinicalHistory> clinicalH =new LinkedList();
 			
-			
-			
+			clinicalHistory.setLastModification(set.getDate("lastModification"));
 			clinicalH.add(clinicalHistory);
 		}
-		
-		return clinicalHistory;
+		set.close();
+		return clinicalH ;
 				
 	}
 	
