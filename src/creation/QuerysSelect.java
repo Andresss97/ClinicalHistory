@@ -317,9 +317,10 @@ public class QuerysSelect {
 		st.setInt(1, id);
 		ResultSet set = st.executeQuery();
 		String type = set.getString("type");
+
 		st.close();
 		set.close();
-		
+
 		return type;
 	}
 }

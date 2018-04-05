@@ -23,8 +23,9 @@ public class QuerysInsert {
 	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
 		query = "INSERT into doctor (username,password,email,gender,idspeciality,mobilephone,name,surname,nif,dob,idaddress) values (?,?,?,?,?,?,?,?,?,?,?)";
-		
+		QuerysSelect qs = new QuerysSelect();
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		int idspeciality = 0;
 		
 		st.setString(1, doctor.getUsername());
 		st.setString(2, doctor.getPassword());
@@ -35,7 +36,8 @@ public class QuerysInsert {
 		else {
 			st.setString(4,"Female");
 		}
-		st.setString(5, doctor.getSpeciality());
+		idspeciality = qs.selectIdSpeciality(doctor.getSpeciality());
+		st.setInt(5, idspeciality);
 		st.setInt(6,doctor.getMobilePhone());
 		st.setString(7,doctor.getName());
 		st.setString(8, doctor.getSurname());

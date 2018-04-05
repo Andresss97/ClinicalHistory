@@ -1,36 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="panel" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="259.0" prefWidth="418.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerSplashScreen">
+
+<AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerSplashScreen">
    <children>
-      <ImageView fitHeight="265.0" fitWidth="440.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="339.0" fitWidth="532.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/SplashScreen.jpg" />
+            <Image url="@../images/SplashScreen2.png" />
          </image>
       </ImageView>
-      <Pane prefHeight="268.0" prefWidth="425.0">
-         <children>
-            <Label layoutX="84.0" layoutY="96.0" prefHeight="33.0" prefWidth="90.0" text="Babylon" textFill="#f5f3f3">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="140.0" layoutY="128.0" text="Studio" textFill="#fcfafa">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
+      <Label layoutX="31.0" layoutY="149.0" text="Babylon Studio" textFill="#259ce5">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <ProgressIndicator layoutX="240.0" layoutY="243.0" />
    </children>
-   <effect>
-      <DropShadow />
-   </effect>
-</StackPane>
+</AnchorPane>

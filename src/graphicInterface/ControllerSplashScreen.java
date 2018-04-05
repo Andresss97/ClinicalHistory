@@ -10,20 +10,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class ControllerSplashScreen implements Initializable{
 	@FXML
-	private StackPane panel;
+	private AnchorPane panel;
 	
 	private class SplashScreen extends Thread{
 		
 		@Override
 		public void run() {
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 				Platform.runLater(new Runnable() {
 					
 					@Override
@@ -42,7 +44,7 @@ public class ControllerSplashScreen implements Initializable{
 							panel.getScene().getWindow().hide();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							System.out.println(e.getMessage());
 						}
 						
 					}

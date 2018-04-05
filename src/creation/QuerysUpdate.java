@@ -210,7 +210,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 				+ "email = ?,"
 				+ "gender = ?,"
 				+ "weight = ?,"
-				+ "height = ?,"
+				+ "height = ?"
 				+ "where id = ?";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -233,6 +233,26 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		st.setFloat(12, patient.getWeight());
 		st.setFloat(13, patient.getHeight());
 		st.setInt(14, patient.getID());
+		
+		st.executeUpdate();
+		
+		st.close();
+	}
+	
+	public void updateAddress(Address address) throws SQLException {
+		String query = "UPDATE address SET "
+				+ "city = ?,"
+				+ "street = ?,"
+				+ "cp = ?,"
+				+ "housenumber = ? where id = ?";
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, address.getCity());
+		st.setString(2, address.getStreet());
+		st.setInt(3, address.getPostalCode());
+		st.setInt(4, address.getHouseNumber());
+		st.setInt(5, address.getID());
 		
 		st.executeUpdate();
 		
