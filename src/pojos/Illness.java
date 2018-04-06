@@ -111,4 +111,10 @@ public class Illness implements Serializable {
 		this.patient = patient;
 	}
 
+	@Override
+	public String toString() {
+		return "Illness [description=" + description + ", date_disease=" + date_disease + ", type=" + type + ", name="
+				+ name + "]";
+	}
+
 }

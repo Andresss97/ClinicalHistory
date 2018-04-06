@@ -78,4 +78,10 @@ public class Surgeries implements Serializable {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "Surgeries [ID=" + ID + ", date=" + date + ", type=" + type + "]";
+	}
+	
 }

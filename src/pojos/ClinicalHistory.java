@@ -102,4 +102,12 @@ public class ClinicalHistory implements Serializable  {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "ClinicalHistory [ID=" + ID + ", addictions=" + addictions + ", observations=" + observations
+				+ ", lastModification=" + lastModification + ", bloodgroup=" + bloodgroup + ", medicalInsurance="
+				+ medicalInsurance + "]";
+	}
+	
 }

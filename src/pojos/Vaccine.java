@@ -106,6 +106,12 @@ public class Vaccine implements Serializable{
 	public void setTreatment(Treatment treatment) {
 		this.treatment = treatment;
 	}
+
+	@Override
+	public String toString() {
+		return "Vaccine [IDvaccine=" + IDvaccine + ", nameVaccine=" + nameVaccine + ", date=" + date + ", description="
+				+ description + "]";
+	}
 	
 	
 	

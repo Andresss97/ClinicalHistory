@@ -121,4 +121,11 @@ public class Treatment implements Serializable{
 		this.name = name;
 	}
 
+	@Override
+	public String toString() {
+		return "Treatment [ID=" + ID + ", startDate=" + startDate + ", endDate=" + endDate + ", name=" + name
+				+ ", description=" + description + ", tresults=" + tresults + "]";
+	}
+	
+
 }
