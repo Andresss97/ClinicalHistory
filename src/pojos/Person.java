@@ -2,6 +2,7 @@ package pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 
 import javafx.scene.image.Image;
 
@@ -130,4 +131,12 @@ public abstract class Person implements Serializable  {
 	public void setID(int iD) {
 		ID = iD;
 	}
+
+	@Override
+	public String toString() {
+		return "Person [username=" + username + ", password=" + password + ", email=" + email + ", NIF=" + NIF
+				+ ", mobilePhone=" + mobilePhone + ", name=" + name + ", surname=" + surname + ", dob=" + dob
+				+ ", gender=" + gender + ", photo=" + Arrays.toString(photo) + ", ID=" + ID + "]";
+	}
+	
 }
