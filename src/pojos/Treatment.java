@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -43,6 +42,9 @@ public class Treatment implements Serializable{
 	private Doctor doctor;
 	@OneToOne(mappedBy="vaccine")
 	private Vaccine vaccine;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "surgeries_id")
+	private Surgeries surgeries;
 
 	public Treatment() {
 		this.name = null;
