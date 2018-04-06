@@ -5,6 +5,8 @@ import java.sql.Date;
 import javax.persistence.*;
 
 
+
+
 @Entity
 @Table(name = "vaccines")
 
@@ -13,6 +15,8 @@ public class Vaccine {
 	@GeneratedValue(generator = "vaccines")
 	@TableGenerator(name = "vaccines", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "vaccines")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
 	private Integer IDvaccine;
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
