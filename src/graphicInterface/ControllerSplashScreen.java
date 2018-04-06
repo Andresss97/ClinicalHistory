@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -39,6 +40,7 @@ public class ControllerSplashScreen implements Initializable{
 							stage.setTitle("Babylon Studio");
 							stage.setResizable(true);
 							stage.setScene(scene);
+							stage.getIcons().add(new Image(".//images//Logo.jpg"));
 							stage.show();
 				
 							panel.getScene().getWindow().hide();

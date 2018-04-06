@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 	
@@ -42,6 +43,7 @@ public class Main extends Application {
 		}
 		
 		this.window = primaryStage;
+		this.window.getIcons().add(new Image(".//images//Logo.jpg"));
 		Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
 		this.window.initStyle(StageStyle.UNDECORATED);
 		this.window.setResizable(false);
