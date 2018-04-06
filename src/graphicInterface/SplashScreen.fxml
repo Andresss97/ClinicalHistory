@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="panel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="532.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerSplashScreen">
    <children>
       <ImageView fitHeight="339.0" fitWidth="532.0" pickOnBounds="true" preserveRatio="true">
@@ -17,7 +16,7 @@
       </ImageView>
       <Label layoutX="31.0" layoutY="149.0" text="Babylon Studio" textFill="#259ce5">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="Constantia Bold" size="36.0" />
          </font>
       </Label>
       <ProgressIndicator layoutX="240.0" layoutY="243.0" />
