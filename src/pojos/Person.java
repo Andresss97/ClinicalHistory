@@ -1,10 +1,11 @@
 package pojos;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javafx.scene.image.Image;
 
-public abstract class Person {
+public abstract class Person implements Serializable  {
 	protected String username;
 	protected String password;
 	protected String email;
@@ -27,11 +28,11 @@ public abstract class Person {
 		this.mobilePhone = 0;
 		this.name = null;
 		this.surname = null;
-		this.dob = new Date(1,1,1);
+		this.dob = null;
 		this.gender = null;
-		this.address = new Address();
+		this.address = null;
 		this.setID(0);
-		this.photo = new byte[0];
+		this.photo = null;
 	}
 	
 	public String getUsername() {

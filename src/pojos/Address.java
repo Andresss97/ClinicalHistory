@@ -1,6 +1,7 @@
 package pojos;
+import java.io.*;
 
-public class Address {
+public class Address implements Serializable {
 	private int postalCode;
 	private String city;
 	private String street;

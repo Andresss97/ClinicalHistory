@@ -1,8 +1,8 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 
-public class ClinicalHistory {
+public class ClinicalHistory implements Serializable  {
 	private Integer ID;
 	private String addictions;
 	private String observations;
@@ -17,9 +17,9 @@ public class ClinicalHistory {
 	private int medicalInsurance;
 
 	public ClinicalHistory() {
-		this.ID = 0;
-		this.addictions = " ";
-		this.observations = " ";
+		this.ID = null;
+		this.addictions = null;
+		this.observations = null;
 		this.lastModification = null;
 		this.bloodgroup = null;
 		this.medicalInsurance = 0;

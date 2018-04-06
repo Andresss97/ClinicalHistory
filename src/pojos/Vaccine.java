@@ -1,8 +1,8 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 
-public class Vaccine {
+public class Vaccine implements Serializable{
 	private Integer IDvaccine;
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,

@@ -16,8 +16,9 @@ import java.util.ArrayList;
 public abstract class DBCreation {    
 	private static ArrayList<String> specialities;
 	
-	public static void createDB(Conector conn) {
-		Conector con = conn;
+	public static void createDB(ConnInterface conn) {
+		if (conn.getClass().equals(Conector.class))  {
+		Conector con = (Conector) conn;
 		QuerysInsert qi = new QuerysInsert();
 		fillSpecialities();
 		
@@ -33,7 +34,7 @@ public abstract class DBCreation {
 		cTAppointment(con);
 		cTClinicalHistory(con);
 		cTMappingLogIn(con);
-		cTSpeciality(conn);
+		cTSpeciality(con);
 		try {
 			qi.insertUser2("admin", "indi");
 			for(int i = 0; i < specialities.size(); i++) {
@@ -41,6 +42,7 @@ public abstract class DBCreation {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
 		}
 	}
 

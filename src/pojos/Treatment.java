@@ -1,8 +1,8 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 
-public class Treatment {
+public class Treatment implements Serializable{
 
 	private Integer ID;
 	private Date startDate;
@@ -20,7 +20,7 @@ public class Treatment {
 
 	public Treatment() {
 		this.name = null;
-		this.ID = 0;
+		this.ID = null;
 		this.startDate = null;
 		this.endDate = null;
 		this.treatment = null;

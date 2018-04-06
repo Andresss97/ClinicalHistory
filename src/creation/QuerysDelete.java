@@ -12,7 +12,7 @@ public class QuerysDelete {
 	private Conector con;
 	
 	public QuerysDelete() {
-		this.con = Main.conector;
+		this.con = (Conector) Main.conector;
 	}	
 
 	public void deleteAppointment (Appointment appointment) throws SQLException {

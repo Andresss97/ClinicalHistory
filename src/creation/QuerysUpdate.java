@@ -11,7 +11,7 @@ import pojos.Person.GENDER;
 
 public class QuerysUpdate {
 
-	private Conector conn = Main.conector;
+	private Conector conn = (Conector) Main.conector;
 	
 	public void updateIllness(Illness illness) throws SQLException {
 		String query;

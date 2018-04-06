@@ -1,8 +1,9 @@
 package pojos;
+import java.io.*;
 
 import java.sql.Date;
 
-public class Surgeries {
+public class Surgeries implements Serializable {
 	private Integer ID;
 	private Date date;
 	private String type;
@@ -10,9 +11,9 @@ public class Surgeries {
 	private Patient patient;
 	
 	public Surgeries() {
-		this.ID = 0;
+		this.ID = null;
 		this.date = null;
-		this.type = " ";
+		this.type = null;
 		this.treatment = null;
 	}
 

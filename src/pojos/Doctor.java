@@ -1,6 +1,7 @@
 package pojos;
+import java.io.*;
 
-public class Doctor extends Person {
+public class Doctor extends Person  {
 
 	private String speciality;
 

@@ -1,9 +1,9 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 import java.util.List;
 
-public class Appointment {
+public class Appointment implements Serializable  {
 	private Integer ID;
 	private Date date;
 	private String hour;
@@ -12,7 +12,7 @@ public class Appointment {
 	private Doctor doctor;
 	
 	public Appointment() {
-		this.ID = 0;
+		this.ID = null;
 		this.date = null;
 		this.hour = null;
 		this.reason = null;

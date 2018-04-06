@@ -20,7 +20,7 @@ import pojos.Person;
 import pojos.Person.GENDER;
 
 public class QuerysSelect {
-	private Conector conn = Main.conector;
+	private Conector conn = (Conector) Main.conector;
 	
 	public String[] selectUser(String user, String psw) throws SQLException {
 		String[] data = new String[2];

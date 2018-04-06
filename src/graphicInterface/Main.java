@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import pojos.*;
 import creation.Conector;
+import creation.ConnInterface;
 import creation.DBCreation;
 import creation.QuerysInsert;
 import javafx.application.Application;
@@ -17,7 +18,7 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	
 	private Stage window;
-	public static Conector conector;
+	public static ConnInterface conector;
 	public static Patient patient;
 	public static Doctor doctor;
 	
