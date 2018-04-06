@@ -76,4 +76,10 @@ public class Allergies implements Serializable {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "Allergies [ID=" + ID + ", group=" + group + ", observations=" + observations + "]";
+	}
+	
 }

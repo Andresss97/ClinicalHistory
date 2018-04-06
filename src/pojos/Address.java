@@ -1,6 +1,9 @@
 package pojos;
 import java.io.*;
+import javax.persistence.*;
 
+
+@Entity
 public class Address implements Serializable {
 	private int postalCode;
 	private String city;
@@ -72,4 +75,13 @@ public class Address implements Serializable {
 	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
+
+	@Override
+	public String toString() {
+		return "Address [postalCode=" + postalCode + ", city=" + city + ", street=" + street + ", houseNumber="
+				+ houseNumber + ", ID=" + ID + "]";
+	}
+
+	
+	
 }
