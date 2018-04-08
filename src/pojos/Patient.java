@@ -108,6 +108,56 @@ public class Patient extends Person{
 		this.cHistory= cHistory;
 	}
 	
+	public void addDoctor(Doctor doctor){
+		this.doctors.add(doctor);
+	} 
+	
+	public void removeDoctor(Doctor doctor){
+		this.doctors.remove(doctor);
+	}
+	
+	public void addIllness(Illness illness){
+		this.illnesses.add(illness);
+	} 
+	
+	public void removeIllness(Illness illness){
+		this.illnesses.remove(illness);
+	}
+	
+	public void addAppointment(Appointment appointment){
+		this.appointments.add(appointment);
+	} 
+	
+	public void removeAppointment(Appointment appointment){
+		this.appointments.remove(appointment);
+	}
+	
+	public void addAllergy(Allergies allergies){
+		this.allergies.add(allergies);
+	} 
+	
+	public void removeAllergy(Allergies allergies){
+		this.allergies.remove(allergies);
+	}
+	
+	public void addSurgery(Surgeries surgery){
+		this.surgeries.add(surgery);
+	} 
+	
+	public void removeSurgery(Surgeries surgery){
+		this.surgeries.remove(surgery);
+	}
+	
+	public void addVaccine(Vaccine vaccine){
+		this.vaccines.add(vaccine);
+	} 
+	
+	public void removeVaccine(Vaccine vaccine){
+		this.vaccines.remove(vaccine);
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Patient: "+ name + " " + surname;
