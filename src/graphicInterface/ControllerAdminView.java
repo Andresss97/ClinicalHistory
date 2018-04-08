@@ -28,6 +28,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import pojos.Doctor;
 import pojos.Patient;
@@ -79,12 +80,11 @@ public class ControllerAdminView implements Initializable{
     
     @FXML
     void onClickCreate(ActionEvent event) throws IOException {
-    	Parent root = FXMLLoader.load(getClass().getResource("CreateDoctorView.fxml"));
-		Scene scene = bar.getScene();
-    	Stage window = (Stage) scene.getWindow();
-    	Scene scene2 = new Scene(root);
-    	window.setScene(scene2);
-    	window.show();
+    	BorderPane root = FXMLLoader.load(getClass().getResource("CreateDoctorView.fxml"));
+		cContainer.getChildren().clear();
+		root.prefHeightProperty().bind(cContainer.heightProperty());
+		root.prefWidthProperty().bind(cContainer.widthProperty());
+		cContainer.setCenter(root);
     }
 
     @FXML
@@ -137,8 +137,10 @@ public class ControllerAdminView implements Initializable{
 
     @FXML
     void onClickEditProfile(ActionEvent event) throws IOException {
+    	GridPane root = FXMLLoader.load(getClass().getResource("EditAdminAccount.fxml"));
     	cContainer.getChildren().clear();
-    	BorderPane root = FXMLLoader.load(getClass().getResource("EditAdminAccount.fxml"));
+    	root.prefHeightProperty().bind(cContainer.heightProperty());
+    	root.prefWidthProperty().bind(cContainer.widthProperty());
     	cContainer.setCenter(root);
     }
 
@@ -157,16 +159,15 @@ public class ControllerAdminView implements Initializable{
     	if(list.getSelectionModel().getSelectedItem() instanceof Doctor) {
     		this.doctor = (Doctor) list.getSelectionModel().getSelectedItem();
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateDoctorsAccount.fxml"));
-    		Parent root = null;
+    		BorderPane root = null;
 			try {
 				root = loader.load();
 				ControllerUpdateDoctors controller = loader.<ControllerUpdateDoctors>getController();
 				controller.initComponents(doctor);
-				Scene scene = bar.getScene();
-				Stage window = (Stage) scene.getWindow();
-				Scene scene2 = new Scene(root);
-				window.setScene(scene2);
-				window.show();
+				cContainer.getChildren().clear();
+				root.prefHeightProperty().bind(cContainer.heightProperty());
+				root.prefWidthProperty().bind(cContainer.widthProperty());
+				cContainer.setCenter(root);
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
@@ -174,16 +175,15 @@ public class ControllerAdminView implements Initializable{
     	else if(list.getSelectionModel().getSelectedItem() instanceof Patient) {
     		patient = (Patient) list.getSelectionModel().getSelectedItem();
     		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePatientAdmin.fxml"));
-    		Parent root = null;
+    		BorderPane root = null;
     		try {
 				root = loader.load();
+				cContainer.getChildren().clear();
 				ControllerUpdatePatientAdmin controller = loader.<ControllerUpdatePatientAdmin>getController();
 				controller.initComponents(patient);
-				Scene scene = bar.getScene();
-				Stage window = (Stage) scene.getWindow();
-				Scene scene2 = new Scene(root);
-				window.setScene(scene2);
-				window.show();
+				root.prefHeightProperty().bind(cContainer.heightProperty());
+				root.prefWidthProperty().bind(cContainer.widthProperty());
+				cContainer.setCenter(root);
 			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}

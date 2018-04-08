@@ -1,24 +1,38 @@
 package graphicInterface;
 
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXComboBox;
+
 import creation.QuerysSelect;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.DatePicker;
 import statistics.StatsAppointments;
 
 public class ControllerStatsView implements Initializable{
-
-	@FXML
-	private BarChart<?, ?> graph;
 	
+    @FXML
+    private JFXComboBox<String> speciality;
+    
+    @FXML
+    private DatePicker date;
+
+    @FXML
+    private BarChart<?, ?> graph;
+
     @FXML
     private CategoryAxis hour;
 
@@ -27,11 +41,30 @@ public class ControllerStatsView implements Initializable{
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		QuerysSelect qs = new QuerysSelect();	
+		ArrayList<String> specialities = null;
+		try {
+			specialities = qs.selectSpecialities();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList list1 = FXCollections.observableArrayList(specialities);
+		
+		speciality.setItems(list1);
+	}
+	
+	@FXML
+	void onDateClick(ActionEvent event) {
+		LocalDate ld = date.getValue();
+		Date d = Date.valueOf(ld);
 		QuerysSelect qs = new QuerysSelect();
 		StatsAppointments stats = new StatsAppointments();
 		
 		try {
-			ArrayList<String> list = qs.appStats();
+			String spec = speciality.getSelectionModel().getSelectedItem();
+			int id = qs.selectIdSpeciality(spec);
+			ArrayList<String> list = qs.appStats(id);
 			stats.generateStats(list);
 			this.fillData(stats);
 		} catch (SQLException e) {
@@ -40,6 +73,8 @@ public class ControllerStatsView implements Initializable{
 	}
 	
 	private void fillData(StatsAppointments stats) {
+		graph.getData().clear();
+		
 		XYChart.Series serie = new XYChart.Series();
 		serie.setName("Affluency");
 		serie.getData().add(new XYChart.Data("9:00", stats.getNine()));

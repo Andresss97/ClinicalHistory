@@ -304,12 +304,14 @@ public class QuerysInsert {
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;
 
-		query = "INSERT into appointment (date, hour, reason) values (?,?,?)";
+		query = "INSERT into appointment (date, hour, reason, iddoctor, idpatient) values (?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 	    st.setDate(1, appointment.getDate());
 		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
+		st.setInt(4, appointment.getDoctor().getID());
+		st.setInt(5, Main.patient.getID());
 		
 		st.executeUpdate();
 		st.close();

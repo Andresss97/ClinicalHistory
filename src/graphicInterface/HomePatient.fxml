@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerHomePatients">
+<BorderPane fx:id="bContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerHomePatients">
    <top>
       <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
         <menus>
@@ -59,7 +59,7 @@
       </HBox>
    </bottom>
    <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <BorderPane fx:id="cContainer" prefHeight="509.0" prefWidth="855.0" BorderPane.alignment="CENTER">
          <left>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
@@ -99,7 +99,7 @@
          <top>
             <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                <BorderPane.margin>
-                  <Insets right="20.0" top="25.0" />
+                  <Insets right="163.0" top="25.0" />
                </BorderPane.margin>
                <children>
                   <JFXTextField focusColor="#249ce8" labelFloat="true" promptText="Search" />
@@ -113,21 +113,21 @@
                </children>
             </HBox>
          </top>
+         <right>
+            <VBox prefHeight="415.0" prefWidth="123.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets right="20.0" top="20.0" />
+               </BorderPane.margin>
+               <children>
+                  <Button fx:id="bPrint" mnemonicParsing="false" onAction="#onClickPrint" prefHeight="25.0" prefWidth="141.0" style="-fx-background-color: #249ce8;" text="Print" textFill="WHITE" />
+                  <Button fx:id="bPDF" mnemonicParsing="false" onAction="#onClickPdf" prefHeight="25.0" prefWidth="136.0" style="-fx-background-color: #249ce8;" text="Export to PDF" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+         </right>
       </BorderPane>
    </center>
-   <right>
-      <VBox prefHeight="415.0" prefWidth="123.0" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets right="20.0" top="72.0" />
-         </BorderPane.margin>
-         <children>
-            <Button fx:id="bPrint" mnemonicParsing="false" onAction="#onClickPrint" prefHeight="25.0" prefWidth="141.0" style="-fx-background-color: #249ce8;" text="Print" textFill="WHITE" />
-            <Button fx:id="bPDF" mnemonicParsing="false" onAction="#onClickPdf" prefHeight="25.0" prefWidth="136.0" style="-fx-background-color: #249ce8;" text="Export to PDF" textFill="WHITE">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
-         </children>
-      </VBox>
-   </right>
 </BorderPane>

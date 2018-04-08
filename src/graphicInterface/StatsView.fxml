@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerStatsView">
-   <children>
-      <BarChart fx:id="graph" prefHeight="400.0" prefWidth="512.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="531.0" prefWidth="773.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerStatsView">
+   <top>
+      <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
+         <children>
+            <JFXComboBox fx:id="speciality" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="137.0" promptText="Speciality" />
+            <Region prefHeight="25.0" prefWidth="16.0" />
+            <DatePicker fx:id="date" onAction="#onDateClick" prefHeight="25.0" prefWidth="135.0" />
+         </children>
+         <BorderPane.margin>
+            <Insets left="30.0" right="30.0" top="20.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+   <center>
+      <BarChart fx:id="graph" style="-fx-border-color: #249ce8;" title="Number of patients per hour " BorderPane.alignment="CENTER">
         <xAxis>
-          <CategoryAxis fx:id="hour" label="Hour" prefHeight="50.0" prefWidth="434.0" side="BOTTOM" />
+          <CategoryAxis fx:id="hour" label="Hour" prefHeight="44.0" prefWidth="633.0" side="BOTTOM" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="people" label="People" prefHeight="292.0" prefWidth="72.0" side="LEFT" />
+          <NumberAxis fx:id="people" label="Patients" side="LEFT" />
         </yAxis>
+         <BorderPane.margin>
+            <Insets bottom="30.0" left="30.0" right="30.0" top="20.0" />
+         </BorderPane.margin>
       </BarChart>
-   </children>
-</AnchorPane>
+   </center>
+</BorderPane>

@@ -12,6 +12,7 @@ import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pojos.Address;
+import pojos.Appointment;
 import pojos.ClinicalHistory;
 import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Doctor;
@@ -65,6 +66,7 @@ public class QuerysSelect {
 			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
 			patient.setPhoto(set.getBytes("photo"));
+			patient.setID(set.getInt("id"));
 		}
 		
 		st.close();
@@ -72,6 +74,7 @@ public class QuerysSelect {
 		
 		return patient;
 	}
+	
 	public Doctor selectDoctor(String[] data) throws SQLException {
 		Doctor doctor = null;
 		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
@@ -125,9 +128,10 @@ public class QuerysSelect {
 		return data;
 	}
 	
-	public ArrayList appStats() throws SQLException {
-		String query = "SELECT hour from appointment";
+	public ArrayList appStats(int idspec) throws SQLException {
+		String query = "SELECT a1.hour from appointment as a1 JOIN doctor as d1 on a1.iddoctor = d1.id where d1.idspeciality = ?";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, idspec);
 		ArrayList<String> list = new ArrayList<>();
 		ResultSet set = st.executeQuery();
 		
@@ -146,20 +150,26 @@ public class QuerysSelect {
 		while (set.next()) {
 			sLevel = set.getInt("usertype");
 		}
+		
 		st.close();
 		set.close();
+		
 		return sLevel;
 	}
 
-	public ArrayList<Doctor> selectDoctorNSSpeciality(String speciality) throws SQLException {
-		String query = "SELECT name, surname from doctor where speciality = '" + speciality + "'";
+	public ArrayList<Doctor> selectDoctorNSSpeciality(int speciality) throws SQLException {
+		String query = "SELECT name, surname, id from doctor where idspeciality = ?";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, speciality);
+		
 		ResultSet set = st.executeQuery();
 		ArrayList<Doctor> list = new ArrayList<>();
 		while (set.next()) {
 			Doctor doctor = new Doctor();
 			doctor.setName(set.getString("name"));
 			doctor.setSurname(set.getString("surname"));
+			doctor.setID(set.getInt("id"));
 			list.add(doctor);
 		}
 		st.close();
@@ -256,6 +266,7 @@ public class QuerysSelect {
 		
 		st.close();
 		set.close();
+		
 		return id;
 	}
 	
@@ -276,7 +287,6 @@ public class QuerysSelect {
 		
 		return address;
 	}
-	
 	
 	public ArrayList<String> selectSpecialities() throws SQLException {
 		String query;
@@ -327,6 +337,7 @@ public class QuerysSelect {
 
 		return type;
 	}
+	
 	public List<ClinicalHistory> selectClinicalHistory () throws SQLException { 
 		String query;
 		
@@ -365,9 +376,54 @@ public class QuerysSelect {
 			clinicalHistory.setLastModification(set.getDate("lastModification"));
 			clinicalH.add(clinicalHistory);
 		}
+		
 		set.close();
-		return clinicalH ;
-				
+		
+		return clinicalH ;		
 	}
 	
+	public ArrayList<String> selectHoursDoctorApp(int id) throws SQLException {
+		String query = "SELECT hour from appointment where iddoctor = ?";
+		ArrayList<String> hours = new ArrayList<>();
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			hours.add(set.getString("hour"));
+		}
+		
+		st.close();
+		set.close();
+		
+		return hours;
+	}
+	
+	public ArrayList<Appointment> selectAppointments(int id) throws SQLException {
+		ArrayList<Appointment> apps = new ArrayList<>();
+		
+		String query = "SELECT * from appointment where idpatient = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			Appointment app = new Appointment();
+			app.setReason(set.getString("reason"));
+			app.setDate(set.getDate("date"));
+			app.setHour(set.getString("hour"));
+			app.setID(set.getInt("id"));
+			
+			apps.add(app);
+		}
+		
+		st.close();
+		set.close();
+		
+		return apps;
+	}
 }
