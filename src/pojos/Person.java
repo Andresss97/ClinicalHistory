@@ -1,6 +1,7 @@
 package pojos;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 import java.util.Arrays;
 
@@ -11,7 +12,9 @@ import javafx.scene.image.Image;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable  {
-	
+
+	private static final long serialVersionUID = 1L;
+
 	protected String username;
 	protected String password;
 	protected String email;

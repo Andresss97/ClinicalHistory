@@ -3,11 +3,35 @@ import java.io.*;
 
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name = "SURGERIES")
+
 public class Surgeries implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(generator = "SURGERIES")
+	@TableGenerator(name = "SURGERIES", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "SURGERIES")
 	private Integer ID;
 	private Date date;
 	private String type;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDTREATMENT")
 	private Treatment treatment;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
 	public Surgeries() {

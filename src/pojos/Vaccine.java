@@ -8,36 +8,33 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "vaccines")
+@Table(name = "VACCINE")
 
 public class Vaccine {
 	@Id
-	@GeneratedValue(generator = "vaccines")
-	@TableGenerator(name = "vaccines", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "vaccines")
+	@GeneratedValue(generator = "VACCINE")
+	@TableGenerator(name = "VACCINE", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "VACCINE")
 	
 	private Integer IDvaccine;
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
 		VARICELLA,YELLOWFEVER};
-		@OneToMany(mappedBy="vaccine")
+		@OneToMany(mappedBy="VACCINE")
 	private typeVaccine nameVaccine;
 	private Date date;
 	private String description;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
+	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "treatment_id")
-	private Treatment treatment;
-	
+
 
 	public Vaccine() {
 		this.IDvaccine = 0;
 		this.nameVaccine = null;
 		this.date = null;
 		this.patient = null;
-		this.treatment = null;
+		
 	}
 	
 	public Vaccine(int ID, typeVaccine name, Date date) {
@@ -118,13 +115,8 @@ public class Vaccine {
 		return true;
 	}
 
-	public Treatment getTreatment() {
-		return treatment;
-	}
-
-	public void setTreatment(Treatment treatment) {
-		this.treatment = treatment;
-	}
+	
+	
 
 	@Override
 	public String toString() {
