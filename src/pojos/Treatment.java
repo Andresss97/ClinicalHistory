@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 @Entity
-@Table(name = "treatments")
+@Table(name = "TREATMENT")
 
 public class Treatment implements Serializable{
 	/**
@@ -20,16 +20,16 @@ public class Treatment implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(generator = "treatments")
-	@TableGenerator(name = "treatments", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "treatments")
+	@GeneratedValue(generator = "TREATMENT")
+	@TableGenerator(name = "TREATMENT", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "TREATMENT")
 	
 
 	private Integer ID;
 	private Date startDate;
 	private Date endDate;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
+	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	public enum typeTreatment {
 		MEDICATION, REHAB
@@ -40,10 +40,11 @@ public class Treatment implements Serializable{
 	private String description;
 	private String tresults;
 	private Doctor doctor;
-	@OneToOne(mappedBy="vaccine")
+	@OneToOne(mappedBy="TREATMENT")
+	private  Illness illnness;
+	@OneToOne(mappedBy="TREATMENT")
 	private Vaccine vaccine;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "surgeries_id")
+	@OneToOne(mappedBy="TREATMENT")
 	private Surgeries surgeries;
 
 	public Treatment() {

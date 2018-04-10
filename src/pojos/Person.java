@@ -1,12 +1,17 @@
 package pojos;
 
 import java.io.Serializable;
+
 import java.sql.Date;
 import java.util.Arrays;
 
 import javafx.scene.image.Image;
 
 public abstract class Person implements Serializable  {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String username;
 	protected String password;
 	protected String email;
