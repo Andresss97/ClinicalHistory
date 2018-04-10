@@ -19,6 +19,7 @@ import pojos.Doctor;
 import pojos.Patient;
 import pojos.Person;
 import pojos.Person.GENDER;
+import pojos.Surgeries;
 
 public class QuerysSelect {
 	private Conector conn = (Conector) Main.conector;
@@ -351,11 +352,12 @@ public class QuerysSelect {
 		return type;
 	}
 	
-	public List<ClinicalHistory> selectClinicalHistory () throws SQLException { 
+	public List<ClinicalHistory> selectClinicalHistory (int id) throws SQLException { 
 		String query;
 		
-		query = "SELECT * FROM ClinicalHistory";
+		query = "SELECT * FROM ClinicalHistory where idpatient = ? ";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, id);
 		ResultSet set = st.executeQuery();
 		st.close();
 		
@@ -477,4 +479,55 @@ public class QuerysSelect {
 		
 		return doctor;
 	}
+	
+	public ArrayList <Surgeries> selectSurgery (int id) throws SQLException {
+	  ArrayList <Surgeries> surgeries = new ArrayList<>();
+	  
+	  String query = "SELECT * FROM surgeries WHERE idpatient = ?";
+	  PreparedStatement st = conn.getConnect().prepareStatement(query);
+	  
+	  st.setInt(1, id);
+	  
+	  ResultSet set = st.executeQuery();
+		
+	  while(set.next()) {
+	      Surgeries surg = new Surgeries();
+	      surg.setDate(set.getDate("date"));
+	      surg.setID(set.getInt("id"));
+	      //surg.setTreatment(set.getInt("treatment"));
+	      surg.setType(set.getString("type"));
+	      
+	      surgeries.add(surg);		
+	  }
+	  st.close();
+	  set.close();
+	  
+	return surgeries;
+	}
+	
+	public ArrayList <Allergies> selectAllergy (int id) throws SQLException{
+		ArrayList <Allergies> allergy = new ArrayList<>();
+		
+		String query = "SELECT * FROM allergies WHERE idpatient = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while (set.next()) {
+			Allergies allerg = new Allergies ();
+			allerg.setGroup(set.getString("group"));
+			allerg.setID(set.getInt("id"));
+			allerg.setObservations(set.getString("observations"));
+			
+			allergy.add(allerg);
+		}
+		
+		st.close();
+		set.close();
+		
+		return allergy;
+	}
+	
 }
