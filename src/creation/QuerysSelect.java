@@ -160,7 +160,7 @@ public class QuerysSelect {
 	}
 
 	public ArrayList<Doctor> selectDoctorNSSpeciality(int speciality) throws SQLException {
-		String query = "SELECT name, surname, id from doctor where idspeciality = ?";
+		String query = "SELECT name, surname, dob, email, nif, mobilephone, idspeciality, gender, id from doctor where idspeciality = ?";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setInt(1, speciality);
@@ -171,7 +171,20 @@ public class QuerysSelect {
 			Doctor doctor = new Doctor();
 			doctor.setName(set.getString("name"));
 			doctor.setSurname(set.getString("surname"));
+			doctor.setDob(set.getDate("dob"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
+			doctor.setSpeciality(sp);
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender(GENDER.MALE);
+			}
+			else {
+				doctor.setGender(GENDER.FEMALE);
+			}
 			doctor.setID(set.getInt("id"));
+			
 			list.add(doctor);
 		}
 		st.close();
@@ -420,7 +433,9 @@ public class QuerysSelect {
 			app.setDate(set.getDate("date"));
 			app.setHour(set.getString("hour"));
 			app.setID(set.getInt("id"));
-			
+			int iddoc = set.getInt("iddoctor");
+			Doctor doc = this.selectDoctorByID(iddoc);
+			app.setDoctor(doc);
 			apps.add(app);
 		}
 		
@@ -428,6 +443,42 @@ public class QuerysSelect {
 		set.close();
 		
 		return apps;
+	}
+	
+	public Doctor selectDoctorByID(int id) throws SQLException {
+		Doctor doctor = new Doctor();
+		
+		String query = "SELECT * from doctor where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			doctor.setName(set.getString("name"));
+			doctor.setSurname(set.getString("surname"));
+			doctor.setDob(set.getDate("dob"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
+			doctor.setSpeciality(sp);
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender(GENDER.MALE);
+			}
+			else {
+				doctor.setGender(GENDER.FEMALE);
+			}
+			doctor.setUsername(set.getString("username"));
+			doctor.setPassword(set.getString("password"));
+			doctor.setID(set.getInt("id"));
+		}
+		
+		st.close();
+		set.close();
+		
+		return doctor;
 	}
 	
 	public ArrayList <Surgeries> selectSurgery (int id) throws SQLException {

@@ -28,7 +28,7 @@
           <Menu mnemonicParsing="false" text="View">
             <items>
               <MenuItem fx:id="mAppointments" mnemonicParsing="false" onAction="#onClickAppointments" text="My appointments" />
-                  <MenuItem fx:id="myCalendar" mnemonicParsing="false" text="My agenda" />
+                  <MenuItem fx:id="myCalendar" mnemonicParsing="false" onAction="#onClickAgenda" text="My agenda" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

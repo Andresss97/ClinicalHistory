@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import virtualization.EmailSender;
 
 public class ControllerPasswordRecovery {
 
@@ -32,10 +33,18 @@ public class ControllerPasswordRecovery {
     @FXML
     void onClickRecover(ActionEvent event) {
     	if(this.checkEmail(email.getText()) == true) {
-    		this.sendEmail(data.get(0), data.get(1));
+    		EmailSender ms = new EmailSender();
+    		try {
+    			System.out.println(data.get(0));
+    			System.out.println(data.get(1));
+				ms.sendEmail(data.get(0), data.get(1), email.getText());
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
     		Alert alert  = new Alert(AlertType.INFORMATION);
     		alert.setHeaderText("Credentials Send");
     		alert.setContentText("Your credentials are in your email");
+    		alert.setTitle("Information");
     		alert.show();
     	}
     }
@@ -56,26 +65,4 @@ public class ControllerPasswordRecovery {
 		data = (data2);
 		return true;
 	}
-    
-    private void sendEmail(String user, String password) {
-    	String to = email.getText();
-    	String from = "espartacoalaparatopereda@gmail.com";
-    	String host = "localhost";
-    	Properties properties = System.getProperties();
-    	properties.put("mail.smtp.host", host);
-    	Session session = Session.getDefaultInstance(properties);
-    	
-    	try {
-    		MimeMessage mm = new MimeMessage(session);
-    		mm.setFrom(new InternetAddress(from));
-    		mm.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-    		mm.setSubject("Your credentials");
-    		String content = "UserName: "+ user + "Password: " + password;
-    		mm.setText(content);
-    		Transport.send(mm);
-    	}
-    	catch(MessagingException ex) {
-    		
-    	}
-    }
 }
