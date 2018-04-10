@@ -101,6 +101,15 @@ public class ControllerHomePatients implements Initializable {
 	}
 	
 	@FXML
+	void onClickAgenda(ActionEvent event) throws IOException {
+		cContainer.getChildren().clear();
+		BorderPane root = FXMLLoader.load(getClass().getResource("AgendaPatients.fxml"));
+		root.prefHeightProperty().bind(cContainer.heightProperty());
+		root.prefWidthProperty().bind(cContainer.widthProperty());
+		cContainer.setCenter(root);
+	}
+	
+	@FXML
 	void onClickPdf(ActionEvent event) {
 		PDFGenerator pdf = new PDFGenerator();
 		

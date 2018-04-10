@@ -94,15 +94,37 @@ public class ControllerMenuAppointmentsPatient implements Initializable{
     	}
     }
 
-    @FXML
-    void onClickOrder(ActionEvent event) {
+	@FXML
+	void onClickOrder(ActionEvent event) {
 
-    }
+	}
 
-    @FXML
-    void onClickUpdate(ActionEvent event) {
+	@FXML
+	void onClickUpdate(ActionEvent event) throws IOException {
+		if (list.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must select an appointment");
+			alert.setTitle("Warning");
+			alert.setHeaderText("Update information");
+			alert.show();
+			return;
+		}
 
-    }
+		container.getChildren().clear();
+		
+		Appointment app = list.getSelectionModel().getSelectedItem();
+		
+		BorderPane lContainer = null;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateAppointment.fxml"));
+		lContainer = loader.load();
+		ControllerUpdateAppointment controller = loader.<ControllerUpdateAppointment>getController();
+		controller.initComponents(app);
+		
+
+		lContainer.prefHeightProperty().bind(container.heightProperty());
+		lContainer.prefWidthProperty().bind(container.widthProperty());
+		container.setCenter(lContainer);
+	}
     
     private void refreshList() {
     	list.getItems().clear();

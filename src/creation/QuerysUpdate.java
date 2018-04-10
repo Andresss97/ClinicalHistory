@@ -61,13 +61,14 @@ public class QuerysUpdate {
 		st.close();
 	}
 
-	private void updateAppointment (Appointment appointment) throws SQLException {
+	public void updateAppointment (Appointment appointment) throws SQLException {
 		String query;
 		query = "UPDATE appointment " 
-				+ "SET date = ? "
-				+ "SET hour = ? "
-				+ "SET reason = ? "
-				+ "SET iddoctor = ? "
+				+ "SET date = ?,"
+				+ "hour = ?,"
+				+ "reason = ?,"
+				+ "iddoctor = ?,"
+				+ "idpatient = ?"
 				+ "WHERE id = ?";
 		
 		PreparedStatement st;
@@ -76,7 +77,8 @@ public class QuerysUpdate {
 		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
 		st.setInt(4, appointment.getDoctor().getID());
-		st.setInt(5, appointment.getID());
+		st.setInt(5, Main.patient.getID());
+		st.setInt(6, appointment.getID());
 		
 	    st.executeUpdate();
 	    st.close();
