@@ -12,6 +12,7 @@ import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import pojos.Address;
+import pojos.Allergies;
 import pojos.Appointment;
 import pojos.ClinicalHistory;
 import pojos.ClinicalHistory.BLOODGROUP;
