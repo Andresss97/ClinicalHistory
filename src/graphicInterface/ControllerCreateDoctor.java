@@ -33,26 +33,11 @@ import pojos.Person.GENDER;
 
 public class ControllerCreateDoctor implements Initializable{
 
-	@FXML
-    private MenuBar bar;
-
-    @FXML
-    private MenuItem home;
-
-    @FXML
-    private MenuItem myProfile;
-
-    @FXML
-    private MenuItem signOff;
-
     @FXML
     private Button create;
 
     @FXML
     private Button browse;
-
-    @FXML
-    private Button takePhoto;
 
     @FXML
     private ComboBox<?> gender;
@@ -153,15 +138,14 @@ public class ControllerCreateDoctor implements Initializable{
     	alert.setTitle("Information");
     	alert.showAndWait();
     	
-    	this.onClickHomePage(event);
+    	this.onClickHomePage();
 	}
 	
-	@FXML
-	void onClickHomePage(ActionEvent event) {
+	private void onClickHomePage() {
 		Parent root = null;
 		try {
 			root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
-			Scene scene = bar.getScene();
+			Scene scene = gender.getScene();
 			Stage window = (Stage) scene.getWindow();
 			Scene scene2 = new Scene(root);
 			window.setScene(scene2);
@@ -169,41 +153,6 @@ public class ControllerCreateDoctor implements Initializable{
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-	}
-
-	@FXML
-	void onClickMyProfile(ActionEvent event) {
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("EditAdminAccount.fxml"));
-			Scene scene = bar.getScene();
-			Stage window = (Stage) scene.getWindow();
-			window.setScene(new Scene(root));
-			window.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void onClickSignOff(ActionEvent event) {
-		Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-			Scene scene = bar.getScene();
-			Stage window = (Stage) scene.getWindow();
-			window.setScene(new Scene(root));
-			window.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	@FXML
-	void onClickTPhoto(ActionEvent event) {
-
 	}
 
 	@Override

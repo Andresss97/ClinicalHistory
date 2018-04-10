@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -26,6 +25,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import pojos.Appointment;
 import pojos.Doctor;
@@ -33,13 +34,13 @@ import pojos.Doctor;
 public class ControllerCreateAppointmentMenu implements Initializable {
 	
 	@FXML
-	private AnchorPane container;
+	private GridPane container;
 	
 	@FXML
 	private TextField rAppointment;
 
 	@FXML
-	private ComboBox<?> speciality;
+	private ComboBox<String> speciality;
 
 	@FXML
 	private ComboBox<?> doctorApp;
@@ -60,6 +61,7 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 	void onClickAhBh(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = FXMLLoader.load(getClass().getResource("StatsView.fxml"));
+		stage.setTitle("Babylon Studio");
 		stage.setScene(new Scene(root));
 		stage.show();
 	}
@@ -76,9 +78,8 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 			alert.setTitle("Information");
 			alert.setContentText("Appointment succesfully created");
 			alert.showAndWait();
-			container.getChildren().clear();
-			AnchorPane lContainer = FXMLLoader.load(getClass().getResource("MenuAppointmentsPatient.fxml"));
-			container.getChildren().add(lContainer);
+			
+			this.toHomePage();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
@@ -87,16 +88,28 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 	@FXML
 	void onClickSpeciality(ActionEvent event) {
 		String speciality = this.speciality.getSelectionModel().getSelectedItem().toString();
-		try {
-			this.setDoctors(speciality);
-		} catch (SQLException e) {
-
-		}
+		this.setDoctors(speciality);
 	}
 	
 	@FXML
 	void onClickDoctor(ActionEvent event) {
+		this.refreshHours();
 		
+		QuerysSelect qs = new QuerysSelect();
+		Doctor doctor = (Doctor) doctorApp.getSelectionModel().getSelectedItem();
+		
+		if(doctor == null) {
+			return;
+		}
+
+		int id = doctor.getID();
+		
+		try {
+			ArrayList<String> hours = qs.selectHoursDoctorApp(id);
+			hApp.getItems().removeAll(hours);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private Appointment obtainData() {
@@ -108,36 +121,61 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 		LocalDate d = dApp.getValue();
 		date = Date.valueOf(d);
 		app.setDate(date);
-		System.out.println(app);
+		Doctor doctor = (Doctor) doctorApp.getSelectionModel().getSelectedItem();
+		app.setDoctor(doctor);
 		
 		return app;
 	}
 	
-	private void setDoctors(String speciality) throws SQLException {
+	private void setDoctors(String speciality) {
 		QuerysSelect qs = new QuerysSelect();
-		ArrayList<Doctor> list;
+		ArrayList<Doctor> list = null;
 		ObservableList list2 = FXCollections.observableArrayList();
-		list = qs.selectDoctorNSSpeciality(speciality);
+		int id;
+		try {
+			id = qs.selectIdSpeciality(speciality);
+			list = qs.selectDoctorNSSpeciality(id);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		list2.addAll(list);
 		
 		doctorApp.setItems(list2);
 	}
-
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
+	
+	private void refreshHours() {
+		hApp.getItems().clear();
 		ObservableList list = FXCollections.observableArrayList("9:00", "9:30", "10:00", "10:30", "11:00", "11:30",
 				"12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00",
 				"17:30", "18:00");
 		hApp.setItems(list);
-		
-		ObservableList list2 = FXCollections.observableArrayList("Allergy and Immunollogy",
-				"General Pathology", "Cardiology","Clinical Neurophisiology","Endocrinology",
-				"General Practice","Internal Medicine","Nephrology","Neurology","Ophthalmology",
-				"Orthopaedics","Paediatrics","Neonatology","Physical Medicine Rehabilitation",
-				"Pulmonology","Psychiatry","Radiology","General Surgery","Urology");
+	}
+	
+	private void toHomePage() throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+		Scene scene = rAppointment.getScene();
+    	Stage window = (Stage) scene.getWindow();
+    	Scene scene2 = new Scene(root);
+    	window.setScene(scene2);
+    	window.show();
+	}
+	
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		QuerysSelect qs = new QuerysSelect();
+		ArrayList<String> specialities = null;
+		try {
+			specialities = qs.selectSpecialities();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObservableList list2 = FXCollections.observableArrayList(specialities);
 		
 		speciality.setItems(list2);
+		
+		this.refreshHours();
 	}
 }
 

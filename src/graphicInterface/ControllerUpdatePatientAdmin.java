@@ -95,15 +95,6 @@ public class ControllerUpdatePatientAdmin implements Initializable {
 
     @FXML
     private PasswordField password;
-
-    @FXML
-    private MenuItem home;
-
-    @FXML
-    private MenuItem mProfile;
-
-    @FXML
-    private MenuItem signOff;
     
     private Patient patient;
     
@@ -112,28 +103,7 @@ public class ControllerUpdatePatientAdmin implements Initializable {
 
     }
 
-    @FXML
-    void onClickMProfile(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickSignOff(ActionEvent event) {
-    	Parent root;
-		try {
-			root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-			Scene scene = name.getScene();
-			Stage window = (Stage) scene.getWindow();
-			window.setScene(new Scene(root));
-			window.show();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
-
-    @FXML
-    void onHomeClick(ActionEvent event) {
+    private void onHomeClick() {
     	Parent root;
 		try {
 			root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
@@ -203,7 +173,7 @@ public class ControllerUpdatePatientAdmin implements Initializable {
     	alert.setHeaderText("Update information");
     	alert.showAndWait();
     	
-    	onHomeClick(event);
+    	this.onHomeClick();
     }
     
     public void initComponents(Patient patient) {

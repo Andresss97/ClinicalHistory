@@ -35,18 +35,6 @@ import pojos.Person.GENDER;
 public class ControllerUpdateDoctors implements Initializable{
 
     @FXML
-    private MenuBar bar;
-
-    @FXML
-    private MenuItem home;
-
-    @FXML
-    private MenuItem myProfile;
-
-    @FXML
-    private MenuItem signOff;
-
-    @FXML
     private Button update;
 
     @FXML
@@ -106,33 +94,13 @@ public class ControllerUpdateDoctors implements Initializable{
 
     }
 
-    @FXML
-    void onClickHomePage(ActionEvent event) throws IOException {
+    private void onClickHomePage() throws IOException {
     	Parent root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
-		Scene scene = bar.getScene();
+		Scene scene = gender.getScene();
     	Stage window = (Stage) scene.getWindow();
     	Scene scene2 = new Scene(root);
     	window.setScene(scene2);
     	window.show();
-    }
-
-    @FXML
-    void onClickMyProfile(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onClickSignOff(ActionEvent event) throws IOException {
-    	Parent root = FXMLLoader.load(getClass().getResource("MainView.fxml"));
-    	Scene scene = bar.getScene();
-    	Stage window = (Stage) scene.getWindow();
-    	window.setScene(new Scene(root));
-    	window.show();
-    }
-
-    @FXML
-    void onClickTPhoto(ActionEvent event) {
-
     }
 
     @FXML
@@ -171,7 +139,7 @@ public class ControllerUpdateDoctors implements Initializable{
     	alert.showAndWait();
     	
     	try {
-			this.onClickHomePage(event);
+			this.onClickHomePage();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

@@ -62,6 +62,7 @@ public class ControllerMainView {
 				case 1: {
 					String[] data = qs.selectUser(user.getText(), password.getText());
 					Main.patient = qs.selectPatient(data);
+					Main.patient.getAppointments().addAll(qs.selectAppointments(Main.patient.getID()));
 					if (Main.patient.getUsername().equals(user.getText())
 							&& Main.patient.getPassword().equals(password.getText())) {
 						Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
