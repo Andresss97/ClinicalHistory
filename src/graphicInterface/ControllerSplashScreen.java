@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class ControllerSplashScreen implements Initializable{
 	@FXML
@@ -41,6 +43,15 @@ public class ControllerSplashScreen implements Initializable{
 							stage.setResizable(true);
 							stage.setScene(scene);
 							stage.getIcons().add(new Image(".//images//Logo.jpg"));
+							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+								
+								@Override
+								public void handle(WindowEvent e) {
+									Main.conector.killConnection();
+									Platform.exit();
+									System.exit(0);
+								}
+							});
 							stage.show();
 				
 							panel.getScene().getWindow().hide();

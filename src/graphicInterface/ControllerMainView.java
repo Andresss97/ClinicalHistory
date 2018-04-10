@@ -2,7 +2,9 @@ package graphicInterface;
 
 import java.io.IOException;
 import creation.QuerysSelect;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class ControllerMainView {
 	
@@ -70,6 +73,17 @@ public class ControllerMainView {
 						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
+						
+						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+							
+							@Override
+							public void handle(WindowEvent e) {
+								Main.conector.killConnection();
+								Platform.exit();
+								System.exit(0);
+							}
+						});
+						
 						window.show();
 					}
 					break;
@@ -85,6 +99,15 @@ public class ControllerMainView {
 						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
+						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+							
+							@Override
+							public void handle(WindowEvent e) {
+								Main.conector.killConnection();
+								Platform.exit();
+								System.exit(0);
+							}
+						});
 						window.show();
 					}
 					break;

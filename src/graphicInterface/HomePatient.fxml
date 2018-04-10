@@ -33,7 +33,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="mProfile" mnemonicParsing="false" text="My profile" />
+              <MenuItem fx:id="mProfile" mnemonicParsing="false" onAction="#onClickMProfile" text="My profile" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Close">
