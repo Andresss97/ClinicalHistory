@@ -2,11 +2,22 @@ package pojos;
 import java.io.*;
 import java.sql.Date;
 
-public class ClinicalHistory implements Serializable  {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "CLINICALHISTORY")
+public class ClinicalHistory implements Serializable {
+	@Id
+	@Column(name = "ID")
 	private Integer ID;
+	
+	@Column(name = "ADDICTIONS")
 	private String addictions;
+	@Column(name = "OBSERVATIONS")
 	private String observations;
+	@Column(name = "LASTMODIFICATIONS")
 	private Date lastModification;
+	
 	private Patient patient;
 	
 	public enum BLOODGROUP {
