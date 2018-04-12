@@ -17,7 +17,7 @@ public class ClinicalHistory implements Serializable {
 	private String observations;
 	@Column(name = "LASTMODIFICATIONS")
 	private Date lastModification;
-	
+	@JoinColumn(name = "idpatient")
 	private Patient patient;
 	
 	public enum BLOODGROUP {

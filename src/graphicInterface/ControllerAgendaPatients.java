@@ -42,8 +42,10 @@ public class ControllerAgendaPatients implements Initializable{
     
     private void createAgenda() {
     	this.vcalendar = new VCalendar();
-    	agenda = new ICalendarAgenda(vcalendar);
-    	container.setCenter(agenda);
+    	this.agenda = new ICalendarAgenda(vcalendar);
+    	container.setCenter(this.agenda);
+    	
+    	this.agenda.actionCallbackProperty();
     }
     
     @FXML

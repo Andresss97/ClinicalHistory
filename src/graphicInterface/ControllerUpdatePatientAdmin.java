@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -137,6 +138,8 @@ public class ControllerUpdatePatientAdmin implements Initializable {
     	else {
     		patient.setGender(GENDER.FEMALE);
     	}
+    	LocalDate ld = dBirth.getValue();
+    	patient.setDob(Date.valueOf(ld));
     	patient.setWeight(Float.parseFloat(weight.getText()));
     	patient.setHeight(Float.parseFloat(height.getText()));
     	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));

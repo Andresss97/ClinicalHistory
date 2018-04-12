@@ -7,32 +7,38 @@ import javax.mail.internet.*;
 
 public class EmailSender {
 	
+	@SuppressWarnings("static-access")
 	public void sendEmail(String user, String password, String email) throws MessagingException {
 		String to = email;
-		String from = "babylonstudiorecovery@gmail.com";
+		String from = "carlosi@tecnovoice.es";
+		String passwordGmail = "Indi.1111";
+		String content = "User: " + user + " Password: " + password;
 		
-        Properties props = new Properties();    
-        props.put("mail.smtp.host", "smtp.gmail.com");    
-        props.put("mail.smtp.socketFactory.port", "465");    
-        props.put("mail.smtp.socketFactory.class",    
-                  "javax.net.ssl.SSLSocketFactory");    
-        props.put("mail.smtp.auth", "true");    
-        props.put("mail.smtp.port", "465");
-        
-        Session session = Session.getDefaultInstance(props,    
-                new javax.mail.Authenticator() {    
-                protected PasswordAuthentication getPasswordAuthentication() {    
-                return new PasswordAuthentication(from,password);  
-                }    
-        });
-        
-        MimeMessage message = new MimeMessage(session);
-        message.setSender(new InternetAddress(from));
+		Properties props = new Properties();
+		props.put("mail.smtp.user", from);
+		props.put("mail.smtp.password", passwordGmail);
+		props.put("mail.smtp.host", "mail.tecnovoice.es");
+		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.starttls.enable", "false");
+		props.put("mail.smtp.debug", "true");
+		props.put("mail.smtp.auth", "true");
+		
+		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(from, passwordGmail);
+			}
+		});
+		session.setDebug(true);
+		
+		MimeMessage message = new MimeMessage(session);
+		message.setSubject("Babylon Studio Credentials");
+        message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-        message.setSubject("Babylon Studio credentials");
-        String content = "User: " + user + " Password: " + password;
         message.setText(content);
-        
-        Transport.send(message);
+        Transport transport = session.getTransport("smtp");
+        transport.connect("mail.tecnovoice.es", 587, from, passwordGmail);
+        transport.send(message, message.getAllRecipients());       
+        transport.close();
 	}
 }
