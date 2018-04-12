@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author andre
  */
-public class Conector {
+public class Conector implements ConnInterface {
     private Connection connect;
     private String url;
     

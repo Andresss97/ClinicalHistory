@@ -1,10 +1,12 @@
 package pojos;
 
+import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 
 import javafx.scene.image.Image;
 
-public abstract class Person {
+public abstract class Person implements Serializable  {
 	protected String username;
 	protected String password;
 	protected String email;
@@ -17,7 +19,7 @@ public abstract class Person {
 	protected GENDER gender;
 	protected byte[] photo;
 	protected Address address;
-	protected Integer ID;
+	protected int ID;
 	
 	@SuppressWarnings("deprecation")
 	public Person() {
@@ -27,11 +29,11 @@ public abstract class Person {
 		this.mobilePhone = 0;
 		this.name = null;
 		this.surname = null;
-		this.dob = new Date(1,1,1);
+		this.dob = null;
 		this.gender = null;
-		this.address = new Address();
+		this.address = null;
 		this.setID(0);
-		this.photo = new byte[0];
+		this.photo = null;
 	}
 	
 	public String getUsername() {
@@ -129,4 +131,27 @@ public abstract class Person {
 	public void setID(int iD) {
 		ID = iD;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		if (ID != other.ID)
+			return false;
+		return true;
+	}
+	 
 }

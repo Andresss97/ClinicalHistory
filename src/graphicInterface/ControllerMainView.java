@@ -1,15 +1,12 @@
 package graphicInterface;
 
 import java.io.IOException;
-import java.net.URL;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-
 import creation.QuerysSelect;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,11 +16,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pojos.Patient;
+import javafx.stage.WindowEvent;
 
 public class ControllerMainView {
 	
@@ -69,6 +65,7 @@ public class ControllerMainView {
 				case 1: {
 					String[] data = qs.selectUser(user.getText(), password.getText());
 					Main.patient = qs.selectPatient(data);
+					Main.patient.getAppointments().addAll(qs.selectAppointments(Main.patient.getID()));
 					if (Main.patient.getUsername().equals(user.getText())
 							&& Main.patient.getPassword().equals(password.getText())) {
 						Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
@@ -76,6 +73,17 @@ public class ControllerMainView {
 						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
+						
+						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+							
+							@Override
+							public void handle(WindowEvent e) {
+								Main.conector.killConnection();
+								Platform.exit();
+								System.exit(0);
+							}
+						});
+						
 						window.show();
 					}
 					break;
@@ -91,6 +99,15 @@ public class ControllerMainView {
 						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
+						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+							
+							@Override
+							public void handle(WindowEvent e) {
+								Main.conector.killConnection();
+								Platform.exit();
+								System.exit(0);
+							}
+						});
 						window.show();
 					}
 					break;

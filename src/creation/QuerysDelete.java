@@ -12,7 +12,7 @@ public class QuerysDelete {
 	private Conector con;
 	
 	public QuerysDelete() {
-		this.con = Main.conector;
+		this.con = (Conector) Main.conector;
 	}	
 
 	public void deleteAppointment (Appointment appointment) throws SQLException {
@@ -102,6 +102,7 @@ public class QuerysDelete {
 		
 		st.close();
 	}
+	
 	public void deleteTreatment(Treatment treatment) throws SQLException {
 		String query = "DELETE from treatment where id = " + treatment.getIDtreatment();
 		PreparedStatement st = con.getConnect().prepareStatement(query);
@@ -109,6 +110,17 @@ public class QuerysDelete {
 		st.executeUpdate();
 		
 		st.close();
+	}
+	
+	public void deleteAddress(int dateID)throws SQLException {
+		String query = "DELETE FROM address WHERE id=?";
+		PreparedStatement st = con.getConnect().prepareStatement(query);
+		st.setInt(1, dateID);
+		
+		st.executeUpdate();
+		
+		st.close();
+		
 	}
 	
 	

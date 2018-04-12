@@ -1,8 +1,9 @@
 package pojos;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Illness {
+public class Illness implements Serializable {
 
 	private String description;
 	private Date date_disease;
@@ -22,7 +23,7 @@ public class Illness {
 		this.description = null;
 		this.date_disease = null;
 		this.type = null;
-		this.IDdisease = 0;
+		this.IDdisease = null;
 	}
 
 	public Illness(String name, String des, Date date, typeDisease type) {
@@ -108,6 +109,12 @@ public class Illness {
 
 	public void setPatient(Patient patient) {
 		this.patient = patient;
+	}
+
+	@Override
+	public String toString() {
+		return "Illness [description=" + description + ", date_disease=" + date_disease + ", type=" + type + ", name="
+				+ name + "]";
 	}
 
 }

@@ -1,6 +1,7 @@
 package pojos;
+import java.io.*;
 
-public class Allergies {
+public class Allergies implements Serializable {
 	private Integer ID;
 	private String group;
 	private String observations;
@@ -8,9 +9,9 @@ public class Allergies {
 	private Patient patient;
 
 	public Allergies() {
-		this.ID = 0;
-		this.group = " ";
-		this.observations = " ";
+		this.ID = null;
+		this.group = null;
+		this.observations = null;
 		this.treatment = null;
 	}
 
@@ -75,4 +76,10 @@ public class Allergies {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "Allergies [ID=" + ID + ", group=" + group + ", observations=" + observations + "]";
+	}
+	
 }

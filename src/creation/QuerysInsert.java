@@ -4,6 +4,7 @@ import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -16,13 +17,15 @@ import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
 	
-	private Conector conn = Main.conector;
+	private Conector conn = (Conector) Main.conector;
 	//change the Integer you are changing
+	
 	public void insertDoctor(Doctor doctor, Integer iDAddress) throws SQLException {
 		String query;
-		query = "INSERT into doctor (username,password,email,gender,speciality,mobilephone,name,surname,nif,dob,idaddress) values (?,?,?,?,?,?,?,?,?,?,?)";
-		
+		query = "INSERT into doctor (username,password,email,gender,idspeciality,mobilephone,name,surname,nif,dob,idaddress) values (?,?,?,?,?,?,?,?,?,?,?)";
+		QuerysSelect qs = new QuerysSelect();
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		int idspeciality = 0;
 		
 		st.setString(1, doctor.getUsername());
 		st.setString(2, doctor.getPassword());
@@ -33,69 +36,8 @@ public class QuerysInsert {
 		else {
 			st.setString(4,"Female");
 		}
-		
-		switch(doctor.getSpeciality()) {
-		case ALLERGY_IMMUNOLLOGY:
-			st.setString(5, "Allergy_Immunollogy");
-			break;
-		case CARDIOLOGY:
-			st.setString(5, "Cardiology");
-			break;
-		case CLINICAL_NEUROPHISIOLOGY:
-			st.setString(5, "Clinical neurophisiology");
-			break;
-		case ENDOCRINOLOGY:
-			st.setString(5, "Endocrinology");
-			break;
-		case GENERAL_PATHOLOGY:
-			st.setString(5, "General Pathology");
-			break;
-		case GENERAL_PRACTICE:
-			st.setString(5, "General Practice");
-			break;
-		case GENERAL_SURGERY:
-			st.setString(5, "General Surgery");
-			break;
-		case INTERNAL_MEDICINE:
-			st.setString(5, "Internal Medicine");
-			break;
-		case NEONATOLOGY:
-			st.setString(5, "Neonatology");
-			break;
-		case NEPHROLOGY:
-			st.setString(5, "Nephrology");
-			break;
-		case NEUROLOGY:
-			st.setString(5, "Neurology");
-			break;
-		case OPHTHALMOLOGY:
-			st.setString(5, "Ophthalmology");
-			break;
-		case ORTHOPAEDICS:
-			st.setString(5, "Orthopaedics");
-			break;
-		case PAEDIATRICS:
-			st.setString(5, "Paediatrics");
-			break;
-		case PHYSICAL_MEDICINE_REHABILITATION:
-			st.setString(5, "Physical Medicine Rehabilitation");
-			break;
-		case PSYCHIATRY:
-			st.setString(5, "Psychiatry");
-			break;
-		case PULMONOLOGY:
-			st.setString(5, "Pulmonogy");
-			break;
-		case RADIOLOGY:
-			st.setString(5, "Radiology");
-			break;
-		case UROLOGY:
-			st.setString(5, "Urology");
-			break;
-		default:
-			break;
-		}
-		
+		idspeciality = qs.selectIdSpeciality(doctor.getSpeciality());
+		st.setInt(5, idspeciality);
 		st.setInt(6,doctor.getMobilePhone());
 		st.setString(7,doctor.getName());
 		st.setString(8, doctor.getSurname());
@@ -362,12 +304,14 @@ public class QuerysInsert {
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;
 
-		query = "INSERT into appointment (date, hour, reason) values (?,?,?)";
+		query = "INSERT into appointment (date, hour, reason, iddoctor, idpatient) values (?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 	    st.setDate(1, appointment.getDate());
 		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
+		st.setInt(4, appointment.getDoctor().getID());
+		st.setInt(5, Main.patient.getID());
 		
 		st.executeUpdate();
 		st.close();
@@ -398,5 +342,16 @@ public class QuerysInsert {
 		st.executeUpdate();
 		st.close();
 	}
-
+	
+	public void insertSpecialities(String speciality) throws SQLException {
+		String query;
+		
+		query = "INSERT into speciality (type) values (?)";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, speciality);
+		
+		st.executeUpdate();
+		st.close();
+	}
 }

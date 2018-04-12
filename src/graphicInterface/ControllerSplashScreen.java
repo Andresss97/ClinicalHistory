@@ -5,24 +5,30 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 
 public class ControllerSplashScreen implements Initializable{
 	@FXML
-	private StackPane panel;
+	private AnchorPane panel;
 	
 	private class SplashScreen extends Thread{
 		
 		@Override
 		public void run() {
 			try {
-				Thread.sleep(5000);
+				Thread.sleep(4000);
 				Platform.runLater(new Runnable() {
 					
 					@Override
@@ -36,12 +42,22 @@ public class ControllerSplashScreen implements Initializable{
 							stage.setTitle("Babylon Studio");
 							stage.setResizable(true);
 							stage.setScene(scene);
+							stage.getIcons().add(new Image(".//images//Logo.jpg"));
+							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+								
+								@Override
+								public void handle(WindowEvent e) {
+									Main.conector.killConnection();
+									Platform.exit();
+									System.exit(0);
+								}
+							});
 							stage.show();
 				
 							panel.getScene().getWindow().hide();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
-							e.printStackTrace();
+							System.out.println(e.getMessage());
 						}
 						
 					}

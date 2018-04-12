@@ -2,21 +2,29 @@ package graphicInterface;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import creation.QuerysDelete;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import pojos.Appointment;
 
 public class ControllerMenuAppointmentsPatient implements Initializable{
@@ -43,41 +51,89 @@ public class ControllerMenuAppointmentsPatient implements Initializable{
     private ListView<Appointment> list;
     
     @FXML
-    private AnchorPane container;
+    private BorderPane container;
 
     @FXML
     void onClickCreate(ActionEvent event) throws IOException {
     	container.getChildren().clear();
-    	AnchorPane lContainer = FXMLLoader.load(getClass().getResource("CreateAppointmentMenu.fxml"));
-    	container.getChildren().add(lContainer);
+    	GridPane lContainer = FXMLLoader.load(getClass().getResource("CreateAppointmentMenu.fxml"));
+    	lContainer.prefHeightProperty().bind(container.heightProperty());
+    	lContainer.prefWidthProperty().bind(container.widthProperty());
+    	container.setCenter(lContainer);
     }
 
     @FXML
     void onClickDelete(ActionEvent event) {
-
+    	QuerysDelete qd = new QuerysDelete();
+    	
+    	if(list.getSelectionModel().getSelectedItem() == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+        	alert.setContentText("You must select an appointment");
+        	alert.setTitle("Warning delete");
+        	alert.setHeaderText("Delete information");
+        	alert.show();
+        	return;
+    	}
+    	
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setContentText("Are you sure you want to delete this appointment?");
+    	alert.setTitle("Information");
+    	alert.setHeaderText("Delete account");
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	if(result.get() == ButtonType.OK) {
+    		Appointment app = list.getSelectionModel().getSelectedItem();
+    		try {
+				qd.deleteAppointment(app);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		Main.patient.getAppointments().remove(app);
+    		this.refreshList();
+    	}
     }
 
-    @FXML
-    void onClickOrder(ActionEvent event) {
+	@FXML
+	void onClickOrder(ActionEvent event) {
 
+	}
+
+	@FXML
+	void onClickUpdate(ActionEvent event) throws IOException {
+		if (list.getSelectionModel().getSelectedItem() == null) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must select an appointment");
+			alert.setTitle("Warning");
+			alert.setHeaderText("Update information");
+			alert.show();
+			return;
+		}
+
+		container.getChildren().clear();
+		
+		Appointment app = list.getSelectionModel().getSelectedItem();
+		
+		BorderPane lContainer = null;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateAppointment.fxml"));
+		lContainer = loader.load();
+		ControllerUpdateAppointment controller = loader.<ControllerUpdateAppointment>getController();
+		controller.initComponents(app);
+		
+
+		lContainer.prefHeightProperty().bind(container.heightProperty());
+		lContainer.prefWidthProperty().bind(container.widthProperty());
+		container.setCenter(lContainer);
+	}
+    
+    private void refreshList() {
+    	list.getItems().clear();
+    	list.getItems().addAll(Main.patient.getAppointments());
     }
-
-    @FXML
-    void onClickSearch(MouseEvent event) {
-
-    }
-
-    @FXML
-    void onClickUpdate(ActionEvent event) {
-
-    }
-
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
-			list.getItems().add(Main.patient.getAppointments().get(i));
-		}
-		
+		this.refreshList();
 		ObservableList list2 = FXCollections.observableArrayList("Date", "Alphabetically");
 		
 		order.setItems(list2);

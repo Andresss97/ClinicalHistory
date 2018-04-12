@@ -1,12 +1,36 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 
-public class Treatment {
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name = "treatments")
+
+public class Treatment implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(generator = "treatments")
+	@TableGenerator(name = "treatments", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "treatments")
+	
 
 	private Integer ID;
 	private Date startDate;
 	private Date endDate;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
 	public enum typeTreatment {
 		MEDICATION, REHAB
@@ -17,10 +41,12 @@ public class Treatment {
 	private String description;
 	private String tresults;
 	private Doctor doctor;
+	@OneToOne(mappedBy="vaccine")
+	private Vaccine vaccine;
 
 	public Treatment() {
 		this.name = null;
-		this.ID = 0;
+		this.ID = null;
 		this.startDate = null;
 		this.endDate = null;
 		this.treatment = null;
@@ -120,5 +146,12 @@ public class Treatment {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "Treatment [ID=" + ID + ", startDate=" + startDate + ", endDate=" + endDate + ", name=" + name
+				+ ", description=" + description + ", tresults=" + tresults + "]";
+	}
+	
 
 }

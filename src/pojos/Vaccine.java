@@ -2,17 +2,36 @@ package pojos;
 
 import java.sql.Date;
 
+import javax.persistence.*;
+
+
+
+
+@Entity
+@Table(name = "vaccines")
+
 public class Vaccine {
+	@Id
+	@GeneratedValue(generator = "vaccines")
+	@TableGenerator(name = "vaccines", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "vaccines")
+	
 	private Integer IDvaccine;
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
 		VARICELLA,YELLOWFEVER};
+		@OneToMany(mappedBy="vaccine")
 	private typeVaccine nameVaccine;
 	private Date date;
 	private String description;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "treatment_id")
 	private Treatment treatment;
 	
+
 	public Vaccine() {
 		this.IDvaccine = 0;
 		this.nameVaccine = null;
@@ -105,6 +124,12 @@ public class Vaccine {
 
 	public void setTreatment(Treatment treatment) {
 		this.treatment = treatment;
+	}
+
+	@Override
+	public String toString() {
+		return "Vaccine [IDvaccine=" + IDvaccine + ", nameVaccine=" + nameVaccine + ", date=" + date + ", description="
+				+ description + "]";
 	}
 	
 	

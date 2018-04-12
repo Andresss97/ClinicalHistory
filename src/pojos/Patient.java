@@ -1,17 +1,46 @@
 package pojos;
+import java.io.*;
+
 
 import java.util.LinkedList;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+@Entity
+@Table(name = "PATIENT")
+
 public class Patient extends Person{
+	/**
+	 * 
+	 */
+	@Id
+	@GeneratedValue(generator = "PATIENT")
+	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
+	private static final long serialVersionUID = 1L;
 	private float weight;
 	private float height;
 	private int housePhone;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Doctor> doctors;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Appointment> appointments;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Illness> illnesses;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Allergies> allergies;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Surgeries> surgeries;
+	@OneToMany(mappedBy="PATIENT")
+	private LinkedList<Treatment> treatment;
+	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Vaccine> vaccines;
+	@OneToOne(mappedBy="PATIENT")
 	private ClinicalHistory cHistory;
 	
 	public Patient() { 
@@ -106,6 +135,56 @@ public class Patient extends Person{
 	public void setClinicalHistory(ClinicalHistory cHistory) {
 		this.cHistory= cHistory;
 	}
+	
+	public void addDoctor(Doctor doctor){
+		this.doctors.add(doctor);
+	} 
+	
+	public void removeDoctor(Doctor doctor){
+		this.doctors.remove(doctor);
+	}
+	
+	public void addIllness(Illness illness){
+		this.illnesses.add(illness);
+	} 
+	
+	public void removeIllness(Illness illness){
+		this.illnesses.remove(illness);
+	}
+	
+	public void addAppointment(Appointment appointment){
+		this.appointments.add(appointment);
+	} 
+	
+	public void removeAppointment(Appointment appointment){
+		this.appointments.remove(appointment);
+	}
+	
+	public void addAllergy(Allergies allergies){
+		this.allergies.add(allergies);
+	} 
+	
+	public void removeAllergy(Allergies allergies){
+		this.allergies.remove(allergies);
+	}
+	
+	public void addSurgery(Surgeries surgery){
+		this.surgeries.add(surgery);
+	} 
+	
+	public void removeSurgery(Surgeries surgery){
+		this.surgeries.remove(surgery);
+	}
+	
+	public void addVaccine(Vaccine vaccine){
+		this.vaccines.add(vaccine);
+	} 
+	
+	public void removeVaccine(Vaccine vaccine){
+		this.vaccines.remove(vaccine);
+	}
+	
+	
 	
 	@Override
 	public String toString() {

@@ -1,12 +1,23 @@
 package pojos;
-
+import java.io.*;
 import java.sql.Date;
 
-public class ClinicalHistory {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "CLINICALHISTORY")
+public class ClinicalHistory implements Serializable {
+	@Id
+	@Column(name = "ID")
 	private Integer ID;
+	
+	@Column(name = "ADDICTIONS")
 	private String addictions;
+	@Column(name = "OBSERVATIONS")
 	private String observations;
+	@Column(name = "LASTMODIFICATIONS")
 	private Date lastModification;
+	
 	private Patient patient;
 	
 	public enum BLOODGROUP {
@@ -17,9 +28,9 @@ public class ClinicalHistory {
 	private int medicalInsurance;
 
 	public ClinicalHistory() {
-		this.ID = 0;
-		this.addictions = " ";
-		this.observations = " ";
+		this.ID = null;
+		this.addictions = null;
+		this.observations = null;
 		this.lastModification = null;
 		this.bloodgroup = null;
 		this.medicalInsurance = 0;
@@ -102,4 +113,12 @@ public class ClinicalHistory {
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
+
+	@Override
+	public String toString() {
+		return "ClinicalHistory [ID=" + ID + ", addictions=" + addictions + ", observations=" + observations
+				+ ", lastModification=" + lastModification + ", bloodgroup=" + bloodgroup + ", medicalInsurance="
+				+ medicalInsurance + "]";
+	}
+	
 }
