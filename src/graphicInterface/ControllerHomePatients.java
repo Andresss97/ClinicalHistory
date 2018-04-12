@@ -101,6 +101,20 @@ public class ControllerHomePatients implements Initializable {
 	}
 	
 	@FXML
+	void onClickMProfile(ActionEvent event) throws IOException {
+		cContainer.getChildren().clear();
+		BorderPane root = null;
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePatient.fxml"));
+		root = loader.load();
+		ControllerUpdatePatient controller = loader.<ControllerUpdatePatient>getController();
+		controller.initComponents(Main.patient);
+		
+		root.prefHeightProperty().bind(cContainer.heightProperty());
+		root.prefWidthProperty().bind(cContainer.widthProperty());
+		cContainer.setCenter(root);
+	}
+	
+	@FXML
 	void onClickAgenda(ActionEvent event) throws IOException {
 		cContainer.getChildren().clear();
 		BorderPane root = FXMLLoader.load(getClass().getResource("AgendaPatients.fxml"));

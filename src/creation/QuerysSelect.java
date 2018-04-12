@@ -68,6 +68,9 @@ public class QuerysSelect {
 			patient.setUsername(set.getString("username"));
 			patient.setPassword(set.getString("password"));
 			patient.setPhoto(set.getBytes("photo"));
+			int id = set.getInt("idaddress");
+			Address address = this.selectAddress(id);
+			patient.setAddress(address);
 			patient.setID(set.getInt("id"));
 		}
 		

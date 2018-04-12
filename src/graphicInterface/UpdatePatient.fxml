@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -15,23 +15,24 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdatePatient">
    <bottom>
       <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
-         <children>
-            <Button fx:id="update" mnemonicParsing="false" onAction="#onUpdateClick" prefHeight="25.0" prefWidth="96.0" style="-fx-background-color: #249ce8;" text="Update" textFill="WHITE" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets bottom="15.0" right="20.0" />
-               </HBox.margin>
-            </Button>
-         </children>
          <BorderPane.margin>
             <Insets bottom="10.0" right="30.0" top="10.0" />
          </BorderPane.margin>
+         <children>
+            <JFXButton fx:id="update" onAction="#onUpdateClick" prefHeight="25.0" prefWidth="88.0" style="-fx-background-color: #249ce8;" text="Update" textFill="WHITE">
+               <HBox.margin>
+                  <Insets bottom="10.0" right="30.0" top="10.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
       </HBox>
    </bottom>
    <center>
@@ -45,8 +46,8 @@
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.0" minWidth="10.0" prefWidth="56.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.0" minWidth="10.0" prefWidth="136.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="84.0" minWidth="10.0" prefWidth="12.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="55.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="155.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="59.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="143.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -61,7 +62,7 @@
                      <children>
                         <Label text="Name:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="name" promptText="Name" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <Label text="Surname:" textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Label text="Surname: " textFill="#249ce8" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <TextField fx:id="surname" promptText="Surname" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                         <Label text="D.birth:" textFill="#249ce8" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <DatePicker fx:id="dBirth" prefHeight="25.0" prefWidth="737.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -170,18 +171,20 @@
                </image>
             </ImageView>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="308.0">
-               <children>
-                  <Button fx:id="browse" mnemonicParsing="false" onAction="#onBrowseClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #249ce8;" text="Browse" textFill="WHITE" />
-               </children>
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
+               <children>
+                  <JFXButton fx:id="browse" onAction="#onBrowseClick" prefHeight="25.0" prefWidth="79.0" style="-fx-background-color: #249ce8;" text="Browse" textFill="WHITE" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <JFXButton fx:id="takePhoto" onAction="#onTakePhotoClick" prefHeight="25.0" prefWidth="85.0" style="-fx-background-color: #249ce8;" text="Take Photo" textFill="WHITE" />
+               </children>
             </HBox>
-            <ComboBox fx:id="gender" prefHeight="25.0" prefWidth="371.0" promptText="Gender">
+            <JFXComboBox fx:id="gender" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="1028.0" promptText="Gender">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
-            </ComboBox>
+            </JFXComboBox>
          </children>
          <BorderPane.margin>
             <Insets left="30.0" />

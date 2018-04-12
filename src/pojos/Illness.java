@@ -1,33 +1,12 @@
 package pojos;
 
 import java.io.Serializable;
-
 import java.sql.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
-@Entity
-@Table(name = "ILLNESSES")
 public class Illness implements Serializable {
-	@Id
-	@GeneratedValue(generator = "ILLNESSES")
-	@TableGenerator(name = "ILLNESSES", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ILLNESSES")
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	private String description;
 	private Date date_disease;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
 	public enum typeDisease {
@@ -37,8 +16,6 @@ public class Illness implements Serializable {
 	private typeDisease type;
 	private String name;
 	private Integer IDdisease;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "IDTREATMENT")
 	private Treatment treatment;
 
 	public Illness() {

@@ -1,20 +1,12 @@
 package pojos;
 
 import java.io.Serializable;
-
 import java.sql.Date;
 import java.util.Arrays;
 
-import javax.persistence.*;
-
 import javafx.scene.image.Image;
 
-@Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable  {
-
-	private static final long serialVersionUID = 1L;
-
 	protected String username;
 	protected String password;
 	protected String email;
@@ -27,7 +19,6 @@ public abstract class Person implements Serializable  {
 	protected GENDER gender;
 	protected byte[] photo;
 	protected Address address;
-	@Id
 	protected int ID;
 	
 	@SuppressWarnings("deprecation")
