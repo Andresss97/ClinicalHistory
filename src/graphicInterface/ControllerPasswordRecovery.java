@@ -35,11 +35,10 @@ public class ControllerPasswordRecovery {
     	if(this.checkEmail(email.getText()) == true) {
     		EmailSender ms = new EmailSender();
     		try {
-    			System.out.println(data.get(0));
-    			System.out.println(data.get(1));
 				ms.sendEmail(data.get(0), data.get(1), email.getText());
 			} catch (MessagingException e) {
-				e.printStackTrace();
+				System.out.println("casi");
+				System.out.println(e.getMessage());
 			}
     		Alert alert  = new Alert(AlertType.INFORMATION);
     		alert.setHeaderText("Credentials Send");

@@ -84,8 +84,7 @@ public class QuerysSelect {
 		Doctor doctor = null;
 		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		
+
 		ResultSet set = st.executeQuery();
 		while(set.next()) {
 			doctor = new Doctor();
@@ -289,7 +288,7 @@ public class QuerysSelect {
 	}
 	
 	public Address selectAddress(int id) throws SQLException {
-		String query = "SELECT city, street, housenumber, cp from address where id = ?";
+		String query = "SELECT city, street, housenumber, cp, id from address where id = ?";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		st.setInt(1, id);
 		ResultSet set = st.executeQuery();
@@ -299,6 +298,7 @@ public class QuerysSelect {
 		address.setStreet(set.getString("street"));
 		address.setHouseNumber(set.getInt("housenumber"));
 		address.setPostalCode(set.getInt("cp"));
+		address.setID(set.getInt("ID"));
 		
 		st.close();
 		set.close();

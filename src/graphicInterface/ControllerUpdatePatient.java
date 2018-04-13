@@ -2,9 +2,13 @@ package graphicInterface;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -13,19 +17,31 @@ import javax.imageio.ImageIO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
+import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import pojos.Address;
 import pojos.Patient;
 import pojos.Person.GENDER;
+import virtualization.Photo;
 
 public class ControllerUpdatePatient implements Initializable{
 
@@ -89,21 +105,103 @@ public class ControllerUpdatePatient implements Initializable{
     @FXML
     private JFXComboBox<String> gender;
     
+    @FXML
+    BorderPane container;
+    
     private Patient patient;
     
     @FXML
     void onBrowseClick(ActionEvent event) {
+		FileChooser fl = new FileChooser();
+		Image img = null;
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		fl.setTitle("Babylon Studio - Select a profile picture");
+		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+		fl.getExtensionFilters().addAll(extFilterPNG, extFilterJPG);
+		
+		File file = fl.showOpenDialog(window);
 
+		if (file != null) {
+			try {
+				img = new Image(file.toURI().toURL().toString());
+				this.image.setImage(img);
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
     }
 
     @FXML
     void onTakePhotoClick(ActionEvent event) {
-
+    	Photo p = new Photo();
+    	this.image = p.takePhoto(this.image);
     }
 
     @FXML
     void onUpdateClick(ActionEvent event) {
-
+    	Patient patient = new Patient();
+    	Address address = new Address();
+    	QuerysUpdate qu = new QuerysUpdate();
+    	
+    	patient.setID(this.patient.getID());
+    	patient.getAppointments().addAll(this.patient.getAppointments());
+    	address.setID(this.patient.getAddress().getID());
+    	
+    	patient.setName(name.getText());
+    	patient.setSurname(surname.getText());
+    	patient.setEmail(mail.getText());
+    	patient.setNIF(nif.getText());
+    	if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
+    		patient.setGender(GENDER.MALE);
+    	}
+    	else {
+    		patient.setGender(GENDER.FEMALE);
+    	}
+    	LocalDate ld = dBirth.getValue();
+    	patient.setDob(Date.valueOf(ld));
+    	patient.setWeight(Float.parseFloat(weight.getText()));
+    	patient.setHeight(Float.parseFloat(height.getText()));
+    	patient.setMobilePhone(Integer.parseInt(mPhone.getText()));
+    	patient.setHousePhone(Integer.parseInt(hPhone.getText()));
+    	patient.setUsername(user.getText());
+    	patient.setPassword(password.getText());
+    	BufferedImage bffI = SwingFXUtils.fromFXImage(image.getImage(), null);
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	
+    	try {
+			ImageIO.write(bffI, "jpg", baos);
+			byte[] photo = baos.toByteArray();
+			patient.setPhoto(photo);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+    	
+    	address.setCity(city.getText());
+    	address.setStreet(street.getText());
+    	address.setHouseNumber(Integer.parseInt(hNumber.getText()));
+    	address.setPostalCode(Integer.parseInt(cp.getText()));
+    	patient.setAddress(address);
+    	
+    	try {
+    		qu.updatePatient(patient);
+    		qu.updateAddress(address);
+    	}
+    	catch(SQLException ex) {
+    		System.out.println(ex.getMessage());
+    	}
+    	
+    	Main.patient = patient;
+    	
+    	Alert alert = new Alert(AlertType.INFORMATION);
+    	alert.setContentText("Update correctly");
+    	alert.setTitle("Information");
+    	alert.setHeaderText("Update information");
+    	alert.showAndWait();
+    	
+    	this.onHomeClick();
     }
     
     public void initComponents(Patient patient) {
@@ -143,7 +241,22 @@ public class ControllerUpdatePatient implements Initializable{
 			this.gender.getSelectionModel().select("Female");
 		}
     }
-
+    
+    private void onHomeClick() {
+    	Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+			Scene scene = container.getScene();
+			Stage window = (Stage) scene.getWindow();
+			Scene scene2 = new Scene(root);
+			window.setScene(scene2);
+			window.show();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list2 = FXCollections.observableArrayList("Male", "Female");

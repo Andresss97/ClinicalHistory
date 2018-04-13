@@ -43,6 +43,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pojos.*;
 import pojos.Person.GENDER;
+import virtualization.Photo;
 
 
 public class ControllerSignUpPatient implements Initializable{	
@@ -105,40 +106,6 @@ public class ControllerSignUpPatient implements Initializable{
     
     @FXML
     private ImageView image;
-    
-    private class Photo {
-    	private Mat matrix = null;
-    	private VideoCapture c = null;
-    	
-    	public void takePhoto() {
-    		Photo p = new Photo();
-    		WritableImage wii = p.capturePhoto();
-    		Image img = (Image) wii;
-    		image.setImage(img);
-    	}
-    	
-    	private WritableImage capturePhoto() {
-    		WritableImage wiiU = null;
-    		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-    	    c = new VideoCapture(0);
-    		matrix = new Mat();
-    		c.read(matrix);
-    		
-    		if(c.isOpened()) {
-    			if(c.read(matrix)) {
-    				BufferedImage img = new BufferedImage(matrix.width(), matrix.height(), BufferedImage.TYPE_3BYTE_BGR);
-    				WritableRaster r = img.getRaster();
-    				DataBufferByte db = (DataBufferByte) r.getDataBuffer();
-    				byte[] bd = db.getData();
-    				matrix.get(0, 0, bd);
-    				
-    				wiiU = SwingFXUtils.toFXImage(img, null);
-    			}
-    		}
-    		c.release();
-    		return wiiU;
-    	}
-    }
     
 	@FXML
 	void onBrowseClick(ActionEvent event) {
@@ -270,7 +237,7 @@ public class ControllerSignUpPatient implements Initializable{
     @FXML
     void onTakePhotoClick(ActionEvent event) throws IOException {
     	Photo p = new Photo();
-    	p.takePhoto();
+    	this.image = p.takePhoto(this.image);
     }
     
     private boolean checkPersonalData() {
