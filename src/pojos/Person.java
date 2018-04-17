@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import javafx.scene.image.Image;
 
-public abstract class Person implements Serializable  {
+public abstract class Person implements Serializable, Comparable<Person>  {
 	protected String username;
 	protected String password;
 	protected String email;
@@ -132,6 +132,16 @@ public abstract class Person implements Serializable  {
 		ID = iD;
 	}
 
+	@Override
+    public int compareTo(Person person) {
+       if(this.ID == person.getID()){
+           return 1;
+       }else{
+           return 0;
+       }
+    }
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
