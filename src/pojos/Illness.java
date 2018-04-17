@@ -3,10 +3,25 @@ package pojos;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.*;
+
+
+@Entity
+@Table(name = "ILLNESSES")
 public class Illness implements Serializable {
 
+	
+	@Id
+	@GeneratedValue (generator = "ILLNESSES")
+	@TableGenerator (name = "ILLNESSES", table = "sqlite_sequence", 
+	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ILLNESSES")
+	private Integer id;
+	
 	private String description;
 	private Date date_disease;
+	
+	@ManyToOne(fetch=FetchType.LAZY) 
+	@JoinColumn(name="IDPATIENT")
 	private Patient patient;
 	
 	public enum typeDisease {
@@ -15,15 +30,18 @@ public class Illness implements Serializable {
 
 	private typeDisease type;
 	private String name;
-	private Integer IDdisease;
+	
+	@OneToOne(fetch=FetchType.LAZY) 
+	@JoinColumn(name="IDTREATMENT")
 	private Treatment treatment;
 
+	
 	public Illness() {
 		this.name = null;
 		this.description = null;
 		this.date_disease = null;
 		this.type = null;
-		this.IDdisease = null;
+		this.id = null;
 	}
 
 	public Illness(String name, String des, Date date, typeDisease type) {
@@ -34,7 +52,7 @@ public class Illness implements Serializable {
 	}
 
 	public int getIDdisease() {
-		return this.IDdisease;
+		return this.id;
 	}
 
 	public Treatment getTreatment() {
@@ -46,7 +64,7 @@ public class Illness implements Serializable {
 	}
 
 	public void setIDdisease(int num) {
-		this.IDdisease = num;
+		this.id = num;
 	}
 
 	public String getName() {
@@ -85,7 +103,7 @@ public class Illness implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + IDdisease;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -98,7 +116,7 @@ public class Illness implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Illness other = (Illness) obj;
-		if (IDdisease != other.IDdisease)
+		if (id != other.id)
 			return false;
 		return true;
 	}
