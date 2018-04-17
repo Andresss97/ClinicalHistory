@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import com.itextpdf.text.DocumentException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -121,6 +123,39 @@ public class ControllerHomePatients implements Initializable {
 		root.prefHeightProperty().bind(cContainer.heightProperty());
 		root.prefWidthProperty().bind(cContainer.widthProperty());
 		cContainer.setCenter(root);
+	}
+	
+	@FXML
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	void onOrderByClick(ActionEvent event) {
+		if(orderBy.getSelectionModel().getSelectedItem().equals("Alphabetically")) {
+			ObservableList s = FXCollections.observableArrayList(Main.patient.getAppointments());
+			SortedList so = new SortedList(s);
+			
+			so.setComparator(new Comparator<Appointment>() {
+
+				@Override
+				public int compare(Appointment arg0, Appointment arg1) {
+					return arg0.getReason().compareToIgnoreCase(arg1.getReason());
+				}
+			});
+			
+			this.View.setItems(so);
+		}
+		else if(orderBy.getSelectionModel().getSelectedItem().equals("Date")) {
+			ObservableList s = FXCollections.observableArrayList(Main.patient.getAppointments());
+			SortedList so = new SortedList(s);
+			
+			so.setComparator(new Comparator<Appointment>() {
+
+				@Override
+				public int compare(Appointment arg0, Appointment arg1) {
+					return arg0.getDate().compareTo(arg1.getDate());
+				}
+			});
+			
+			this.View.setItems(so);
+		}
 	}
 	
 	@FXML

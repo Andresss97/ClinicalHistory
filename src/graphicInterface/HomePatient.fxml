@@ -109,7 +109,7 @@
                      </image>
                   </ImageView>
                   <Region prefHeight="25.0" prefWidth="10.0" />
-                  <ComboBox fx:id="orderBy" prefWidth="150.0" promptText="Order by:" style="-fx-background-color: #249ce8;" />
+                  <ComboBox fx:id="orderBy" onAction="#onOrderByClick" prefWidth="150.0" promptText="Order by:" style="-fx-background-color: #249ce8;" />
                </children>
             </HBox>
          </top>

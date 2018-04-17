@@ -67,8 +67,8 @@
                <children>
                   <Button fx:id="create" mnemonicParsing="false" onAction="#onClickCreate" style="-fx-background-color: #249ce8;" text="Create doctor account" textFill="WHITE" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <JFXTextField focusColor="#249ce8" labelFloat="true" promptText="Search" unFocusColor="BLACK" />
-                  <ImageView fx:id="iButton" fitHeight="25.0" fitWidth="30.0" onMouseClicked="#onClickedSearch" pickOnBounds="true" preserveRatio="true">
+                  <JFXTextField fx:id="search" focusColor="#249ce8" labelFloat="true" onAction="#onClickedSearch" promptText="Search" unFocusColor="BLACK" />
+                  <ImageView fx:id="iButton" fitHeight="25.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/Search-WF.png" />
                      </image>
