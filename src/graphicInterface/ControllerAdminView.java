@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXTextField;
 
 import creation.QuerysDelete;
 import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +31,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -71,6 +75,9 @@ public class ControllerAdminView implements Initializable{
 
     @FXML
     private ComboBox<?> orderBy;
+    
+    @FXML
+    private JFXTextField search;
     
     private Doctor doctor;
     
@@ -197,14 +204,49 @@ public class ControllerAdminView implements Initializable{
         	return;
     	}
      }
-
+    
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @FXML
     void onClickOrderBy(ActionEvent event) {
     	if(orderBy.getSelectionModel().getSelectedItem().equals("Alphabetically")) {
-
+    		ObservableList s = FXCollections.observableArrayList(accounts);
+        	SortedList so = new SortedList(s);
+        	
+        	so.setComparator(new Comparator<Person>() {
+    			@Override
+    			public int compare(Person arg0, Person arg1) {
+    				return arg0.getName().compareToIgnoreCase(arg1.getName());
+    			}
+        	});
+        	
+        	list.setItems(so);
     	}
     	else if(orderBy.getSelectionModel().getSelectedItem().equals("User type")){
-    		
+    		ObservableList s = FXCollections.observableArrayList(accounts);
+        	SortedList so = new SortedList(s);
+        	
+        	so.setComparator(new Comparator<Person>() {
+    			@Override
+    			public int compare(Person arg0, Person arg1) {
+    				if(arg0 instanceof Patient) {
+    					return 1;
+    				}
+    				else if(arg1 instanceof Patient) {
+    					return 1;
+    				}
+    				else if(arg0 instanceof Doctor) {
+    					return -1;
+    				}
+    				else if(arg1 instanceof Doctor) {
+    					return -1;
+    				}
+    				else {
+    					return 0;
+    				}
+    			}
+        	});
+        	
+        	list.setItems(so);
     	}
     }
 
@@ -216,10 +258,11 @@ public class ControllerAdminView implements Initializable{
     	window.setScene(new Scene(root));
     	window.show();
     }
-
-    @FXML
-    void onClickedSearch(MouseEvent event) {
-
+    
+    
+	@FXML
+    void onClickedSearch(ActionEvent event) {
+		
     }
     
     private void refreshList() {

@@ -3,8 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
-	<classpathentry kind="lib" path="lib/jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="lib/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="lib" path="lib/activation.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="lib" path="lib/opencv-340.jar">
@@ -16,6 +14,10 @@
 	<classpathentry kind="lib" path="lib/eclipselink-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/javax.persistence_2.1.1.v201509150925.jar"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/Ensemble JFXTRAS.jar"/>
+	<classpathentry kind="lib" path="lib/calendarfx-recurrence-8.4.2.jar"/>
+	<classpathentry kind="lib" path="lib/calendarfx-view-8.4.2.jar"/>
+	<classpathentry kind="lib" path="lib/controlsfx-8.40.13.jar"/>
+	<classpathentry kind="lib" path="lib/fontawesomefx-commons-8.13.jar"/>
+	<classpathentry kind="lib" path="lib/fontawesomefx-fontawesome-4.7.0-1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
