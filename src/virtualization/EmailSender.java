@@ -16,9 +16,9 @@ public class EmailSender {
 		
 		Properties props = new Properties();
 		props.put("mail.smtp.user", from);
-		props.put("mail.smtp.password", passwordGmail);
+		props.put("mail.smtp.password", passwordGmail); 
 		props.put("mail.smtp.host", "mail.tecnovoice.es");
-		props.put("mail.smtp.port", "587");
+		props.put("mail.smtp.port", "25");
 		props.put("mail.smtp.starttls.enable", "false");
 		props.put("mail.smtp.debug", "true");
 		props.put("mail.smtp.auth", "true");
@@ -37,7 +37,7 @@ public class EmailSender {
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setText(content);
         Transport transport = session.getTransport("smtp");
-        transport.connect("mail.tecnovoice.es", 587, from, passwordGmail);
+        transport.connect("mail.tecnovoice.es", 25, from, passwordGmail);
         transport.send(message, message.getAllRecipients());       
         transport.close();
 	}
