@@ -4,20 +4,23 @@ import javax.persistence.*;
 
 
 @Entity
-@Table (name = "address")
+@Table (name = "ADDRESS")
 public class Address implements Serializable {
 	
 	private int postalCode;
 	private String city;
 	private String street;
 	private int houseNumber;
+	
 	@Id
-	@GeneratedValue (generator = "address")
-	@TableGenerator (name = "address", table = "sqlite_sequence", 
-	pkColumnName = "ID", valueColumnName = "seq", pkColumnValue = "address")
+	@GeneratedValue (generator = "ADDRESS")
+	@TableGenerator (name = "ADDRESS", table = "sqlite_sequence", 
+	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ADDRESS")
 	private Integer ID;
+	
 	@OneToOne (fetch = FetchType.LAZY)
 	private Patient patient;
+	
 	@OneToOne (fetch = FetchType.LAZY)
 	private Doctor doctor;
 	

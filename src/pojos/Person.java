@@ -3,9 +3,11 @@ package pojos;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.Arrays;
-
+import javax.persistence.*;
 import javafx.scene.image.Image;
 
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable, Comparable<Person>  {
 	protected String username;
 	protected String password;
@@ -19,9 +21,13 @@ public abstract class Person implements Serializable, Comparable<Person>  {
 	protected GENDER gender;
 	protected byte[] photo;
 	protected Address address;
-	protected int ID;
+	
+	@Id
+	protected Integer ID;
+	
 	
 	@SuppressWarnings("deprecation")
+	
 	public Person() {
 		this.username = null;
 		this.password = null;

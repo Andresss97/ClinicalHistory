@@ -1,11 +1,28 @@
 package pojos;
 import java.io.*;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
+@Entity
+@Table (name = "ALLERGIES")
 public class Allergies implements Serializable {
+	
+	@Id
+	@GeneratedValue (generator = "ALLERGIES")
+	@TableGenerator (name = "ALLERGIES", table = "sqlite_sequence", 
+	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ALLERGIES")
 	private Integer ID;
+	
 	private String group;
 	private String observations;
+	
+	
 	private Treatment treatment;
+	
 	private Patient patient;
 
 	public Allergies() {

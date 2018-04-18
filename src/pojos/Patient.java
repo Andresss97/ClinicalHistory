@@ -1,39 +1,38 @@
+
 package pojos;
 import java.io.*;
-
-
 import java.util.LinkedList;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 @Entity
 @Table(name = "PATIENT")
-
 public class Patient extends Person{
-	/**
-	 * 
-	 */
+	
 	@Id
 	@GeneratedValue(generator = "PATIENT")
 	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
+	private Integer id;
 	private static final long serialVersionUID = 1L;
 	private float weight;
 	private float height;
 	private int housePhone;
-	@OneToMany(mappedBy="PATIENT")
+	
+	@ManyToMany(mappedBy="PATIENT")
+	@JoinTable(name="MAPPING",
+			joinColumns={@JoinColumn(name="IDDOCTOR", referencedColumnName="id")},
+			inverseJoinColumns={@JoinColumn(name="IDPATIENT", referencedColumnName="id")})
 	private LinkedList<Doctor> doctors;
+	
 	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Appointment> appointments;
+	
 	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Illness> illnesses;
+	
 	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Allergies> allergies;
+	
 	@OneToMany(mappedBy="PATIENT")
 	private LinkedList<Surgeries> surgeries;
 	@OneToMany(mappedBy="PATIENT")
