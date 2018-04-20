@@ -14,8 +14,10 @@ import javax.mail.internet.MimeMessage;
 import creation.QuerysSelect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import virtualization.EmailSender;
@@ -30,23 +32,28 @@ public class ControllerPasswordRecovery {
     
     private ArrayList<String> data;
     
-    @FXML
-    void onClickRecover(ActionEvent event) {
-    	if(this.checkEmail(email.getText()) == true) {
-    		EmailSender ms = new EmailSender();
-    		try {
+	@FXML
+	void onClickRecover(ActionEvent event) {
+		if (this.checkEmail(email.getText()) == true) {
+			EmailSender ms = new EmailSender();
+			try {
 				ms.sendEmail(data.get(0), data.get(1), email.getText());
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setHeaderText("Credentials Send");
+				alert.setContentText("Your credentials are in your email");
+				alert.setTitle("Information");
+				alert.showAndWait();
+				
+				Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				
+				window.close();
 			} catch (MessagingException e) {
 				System.out.println("casi");
 				System.out.println(e.getMessage());
 			}
-    		Alert alert  = new Alert(AlertType.INFORMATION);
-    		alert.setHeaderText("Credentials Send");
-    		alert.setContentText("Your credentials are in your email");
-    		alert.setTitle("Information");
-    		alert.show();
-    	}
-    }
+		}
+	}
     
 	private boolean checkEmail(String email) {
 		QuerysSelect qs = new QuerysSelect();
