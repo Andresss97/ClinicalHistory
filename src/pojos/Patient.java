@@ -12,7 +12,7 @@ public class Patient extends Person{
 	@GeneratedValue(generator = "PATIENT")
 	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
-	private Integer id;
+	private Integer ID;
 	
 	private float weight;
 	private float height;
