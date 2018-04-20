@@ -89,7 +89,30 @@ public class ControllerMainView {
 					break;
 				}
 				case 2 : {
-					break;
+				String[] data = qs.selectUser(user.getText(), password.getText());
+				Main.doctor = qs.selectDoctor(data);
+
+				if (Main.doctor.getUsername().equals(user.getText())
+						&& Main.doctor.getPassword().equals(password.getText())) {
+					Parent root = FXMLLoader.load(getClass().getResource("HomeDoctors.fxml"));
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					window.setResizable(true);
+					Scene scene = new Scene(root);
+					window.setScene(scene);
+
+					window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+						@Override
+						public void handle(WindowEvent e) {
+							Main.conector.killConnection();
+							Platform.exit();
+							System.exit(0);
+						}
+					});
+
+					window.show();
+				}
+				break;
 				}
 				case 3 : {
 					String[] data = qs.selectUser(user.getText(), password.getText());

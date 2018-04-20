@@ -99,7 +99,4 @@ public class Address implements Serializable {
 		return "Address [postalCode=" + postalCode + ", city=" + city + ", street=" + street + ", houseNumber="
 				+ houseNumber + ", ID=" + ID + "]";
 	}
-
-	
-	
 }
