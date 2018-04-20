@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 import graphicInterface.Main;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -82,35 +86,19 @@ public class QuerysSelect {
 	
 	public Doctor selectDoctor(String[] data) throws SQLException {
 		Doctor doctor = null;
-		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-
-		ResultSet set = st.executeQuery();
-		while(set.next()) {
-			doctor = new Doctor();
-			doctor.setName(set.getString("Name"));
-			doctor.setSurname(set.getString("Surname"));
-			doctor.setEmail(set.getString("email"));
-			doctor.setNIF(set.getString("nif"));
-			doctor.setMobilePhone(set.getInt("mobilephone"));
-			doctor.setDob(set.getDate("dob"));
-			doctor.setSpeciality(this.selectIdSpeciality(set.getInt("idspeciality")));
-			
-			if(set.getString("gender").equals("Male")) {
-				doctor.setGender(GENDER.MALE);
-			}else {
-				doctor.setGender(GENDER.FEMALE);
-			}
-			
-			doctor.setUsername(set.getString("username"));
-			doctor.setPassword(set.getString("password"));
-			doctor.setPhoto(set.getBytes("photo"));
-			doctor.setID(set.getInt("id"));
-		}
 		
-		st.close();
-		set.close();
+		EntityManager em = Persistence.createEntityManagerFactory("hospitalManager").createEntityManager();
 		
+		em.getTransaction().begin();
+		Query q = em.createNativeQuery("SELECT * from doctor where username = " 
+		+ data[0] + " and password = " + data[1], Doctor.class);
+		
+		doctor = (Doctor) q.getSingleResult();
+		
+		em.getTransaction().commit();
+		em.flush();
+		em.close();
+		System.out.println(doctor);
 		return doctor;
 	}
 	

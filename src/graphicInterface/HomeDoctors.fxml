@@ -1,8 +1,143 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
+<BorderPane fx:id="container" prefHeight="534.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Database Project" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Babylon Studio" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="v1.0" />
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="5.0" left="10.0" right="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   <top>
+      <MenuBar fx:id="bar" BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="Home">
+            <items>
+              <MenuItem fx:id="home" mnemonicParsing="false" onAction="#oClickHome" text="Home Page" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="View">
+              <items>
+                <MenuItem fx:id="mPatients" mnemonicParsing="false" onAction="#onClickmPatients" text="My Patients" />
+                  <MenuItem fx:id="mAgenda" mnemonicParsing="false" onAction="#onClickmAgenda" text="My Agenda" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem fx:id="mAccount" mnemonicParsing="false" onAction="#onClickmAccount" text="My Account" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Close">
+            <items>
+              <MenuItem fx:id="sOff" mnemonicParsing="false" onAction="#onClickSignOff" text="Sign Off" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <ListView fx:id="appointments" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" left="15.0" right="20.0" />
+               </BorderPane.margin>
+            </ListView>
+         </center>
+         <left>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/UserProfile.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ImageView>
+                  <Label fx:id="name" text="Label" textFill="#249ce8">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="surname" text="Label" textFill="#249ce8">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="nif" text="Label" textFill="#249ce8">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="25.0" />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <right>
+            <VBox alignment="TOP_CENTER" prefHeight="429.0" prefWidth="142.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="pdf" onAction="#onClickToPDF" prefHeight="25.0" prefWidth="900.0" style="-fx-background-color: #249ce8;" text="Export to PDF" textFill="WHITE" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="print" onAction="#onClickPrint" prefHeight="25.0" prefWidth="769.0" style="-fx-background-color: #249ce8;" text="Print" textFill="WHITE" VBox.vgrow="ALWAYS" />
+                  <JFXButton fx:id="cApp" onAction="#onClickcApp" prefHeight="25.0" prefWidth="688.0" style="-fx-background-color: #249ce8;" text="Check Appointments" textFill="WHITE" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+               <BorderPane.margin>
+                  <Insets right="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+         <top>
+            <HBox alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="508.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXTextField fx:id="search" focusColor="#249ce8" labelFloat="true" onAction="#onClickSearch" promptText="Search" />
+                  <ImageView fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/Search-WF.png" />
+                     </image>
+                  </ImageView>
+                  <Region prefHeight="28.0" prefWidth="14.0" />
+                  <JFXComboBox fx:id="orderBy" focusColor="#249ce8" onAction="#onClickOrderBy" prefHeight="25.0" prefWidth="129.0" promptText="Order by:" HBox.hgrow="ALWAYS" />
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="15.0" left="190.0" right="182.0" top="15.0" />
+               </BorderPane.margin>
+            </HBox>
+         </top></BorderPane>
+   </center>
 </BorderPane>
-
