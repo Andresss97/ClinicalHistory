@@ -70,7 +70,6 @@ public class ControllerMainView {
 							&& Main.patient.getPassword().equals(password.getText())) {
 						Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
 						Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
 						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -84,6 +83,7 @@ public class ControllerMainView {
 						});
 						
 						window.show();
+						window.setMaximized(true);
 					}
 					break;
 				}
