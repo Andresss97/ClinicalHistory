@@ -14,6 +14,7 @@ public class Doctor extends Person  {
 	private Integer id;
 	
 	private String speciality;
+	
 	@ManyToMany(mappedBy="DOCTOR")
 	private LinkedList<Patient>patients;
 	

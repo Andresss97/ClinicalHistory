@@ -7,8 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "TREATMENT")
 public class Treatment implements Serializable{
-
-	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(generator = "TREATMENT")
@@ -20,7 +18,7 @@ public class Treatment implements Serializable{
 	private Date endDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
+	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
 	public enum typeTreatment {
@@ -30,17 +28,17 @@ public class Treatment implements Serializable{
 	private String name;
 	private typeTreatment treatment;
 	
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="treatment")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy="treatment")
 	private Illness illness; 
 	
 	private String description;
 	private String tresults;
-	private Doctor doctor;
 	
-	@OneToOne(mappedBy="treatment")
-	private Vaccine vaccine;
-	
+	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
 	private Allergies allergy;
+	
+	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
+	private Surgeries surgery;
 
 	public Treatment() {
 		this.name = null;
@@ -58,14 +56,6 @@ public class Treatment implements Serializable{
 
 	public void setIDtreatment(int iDtreatment) {
 		ID = iDtreatment;
-	}
-
-	public Doctor getDoctor() {
-		return this.doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
 	}
 
 	public String getResults() {
@@ -143,6 +133,14 @@ public class Treatment implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Surgeries getSurgery() {
+		return surgery;
+	}
+
+	public void setSurgery(Surgeries surgery) {
+		this.surgery = surgery;
 	}
 
 	@Override

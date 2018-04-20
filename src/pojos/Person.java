@@ -28,6 +28,9 @@ public abstract class Person implements Serializable {
 	public enum GENDER {MALE, FEMALE};
 	protected GENDER gender;
 	protected byte[] photo;
+	
+	@OneToOne (fetch = FetchType.LAZY)
+	@JoinColumn (name = "IDADDRESS")
 	protected Address address;
 	
 	@Id

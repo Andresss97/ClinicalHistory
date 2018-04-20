@@ -87,7 +87,7 @@ public class QuerysDelete {
 		String query ="DELETE FROM illness WHERE id = ?";
 		PreparedStatement st = con.getConnect().prepareStatement(query);
 		
-		st.setInt(1, illness.getIDdisease());
+		st.setInt(1, illness.getID());
 		st.executeQuery();
 		st.close();
 		

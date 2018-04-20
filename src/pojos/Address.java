@@ -17,12 +17,9 @@ public class Address implements Serializable {
 	@TableGenerator (name = "ADDRESS", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ADDRESS")
 	private Integer ID;
-	
-	@OneToOne (fetch = FetchType.LAZY)
-	private Patient patient;
-	
-	@OneToOne (fetch = FetchType.LAZY)
-	private Doctor doctor;
+
+	@OneToOne (fetch = FetchType.LAZY, mappedBy = "address")
+	private Person person;
 	
 	public Address() {
 		this.postalCode = 0;
@@ -39,22 +36,32 @@ public class Address implements Serializable {
 		this.ID=id;
 	}
 	
-	public Patient getPatient() {
-		return this.patient;
-	}
 	
-	public void setPatient(Patient patient) {
-		this.patient = patient;
-	}
 	
-	public Doctor getDoctor() {
-		return this.doctor;
-	}
+//	public Patient getPatient() {
+//		return this.patient;
+//	}
+//	
+//	public void setPatient(Patient patient) {
+//		this.patient = patient;
+//	}
+//	
+//	public Doctor getDoctor() {
+//		return this.doctor;
+//	}
+//	
+//	public void setDoctor(Doctor doctor) {
+//		this.doctor=doctor;
+//	}
 	
-	public void setDoctor(Doctor doctor) {
-		this.doctor=doctor;
+	public Person getPerson() {
+		return person;
 	}
-	
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
 	public int getPostalCode() {
 		return postalCode;
 	}

@@ -13,33 +13,36 @@ public class Patient extends Person{
 	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
 	private Integer id;
-	private static final long serialVersionUID = 1L;
+	
 	private float weight;
 	private float height;
 	private int housePhone;
 	
-	@ManyToMany(mappedBy="PATIENT")
+	@ManyToMany(mappedBy="patient")
 	@JoinTable(name="MAPPING",
 			joinColumns={@JoinColumn(name="IDDOCTOR", referencedColumnName="id")},
 			inverseJoinColumns={@JoinColumn(name="IDPATIENT", referencedColumnName="id")})
 	private LinkedList<Doctor> doctors;
 	
-	@OneToMany(mappedBy="PATIENT")
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Appointment> appointments;
 	
-	@OneToMany(mappedBy="PATIENT")
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Illness> illnesses;
 	
-	@OneToMany(mappedBy="PATIENT")
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Allergies> allergies;
 	
-	@OneToMany(mappedBy="PATIENT")
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Surgeries> surgeries;
-	@OneToMany(mappedBy="PATIENT")
+	
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Treatment> treatment;
-	@OneToMany(mappedBy="PATIENT")
+	
+	@OneToMany(mappedBy="patient")
 	private LinkedList<Vaccine> vaccines;
-	@OneToOne(mappedBy="PATIENT")
+	
+	@OneToOne(mappedBy="patient")
 	private ClinicalHistory cHistory;
 	
 	public Patient() { 

@@ -1,47 +1,39 @@
 package pojos;
 
 import java.sql.Date;
-
 import javax.persistence.*;
 
-
-
-
 @Entity
-@Table(name = "vaccines")
-
+@Table(name = "VACCINES")
 public class Vaccine {
 	@Id
-	@GeneratedValue(generator = "vaccines")
-	@TableGenerator(name = "vaccines", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "vaccines")
+	@GeneratedValue(generator = "VACCINES")
+	@TableGenerator(name = "VACCINES", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "VACCINES")
+	private Integer ID;
 	
-	private Integer IDvaccine;
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
 		VARICELLA,YELLOWFEVER};
-		@OneToMany(mappedBy="vaccine")
+	
 	private typeVaccine nameVaccine;
 	private Date date;
 	private String description;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "patient_id")
-	private Patient patient;
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "treatment_id")
-	private Treatment treatment;
 	
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "IDPATIENT")
+	private Patient patient;
+	
 	public Vaccine() {
-		this.IDvaccine = 0;
+		this.ID = 0;
 		this.nameVaccine = null;
 		this.date = null;
 		this.patient = null;
-		this.treatment = null;
+		
 	}
 	
 	public Vaccine(int ID, typeVaccine name, Date date) {
-		this.IDvaccine = ID;
+		this.ID = ID;
 		this.nameVaccine = name;
 		this.date = date;
 	}
@@ -55,11 +47,11 @@ public class Vaccine {
 	}
 	
 	public int getIDvaccine() {
-		return this.IDvaccine;
+		return this.ID;
 	}
 	
 	public void setIDvaccine(int ID) {
-		this.IDvaccine = ID;
+		this.ID = ID;
 	}
 
 	public typeVaccine getNameVaccine() {
@@ -91,7 +83,7 @@ public class Vaccine {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + IDvaccine;
+		result = prime * result + ID;
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((nameVaccine == null) ? 0 : nameVaccine.hashCode());
 		return result;
@@ -106,7 +98,7 @@ public class Vaccine {
 		if (getClass() != obj.getClass())
 			return false;
 		Vaccine other = (Vaccine) obj;
-		if (IDvaccine != other.IDvaccine)
+		if (ID != other.ID)
 			return false;
 		if (date == null) {
 			if (other.date != null)
@@ -118,17 +110,9 @@ public class Vaccine {
 		return true;
 	}
 
-	public Treatment getTreatment() {
-		return treatment;
-	}
-
-	public void setTreatment(Treatment treatment) {
-		this.treatment = treatment;
-	}
-
 	@Override
 	public String toString() {
-		return "Vaccine [IDvaccine=" + IDvaccine + ", nameVaccine=" + nameVaccine + ", date=" + date + ", description="
+		return "Vaccine [IDvaccine=" + ID + ", nameVaccine=" + nameVaccine + ", date=" + date + ", description="
 				+ description + "]";
 	}
 	
