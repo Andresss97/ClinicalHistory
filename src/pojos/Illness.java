@@ -10,12 +10,11 @@ import javax.persistence.*;
 @Table(name = "ILLNESSES")
 public class Illness implements Serializable {
 
-	
 	@Id
 	@GeneratedValue (generator = "ILLNESSES")
 	@TableGenerator (name = "ILLNESSES", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ILLNESSES")
-	private Integer id;
+	private Integer ID;
 	
 	private String description;
 	private Date date_disease;
@@ -41,7 +40,7 @@ public class Illness implements Serializable {
 		this.description = null;
 		this.date_disease = null;
 		this.type = null;
-		this.id = null;
+		this.ID = null;
 	}
 
 	public Illness(String name, String des, Date date, typeDisease type) {
@@ -51,8 +50,8 @@ public class Illness implements Serializable {
 		this.type = type;
 	}
 
-	public int getIDdisease() {
-		return this.id;
+	public int getID() {
+		return this.ID;
 	}
 
 	public Treatment getTreatment() {
@@ -63,8 +62,8 @@ public class Illness implements Serializable {
 		this.treatment = treatment;
 	}
 
-	public void setIDdisease(int num) {
-		this.id = num;
+	public void setID(int num) {
+		this.ID = num;
 	}
 
 	public String getName() {
@@ -103,7 +102,7 @@ public class Illness implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + ID;
 		return result;
 	}
 
@@ -116,7 +115,7 @@ public class Illness implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Illness other = (Illness) obj;
-		if (id != other.id)
+		if (ID != other.ID)
 			return false;
 		return true;
 	}

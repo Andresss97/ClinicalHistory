@@ -1,11 +1,7 @@
 package pojos;
 import java.io.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.TableGenerator;
+import javax.persistence.*;
 
 @Entity
 @Table (name = "ALLERGIES")
@@ -20,9 +16,12 @@ public class Allergies implements Serializable {
 	private String group;
 	private String observations;
 	
-	
+	@OneToOne (fetch = FetchType.LAZY)
+	@JoinColumn (name = "IDTREATMENT")
 	private Treatment treatment;
 	
+	@ManyToOne (fetch = FetchType.LAZY)
+	@JoinColumn (name = "IDPATIENT")
 	private Patient patient;
 
 	public Allergies() {

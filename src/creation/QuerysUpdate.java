@@ -38,7 +38,7 @@ public class QuerysUpdate {
 		
 		st.setString(3,illness.getDescription());
 		st.setDate(4,illness.getDate());;
-		st.setInt(5,illness.getIDdisease());
+		st.setInt(5,illness.getID());
 		
 		st.executeUpdate();
 		st.close();
@@ -128,8 +128,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 				+ "SET  type = ?,"
 				+ "SET  StartDate = ?,"
 				+ "SET  EndDate = ?,"
-				+ "SET  Results = ?,"
-				+ "SET  Doctor = ?,"	
+				+ "SET  Results = ?,"	
 				+ "WHERE id =?";
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
@@ -146,9 +145,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		st.setDate(4, treatment.getStartDate());
 		st.setDate(5, treatment.getEndDate());
 		st.setString(6, treatment.getResults());
-		st.setInt(7, treatment.getDoctor().getID());
-		
-		st.setInt(8,treatment.getIDtreatment());
+		st.setInt(7,treatment.getIDtreatment());
 		
 		st.executeUpdate();
 		st.close();

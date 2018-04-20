@@ -8,16 +8,18 @@ import javax.persistence.*;
 @Table(name = "CLINICALHISTORY")
 public class ClinicalHistory implements Serializable {
 	@Id
-	@Column(name = "ID")
+	@GeneratedValue (generator = "CLINICALHISTORY")
+	@TableGenerator (name = "CLINICALHISTORY", table = "sqlite_sequence", 
+	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "CLINICALHISTORY")
 	private Integer ID;
 	
-	@Column(name = "ADDICTIONS")
+	
 	private String addictions;
-	@Column(name = "OBSERVATIONS")
 	private String observations;
-	@Column(name = "LASTMODIFICATIONS")
 	private Date lastModification;
-	@JoinColumn(name = "idpatient")
+
+	@OneToOne
+	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
 	public enum BLOODGROUP {

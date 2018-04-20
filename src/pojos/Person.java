@@ -20,6 +20,9 @@ public abstract class Person implements Serializable, Comparable<Person>  {
 	public enum GENDER {MALE, FEMALE};
 	protected GENDER gender;
 	protected byte[] photo;
+	
+	@OneToOne (fetch = FetchType.LAZY)
+	@JoinColumn (name = "IDADDRESS")
 	protected Address address;
 	
 	@Id
