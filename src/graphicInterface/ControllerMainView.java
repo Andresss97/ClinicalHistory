@@ -73,7 +73,6 @@ public class ControllerMainView {
 						window.setResizable(true);
 						Scene scene = new Scene(root);
 						window.setScene(scene);
-						
 						window.setOnCloseRequest(new EventHandler<WindowEvent>() {
 							
 							@Override
@@ -111,6 +110,7 @@ public class ControllerMainView {
 					});
 
 					window.show();
+					window.setMaximized(true);
 				}
 				break;
 				}
@@ -131,6 +131,8 @@ public class ControllerMainView {
 								System.exit(0);
 							}
 						});
+						
+						window.setMaximized(true);
 						window.show();
 					}
 					break;
@@ -168,11 +170,13 @@ public class ControllerMainView {
     		Parent root2 = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
     		window.setScene(new Scene(root2));
     		window.show();
+    		window.setMaximized(true);
     		return;
     	}
     	
     	if(modal.isShowing() == false) {
     		window.show();
+    		window.setMaximized(true);
     	}
     }
     

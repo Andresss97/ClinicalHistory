@@ -43,6 +43,7 @@ public class ControllerSplashScreen implements Initializable{
 							stage.setResizable(true);
 							stage.setScene(scene);
 							stage.getIcons().add(new Image(".//images//Logo.jpg"));
+							stage.setMaximized(true);
 							stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 								
 								@Override
@@ -52,8 +53,10 @@ public class ControllerSplashScreen implements Initializable{
 									System.exit(0);
 								}
 							});
+							
 							stage.show();
-				
+							
+							
 							panel.getScene().getWindow().hide();
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
