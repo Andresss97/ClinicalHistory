@@ -40,7 +40,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pojos.Address;
 import pojos.Patient;
-import pojos.Person.GENDER;
 import virtualization.Photo;
 
 public class ControllerUpdatePatient implements Initializable{
@@ -154,10 +153,10 @@ public class ControllerUpdatePatient implements Initializable{
     	patient.setEmail(mail.getText());
     	patient.setNIF(nif.getText());
     	if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
-    		patient.setGender(GENDER.MALE);
+    		patient.setGender("Male");
     	}
     	else {
-    		patient.setGender(GENDER.FEMALE);
+    		patient.setGender("Female");
     	}
     	LocalDate ld = dBirth.getValue();
     	patient.setDob(Date.valueOf(ld));
@@ -234,7 +233,7 @@ public class ControllerUpdatePatient implements Initializable{
 		cp.setText(String.valueOf(this.patient.getAddress().getPostalCode()));
 		user.setText(this.patient.getUsername());
 		password.setText(this.patient.getPassword());
-		if(this.patient.getGender().equals(GENDER.MALE)) {
+		if(this.patient.getGender().equals("Male")) {
 			this.gender.getSelectionModel().select("Male");
 		}
 		else {

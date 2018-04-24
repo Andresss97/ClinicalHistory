@@ -13,6 +13,7 @@ public class Allergies implements Serializable {
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ALLERGIES")
 	private Integer ID;
 	
+	@Column(name = "type")
 	private String group;
 	private String observations;
 	

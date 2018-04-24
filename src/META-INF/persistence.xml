@@ -10,17 +10,17 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
  
 		<!-- Entity Class -->
-		<class>sample.db.pojos.Person</class>
-		<class>sample.db.pojos.Address</class>
-		<class>sample.db.pojos.Allergies</class>
-		<class>sample.db.pojos.Appointment</class>
-		<class>sample.db.pojos.ClinicalHistory</class>
-		<class>sample.db.pojos.Doctor</class>
-		<class>sample.db.pojos.Illness</class>
-		<class>sample.db.pojos.Patient</class>
-		<class>sample.db.pojos.Surgeries</class>
-		<class>sample.db.pojos.Treatment</class>
-		<class>sample.db.pojos.Vaccine</class>
+		<class>pojos.Person</class>
+		<class>pojos.Address</class>
+		<class>pojos.Allergies</class>
+		<class>pojos.Appointment</class>
+		<class>pojos.ClinicalHistory</class>
+		<class>pojos.Doctor</class>
+		<class>pojos.Illness</class>
+		<class>pojos.Patient</class>
+		<class>pojos.Surgeries</class>
+		<class>pojos.Treatment</class>
+		<class>pojos.Vaccine</class>
  
 		<properties>	
 			<!-- Connection properties -->

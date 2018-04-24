@@ -17,7 +17,8 @@ public class Illness implements Serializable {
 	private Integer ID;
 	
 	private String description;
-	private Date date_disease;
+	
+	private Date date;
 	
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDPATIENT")
@@ -38,7 +39,7 @@ public class Illness implements Serializable {
 	public Illness() {
 		this.name = null;
 		this.description = null;
-		this.date_disease = null;
+		this.date = null;
 		this.type = null;
 		this.ID = null;
 	}
@@ -46,7 +47,7 @@ public class Illness implements Serializable {
 	public Illness(String name, String des, Date date, typeDisease type) {
 		this.name = name;
 		this.description = des;
-		this.date_disease = date;
+		this.date = date;
 		this.type = type;
 	}
 
@@ -75,11 +76,11 @@ public class Illness implements Serializable {
 	}
 
 	public Date getDate() {
-		return this.date_disease;
+		return this.date;
 	}
 
 	public void setDate(Date date) {
-		this.date_disease = date;
+		this.date = date;
 	}
 
 	public String getDescription() {
@@ -130,7 +131,7 @@ public class Illness implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Illness [description=" + description + ", date_disease=" + date_disease + ", type=" + type + ", name="
+		return "Illness [description=" + description + ", date_disease=" + date + ", type=" + type + ", name="
 				+ name + "]";
 	}
 

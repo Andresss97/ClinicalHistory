@@ -10,16 +10,15 @@ public class Doctor extends Person  {
 
 	@Id
 	@GeneratedValue(generator = "DOCTOR")
-	@TableGenerator(name = "DOCTOR", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "DOCTOR")
 	private Integer ID;
 
+	@Column(name = "idspeciality")
 	private String speciality;
 	
-	@ManyToMany(mappedBy="doctor")
+	@ManyToMany(mappedBy="doctors")
 	private LinkedList<Patient>patients;
 	
-
+	
 	public Doctor() {
 		super();
 		this.speciality = null;

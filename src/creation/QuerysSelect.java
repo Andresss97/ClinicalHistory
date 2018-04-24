@@ -23,7 +23,6 @@ import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Doctor;
 import pojos.Patient;
 import pojos.Person;
-import pojos.Person.GENDER;
 import pojos.Surgeries;
 
 public class QuerysSelect {
@@ -63,9 +62,9 @@ public class QuerysSelect {
 			patient.setHousePhone(set.getInt("homephone"));
 			patient.setDob(set.getDate("dob"));
 			if(set.getString("gender").equals("Male")) {
-				patient.setGender(GENDER.MALE);
+				patient.setGender("Male");
 			}else {
-				patient.setGender(GENDER.FEMALE);
+				patient.setGender("Female");
 			}
 			patient.setWeight(set.getFloat("weight"));
 			patient.setHeight(set.getFloat("height"));
@@ -85,20 +84,40 @@ public class QuerysSelect {
 	}
 	
 	public Doctor selectDoctor(String[] data) throws SQLException {
-		Doctor doctor = null;
+		Doctor doctor = new Doctor();
+		String query = "SELECT * from doctor where username = '" + data[0] + "' and password = '" + data[1] + "'";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		int idAddress;
+		Address address;
 		
-		EntityManager em = Persistence.createEntityManagerFactory("hospitalManager").createEntityManager();
+		ResultSet set = st.executeQuery();
 		
-		em.getTransaction().begin();
-		Query q = em.createNativeQuery("SELECT * from doctor where username = " 
-		+ data[0] + " and password = " + data[1], Doctor.class);
+		while(set.next()) {
+			doctor.setName(set.getString("name"));
+			doctor.setSurname(set.getString("surname"));
+			doctor.setDob(set.getDate("dob"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
+			doctor.setSpeciality(sp);
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender("Male");
+			}
+			else {
+				doctor.setGender("Female");
+			}
+			doctor.setUsername(set.getString("username"));
+			doctor.setPassword(set.getString("password"));
+			doctor.setID(set.getInt("id"));
+			idAddress = set.getInt("idaddress");
+			address = this.selectAddress(idAddress);
+			doctor.setAddress(address);
+		}
 		
-		doctor = (Doctor) q.getSingleResult();
+		set.close();
+		st.close();
 		
-		em.getTransaction().commit();
-		em.flush();
-		em.close();
-		System.out.println(doctor);
 		return doctor;
 	}
 	
@@ -168,10 +187,10 @@ public class QuerysSelect {
 			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
 			doctor.setSpeciality(sp);
 			if(set.getString("gender").equals("Male")) {
-				doctor.setGender(GENDER.MALE);
+				doctor.setGender("Male");
 			}
 			else {
-				doctor.setGender(GENDER.FEMALE);
+				doctor.setGender("Female");
 			}
 			doctor.setID(set.getInt("id"));
 			
@@ -201,10 +220,10 @@ public class QuerysSelect {
 			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
 			doctor.setSpeciality(sp);
 			if(set.getString("gender").equals("Male")) {
-				doctor.setGender(GENDER.MALE);
+				doctor.setGender("Male");
 			}
 			else {
-				doctor.setGender(GENDER.FEMALE);
+				doctor.setGender("Female");
 			}
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
@@ -245,10 +264,10 @@ public class QuerysSelect {
 			patient.setHousePhone(set.getInt("homephone"));
 			patient.setPhoto(set.getBytes("photo"));
 			if(set.getString("gender").equals("Male")) {
-				patient.setGender(GENDER.MALE);
+				patient.setGender("Male");
 			}
 			else {
-				patient.setGender(GENDER.FEMALE);
+				patient.setGender("Female");
 			}
 			idAddress = set.getInt("idaddress");
 			address = this.selectAddress(idAddress);
@@ -359,7 +378,7 @@ public class QuerysSelect {
 			clinicalHistory.setAddictions(set.getString("additions"));
 			clinicalHistory.setID(set.getInt("ID"));
 			clinicalHistory.setLastModification(set.getDate("date"));
-			clinicalHistory.setMedicalInsurance(set.getInt("medicalInsurance"));
+			//clinicalHistory.setMedicalInsurance(set.getInt("medicalInsurance"));
 			clinicalHistory.setObservations(set.getString("observations"));
 			
 			if(set.getString("bloodGroup").equals("AP")) {
@@ -456,10 +475,10 @@ public class QuerysSelect {
 			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
 			doctor.setSpeciality(sp);
 			if(set.getString("gender").equals("Male")) {
-				doctor.setGender(GENDER.MALE);
+				doctor.setGender("Male");
 			}
 			else {
-				doctor.setGender(GENDER.FEMALE);
+				doctor.setGender("Female");
 			}
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
@@ -522,4 +541,30 @@ public class QuerysSelect {
 		return allergy;
 	}
 	
+	public ArrayList<Appointment> selectAppointmentForDoctor(int id) throws SQLException {
+		ArrayList<Appointment> apps = new ArrayList<>();
+		String query = "SELECT * from appointment where iddoctor = ?";
+		
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			Appointment app = new Appointment();
+			app.setReason(set.getString("reason"));
+			app.setDate(set.getDate("date"));
+			app.setHour(set.getString("hour"));
+			app.setID(set.getInt("id"));
+			int iddoc = set.getInt("iddoctor");
+			Doctor doc = this.selectDoctorByID(iddoc);
+			app.setDoctor(doc);
+			apps.add(app);
+		}
+		
+		st.close();
+		set.close();
+		
+		return apps;
+	}
 }

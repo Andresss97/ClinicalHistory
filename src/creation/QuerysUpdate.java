@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import graphicInterface.Main;
 import pojos.Illness.typeDisease;
-import pojos.Person.GENDER;
 
 public class QuerysUpdate {
 
@@ -133,17 +132,17 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 			
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
-		st.setString(1,treatment.getName());
+		//st.setString(1,treatment.getName());
 		st.setString(2, treatment.getDescrpition());
 		
-		if(treatment.getTreatment().equals("MEDICATION")) {
+		/*if(treatment.getTreatment().equals("MEDICATION")) {
 			st.setString(3,"MEDICATION");
 		}
 		else {
 			st.setString(3, "REHAB");
-		}
-		st.setDate(4, treatment.getStartDate());
-		st.setDate(5, treatment.getEndDate());
+		}*/
+		/*st.setDate(4, treatment.getStartDate());
+		st.setDate(5, treatment.getEndDate());*/
 		st.setString(6, treatment.getResults());
 		st.setInt(7,treatment.getIDtreatment());
 		
@@ -178,7 +177,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		st.setString(7, doctor.getUsername());
 		st.setString(8, doctor.getPassword());
 		st.setString(9, doctor.getEmail());
-		if(doctor.getGender().equals(GENDER.MALE)) {
+		if(doctor.getGender().equals("Male")) {
 			st.setString(10, "Male");
 		}
 		else {
@@ -223,7 +222,7 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		st.setString(8, patient.getUsername());
 		st.setString(9, patient.getPassword());
 		st.setString(10, patient.getEmail());
-		if(patient.getGender().equals(GENDER.MALE)) {
+		if(patient.getGender().equals("Male")) {
 			st.setString(11, "Male");
 		}
 		else {

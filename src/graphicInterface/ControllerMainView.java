@@ -20,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import jpa.ReadJPA;
 
 public class ControllerMainView {
 	
@@ -77,18 +78,20 @@ public class ControllerMainView {
 							@Override
 							public void handle(WindowEvent e) {
 								Main.conector.killConnection();
+								Main.jpaConector.killConnection();
+								System.out.println("Pase por aqui");
 								Platform.exit();
 								System.exit(0);
 							}
 						});
 						
-						window.show();
 						window.setMaximized(true);
 					}
 					break;
 				}
 				case 2 : {
 				String[] data = qs.selectUser(user.getText(), password.getText());
+				
 				Main.doctor = qs.selectDoctor(data);
 
 				if (Main.doctor.getUsername().equals(user.getText())
@@ -104,6 +107,8 @@ public class ControllerMainView {
 						@Override
 						public void handle(WindowEvent e) {
 							Main.conector.killConnection();
+							Main.jpaConector.killConnection();
+							System.out.println("Pase por aqui");
 							Platform.exit();
 							System.exit(0);
 						}
@@ -127,6 +132,8 @@ public class ControllerMainView {
 							@Override
 							public void handle(WindowEvent e) {
 								Main.conector.killConnection();
+								Main.jpaConector.killConnection();
+								System.out.println("Pase por aqui");
 								Platform.exit();
 								System.exit(0);
 							}
@@ -169,6 +176,17 @@ public class ControllerMainView {
     	if(modal.isShowing() == false && !(Main.patient == null)) {
     		Parent root2 = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
     		window.setScene(new Scene(root2));
+			window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				
+				@Override
+				public void handle(WindowEvent e) {
+					Main.conector.killConnection();
+					Main.jpaConector.killConnection();
+					System.out.println("Pase por aqui");
+					Platform.exit();
+					System.exit(0);
+				}
+			});
     		window.show();
     		window.setMaximized(true);
     		return;

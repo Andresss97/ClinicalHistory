@@ -7,6 +7,7 @@ import javax.persistence.*;
 @Table (name = "ADDRESS")
 public class Address implements Serializable {
 	
+	@Column(name = "cp")
 	private int postalCode;
 	private String city;
 	private String street;

@@ -42,7 +42,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pojos.*;
-import pojos.Person.GENDER;
 import virtualization.Photo;
 
 
@@ -164,7 +163,6 @@ public class ControllerSignUpPatient implements Initializable{
     	QuerysInsert query = new QuerysInsert();
     	QuerysSelect query2 = new QuerysSelect();
     	Date date = null;
-    	GENDER gender = null;
     	int ad = 0;
     	
     	address.setCity(city.getText());
@@ -186,10 +184,10 @@ public class ControllerSignUpPatient implements Initializable{
     	
     	patient.setEmail(mail.getText());
     	if(this.gender.getSelectionModel().getSelectedItem().equals("Female")) {
-    		patient.setGender(gender.FEMALE);
+    		patient.setGender("Female");
     	}
     	else {
-    		patient.setGender(gender.MALE);
+    		patient.setGender("Male");
     	}
     	LocalDate d = dBirth.getValue();
     	

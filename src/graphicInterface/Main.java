@@ -12,6 +12,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import jpa.JPAConnector;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -20,6 +21,7 @@ public class Main extends Application {
 	
 	private Stage window;
 	public static ConnInterface conector;
+	public static ConnInterface jpaConector;
 	public static Patient patient;
 	public static Doctor doctor;
 	
@@ -32,14 +34,17 @@ public class Main extends Application {
 		QuerysInsert qi = new QuerysInsert();
 		
 		this.conector = new Conector();
+		this.jpaConector = new JPAConnector();
 		File url = new File(".//Database//DBproject.db");
 		
 		if(!url.exists()) {
 			this.conector.connect();
 			DBCreation.createDB(this.conector);
+			this.jpaConector.connect();
 		}
 		else {
 			this.conector.connect();
+			this.jpaConector.connect();
 		}
 		
 		this.window = primaryStage;

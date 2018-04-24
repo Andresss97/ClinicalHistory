@@ -14,19 +14,19 @@ public class Treatment implements Serializable{
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "TREATMENT")
 	private Integer ID;
 	
-	private Date startDate;
-	private Date endDate;
+	/*private Date startDate;
+	private Date endDate;*/
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
-	public enum typeTreatment {
+	/*public enum typeTreatment {
 		MEDICATION, REHAB
-	};
+	};*/
 	
-	private String name;
-	private typeTreatment treatment;
+	//private String name;
+	//private typeTreatment treatment;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy="treatment")
 	private Illness illness; 
@@ -41,11 +41,11 @@ public class Treatment implements Serializable{
 	private Surgeries surgery;
 
 	public Treatment() {
-		this.name = null;
+		//this.name = null;
 		this.ID = null;
-		this.startDate = null;
-		this.endDate = null;
-		this.treatment = null;
+		/*this.startDate = null;
+		this.endDate = null;*/
+		//this.treatment = null;
 		this.description = null;
 		this.tresults = null;
 	}
@@ -66,7 +66,7 @@ public class Treatment implements Serializable{
 		this.tresults = results;
 	}
 
-	public Date getStartDate() {
+	/*public Date getStartDate() {
 		return startDate;
 	}
 
@@ -80,15 +80,15 @@ public class Treatment implements Serializable{
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
+	}*/
 
-	public typeTreatment getTreatment() {
+	/*public typeTreatment getTreatment() {
 		return treatment;
 	}
 
 	public void setTreatment(typeTreatment treatment) {
 		this.treatment = treatment;
-	}
+	}*/
 
 	public String getDescrpition() {
 		return description;
@@ -127,13 +127,14 @@ public class Treatment implements Serializable{
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	public String getName() {
+	
+	/*public String getName() {
 		return this.name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-	}
+	}*/
 
 	public Surgeries getSurgery() {
 		return surgery;
@@ -145,9 +146,7 @@ public class Treatment implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Treatment [ID=" + ID + ", startDate=" + startDate + ", endDate=" + endDate + ", name=" + name
-				+ ", description=" + description + ", tresults=" + tresults + "]";
+		return "Treatment [ID=" + ID + ", startDate=" + /*startDate + ", endDate=" + endDate + */", name=" + /*name
+				+ */", description=" + description + ", tresults=" + tresults + "]";
 	}
-	
-
 }
