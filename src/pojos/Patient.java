@@ -16,9 +16,10 @@ public class Patient extends Person{
 	
 	private float weight;
 	private float height;
+	@Column(name = "homephone")
 	private int housePhone;
 	
-	@ManyToMany(mappedBy="patient")
+	@ManyToMany
 	@JoinTable(name="MAPPING",
 			joinColumns={@JoinColumn(name="IDDOCTOR", referencedColumnName="id")},
 			inverseJoinColumns={@JoinColumn(name="IDPATIENT", referencedColumnName="id")})

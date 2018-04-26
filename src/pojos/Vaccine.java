@@ -4,20 +4,21 @@ import java.sql.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "VACCINES")
+@Table(name = "VACCINE")
 public class Vaccine {
 	@Id
-	@GeneratedValue(generator = "VACCINES")
-	@TableGenerator(name = "VACCINES", table = "sqlite_sequence",
-		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "VACCINES")
+	@GeneratedValue(generator = "VACCINE")
+	@TableGenerator(name = "VACCINE", table = "sqlite_sequence",
+		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "VACCINE")
 	private Integer ID;
 	
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
 		VARICELLA,YELLOWFEVER};
-	
+	@Column(name = "name")
 	private typeVaccine nameVaccine;
 	private Date date;
+	@Column(name = "observations")
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

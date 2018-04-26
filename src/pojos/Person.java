@@ -9,24 +9,15 @@ import javafx.scene.image.Image;
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable {
-	@Column(name = "USERNAME")
 	protected String username;
-	@Column(name = "PASSWORD")
 	protected String password;
-	@Column(name = "EMAIL")
 	protected String email;
-	@Column(name = "NIF")
 	protected String NIF;
-	@Column(name = "MOBILEPHONE")
 	protected int mobilePhone;
-	@Column(name = "NAME")
 	protected String name;
-	@Column(name = "SURNAME")
 	protected String surname;
-	@Column(name = "DOB")
 	protected Date dob;
-	public enum GENDER {MALE, FEMALE};
-	protected GENDER gender;
+	protected String gender;
 	protected byte[] photo;
 	
 	@OneToOne (fetch = FetchType.LAZY)
@@ -117,11 +108,11 @@ public abstract class Person implements Serializable {
 		this.NIF = NIF;
 	}
 
-	public GENDER getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(GENDER gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

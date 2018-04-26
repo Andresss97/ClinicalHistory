@@ -1,6 +1,8 @@
-package creation;
+package jpa;
 
 import javax.persistence.*;
+
+import creation.ConnInterface;
 
 public class JPAConnector implements ConnInterface {
 	
@@ -10,19 +12,17 @@ public class JPAConnector implements ConnInterface {
 	@Override
 	public void connect() {
 		this.em = Persistence.createEntityManagerFactory("hospitalManager").createEntityManager();	
-		em.getTransaction().begin();
-		em.createNamedQuery("PRAGMA foreign_keys = ON").executeUpdate();
-		em.getTransaction().commit();
+		this.em.getTransaction().begin();
+		this.em.createNativeQuery("PRAGMA foreign_keys = ON").executeUpdate();
+		this.em.getTransaction().commit();
 	}
 	
 	@Override
 	public void killConnection() {
-		em.close();
+		this.em.close();
 	}
 	
-	public EntityManager getEntityManager () {
+	public EntityManager getEntityManager() {
 		return this.em;
 	}
-	
-
 }

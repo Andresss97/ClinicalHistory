@@ -49,6 +49,7 @@ public class ControllerSplashScreen implements Initializable{
 								@Override
 								public void handle(WindowEvent e) {
 									Main.conector.killConnection();
+									Main.jpaConector.killConnection();
 									Platform.exit();
 									System.exit(0);
 								}

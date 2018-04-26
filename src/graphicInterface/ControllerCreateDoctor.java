@@ -29,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import pojos.*;
-import pojos.Person.GENDER;
 
 public class ControllerCreateDoctor implements Initializable{
 
@@ -115,10 +114,10 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setDob(date);
 		doctor.setSpeciality(String.valueOf(this.speciality.getSelectionModel().getSelectedItem()));
 		if(this.gender.getSelectionModel().getSelectedItem().equals("Male")) {
-			doctor.setGender(GENDER.MALE);
+			doctor.setGender("Male");
 		}
 		else {
-			doctor.setGender(GENDER.FEMALE);
+			doctor.setGender("Female");
 		}
 		doctor.setMobilePhone(Integer.parseInt(mPhone.getText()));
 		doctor.setEmail(email.getText());

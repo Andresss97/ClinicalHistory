@@ -27,7 +27,7 @@ public class ClinicalHistory implements Serializable {
 	};
 
 	private BLOODGROUP bloodgroup;
-	private int medicalInsurance;
+	//private int medicalInsurance;
 
 	public ClinicalHistory() {
 		this.ID = null;
@@ -35,7 +35,7 @@ public class ClinicalHistory implements Serializable {
 		this.observations = null;
 		this.lastModification = null;
 		this.bloodgroup = null;
-		this.medicalInsurance = 0;
+		//this.medicalInsurance = 0;
 	}
 
 	public int getID() {
@@ -78,13 +78,13 @@ public class ClinicalHistory implements Serializable {
 		this.bloodgroup = bloodgroup;
 	}
 
-	public int getMedicalInsurance() {
+	/*public int getMedicalInsurance() {
 		return medicalInsurance;
 	}
 
 	public void setMedicalInsurance(int medicalInsurance) {
 		this.medicalInsurance = medicalInsurance;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
@@ -120,7 +120,7 @@ public class ClinicalHistory implements Serializable {
 	public String toString() {
 		return "ClinicalHistory [ID=" + ID + ", addictions=" + addictions + ", observations=" + observations
 				+ ", lastModification=" + lastModification + ", bloodgroup=" + bloodgroup + ", medicalInsurance="
-				+ medicalInsurance + "]";
+				+ /*medicalInsurance*/ "]";
 	}
 	
 }

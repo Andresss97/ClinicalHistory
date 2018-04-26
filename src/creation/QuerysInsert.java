@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import javax.sql.rowset.serial.SerialBlob;
 
 import graphicInterface.Main;
-import pojos.Person.GENDER;
-import pojos.Treatment.typeTreatment;
+//import pojos.Treatment.typeTreatment;
 import pojos.*;
 import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Illness.typeDisease;
@@ -30,7 +29,7 @@ public class QuerysInsert {
 		st.setString(1, doctor.getUsername());
 		st.setString(2, doctor.getPassword());
 		st.setString(3, doctor.getEmail());
-		if(doctor.getGender().equals(GENDER.MALE)) {
+		if(doctor.getGender().equals("Male")) {
 			st.setString(4,"Male");	
 		}
 		else {
@@ -81,7 +80,7 @@ public class QuerysInsert {
 		st.setInt(6, patient.getHousePhone());
 		st.setDate(7, patient.getDob());
 		
-		if(patient.getGender().equals(GENDER.MALE)) {
+		if(patient.getGender().equals("Male")) {
 			st.setString(8,"Male");	
 		}
 		else {
@@ -245,15 +244,15 @@ public class QuerysInsert {
 		query = "INSERT into treatment (start,end, type, description,) values(?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
-		st.setDate(1, treatment.getStartDate());
-		st.setDate(2, treatment.getEndDate());
+		/*st.setDate(1, treatment.getStartDate());
+		st.setDate(2, treatment.getEndDate());*/
 		
-		if(treatment.getTreatment().equals(typeTreatment.MEDICATION)) {
+		/*if(treatment.getTreatment().equals(typeTreatment.MEDICATION)) {
 			st.setString(3, "Medication");
 		}
 		else {
 			st.setString(3, "Rehab");
-		}
+		}*/
 		st.setString(4, treatment.getDescrpition());
 		st.setString(5, treatment.getResults());
 		
@@ -295,7 +294,7 @@ public class QuerysInsert {
 		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ZP)) {
 			st.setString(4,"Zero positive");	
 		}
-		st.setInt(5, clinicalHistory.getMedicalInsurance());
+		//st.setInt(5, clinicalHistory.getMedicalInsurance());
 		
 		st.executeUpdate();
 		st.close();
