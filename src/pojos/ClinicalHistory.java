@@ -3,21 +3,31 @@ import java.io.*;
 import java.sql.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "CLINICALHISTORY")
 public class ClinicalHistory implements Serializable {
+	
+	@XmlAttribute
 	@Id
 	@GeneratedValue (generator = "CLINICALHISTORY")
 	@TableGenerator (name = "CLINICALHISTORY", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "CLINICALHISTORY")
 	private Integer ID;
 	
-	
+	@XmlElement
 	private String addictions;
+	
+	@XmlElement
 	private String observations;
+	
+	@XmlElement
 	private Date lastModification;
 
+	@XmlTransient
 	@OneToOne
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
@@ -26,6 +36,7 @@ public class ClinicalHistory implements Serializable {
 		AP, BP, ABP, AN, BN, ABN, ZP, ZN
 	};
 
+	@XmlElement
 	private BLOODGROUP bloodgroup;
 	//private int medicalInsurance;
 

@@ -3,46 +3,64 @@ package pojos;
 import java.io.*;
 import java.util.LinkedList;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "PATIENT")
 public class Patient extends Person{
 	
+	@XmlAttribute
 	@Id
 	@GeneratedValue(generator = "PATIENT")
 	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
 	private Integer ID;
 	
+	@XmlElement
 	private float weight;
+	
+	@XmlElement
 	private float height;
+	
+	@XmlElement
 	@Column(name = "homephone")
 	private int housePhone;
 	
+	@XmlTransient
 	@ManyToMany
 	@JoinTable(name="MAPPING",
 			joinColumns={@JoinColumn(name="IDDOCTOR", referencedColumnName="id")},
 			inverseJoinColumns={@JoinColumn(name="IDPATIENT", referencedColumnName="id")})
 	private LinkedList<Doctor> doctors;
 	
+	@XmlElement 
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Appointment> appointments;
 	
+	@XmlElement
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Illness> illnesses;
 	
+	
+	@XmlElement
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Allergies> allergies;
 	
+	@XmlElement
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Surgeries> surgeries;
 	
+	@XmlElement
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Treatment> treatment;
 	
+	@XmlElement
 	@OneToMany(mappedBy="patient")
 	private LinkedList<Vaccine> vaccines;
 	
+	@XmlElement
 	@OneToOne(mappedBy="patient")
 	private ClinicalHistory cHistory;
 	

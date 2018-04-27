@@ -3,25 +3,35 @@ import java.io.*;
 import java.sql.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "APPOINTMENT")
 public class Appointment implements Serializable  {
 	
+	@XmlAttribute
 	@Id
 	@GeneratedValue (generator = "APPOINTMENT")
 	@TableGenerator (name = "APPOINTMENT", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "APPOINTMENT")
 	private Integer ID;
 	
+	@XmlElement
 	private Date date;
+	
+	@XmlElement
 	private String hour;
+	
+	@XmlElement
 	private String reason;
 	
+	@XmlTransient
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDPATIENT")
 	private Patient patient;
 	
+	@XmlTransient
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDDOCTOR")
 	private Doctor doctor;

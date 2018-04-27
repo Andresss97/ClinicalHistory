@@ -1,24 +1,36 @@
 package pojos;
 import java.io.*;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table (name = "ADDRESS")
 public class Address implements Serializable {
 	
+	@XmlElement
 	@Column(name = "cp")
 	private int postalCode;
+	
+	@XmlElement
 	private String city;
+	
+	@XmlElement
 	private String street;
+	
+	@XmlElement
 	private int houseNumber;
 	
+	
+	@XmlAttribute
 	@Id
 	@GeneratedValue (generator = "ADDRESS")
 	@TableGenerator (name = "ADDRESS", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ADDRESS")
 	private Integer ID;
 
+	@XmlTransient
 	@OneToOne (fetch = FetchType.LAZY, mappedBy = "address")
 	private Person person;
 	
@@ -36,25 +48,7 @@ public class Address implements Serializable {
 	public void setID(int id) {
 		this.ID=id;
 	}
-	
-	
-	
-//	public Patient getPatient() {
-//		return this.patient;
-//	}
-//	
-//	public void setPatient(Patient patient) {
-//		this.patient = patient;
-//	}
-//	
-//	public Doctor getDoctor() {
-//		return this.doctor;
-//	}
-//	
-//	public void setDoctor(Doctor doctor) {
-//		this.doctor=doctor;
-//	}
-	
+				
 	public Person getPerson() {
 		return person;
 	}

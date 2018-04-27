@@ -3,18 +3,24 @@ import java.io.*;
 import java.sql.Date;
 import java.util.LinkedList;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "DOCTOR")
 public class Doctor extends Person  {
 
+	@XmlAttribute
 	@Id
 	@GeneratedValue(generator = "DOCTOR")
 	private Integer ID;
 
+	@XmlElement
 	@Column(name = "idspeciality")
 	private String speciality;
 	
+	@XmlTransient
 	@ManyToMany(mappedBy="doctors")
 	private LinkedList<Patient>patients;
 	

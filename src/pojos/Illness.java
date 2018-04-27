@@ -4,22 +4,29 @@ import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "ILLNESSES")
 public class Illness implements Serializable {
 
+	@XmlAttribute
 	@Id
 	@GeneratedValue (generator = "ILLNESSES")
 	@TableGenerator (name = "ILLNESSES", table = "sqlite_sequence", 
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "ILLNESSES")
 	private Integer ID;
 	
+	@XmlElement
 	private String description;
 	
+	@XmlElement
 	private Date date;
 	
+	@XmlTransient
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDPATIENT")
 	private Patient patient;
@@ -28,9 +35,13 @@ public class Illness implements Serializable {
 		HEREDITARY, PERSONAL
 	};
 
+	@XmlAttribute
 	private typeDisease type;
+	
+	@XmlAttribute
 	private String name;
 	
+	@XmlElement
 	@OneToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDTREATMENT")
 	private Treatment treatment;
