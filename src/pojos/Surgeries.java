@@ -2,24 +2,32 @@ package pojos;
 import java.io.*;
 import java.sql.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table (name = "SURGERIES")
 public class Surgeries implements Serializable {
 	
+	@XmlAttribute
 	@Id
 	@GeneratedValue(generator = "SURGERIES")
 	@TableGenerator(name = "SURGERIES", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "SURGERIES")
 	private Integer ID;
 	
+	@XmlElement
 	private Date date;
+	
+	@XmlElement
 	private String type;
 	
+	@XmlElement
 	@OneToOne (fetch = FetchType.LAZY)
 	@JoinColumn (name = "IDTREATMENT")
 	private Treatment treatment;
 	
+	@XmlTransient
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn (name = "IDPATIENT")
 	private Patient patient;

@@ -2,12 +2,15 @@ package pojos;
 import java.io.*;
 import java.sql.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
 
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "TREATMENT")
 public class Treatment implements Serializable{
 	
+	@XmlAttribute
 	@Id
 	@GeneratedValue(generator = "TREATMENT")
 	@TableGenerator(name = "TREATMENT", table = "sqlite_sequence",
@@ -17,9 +20,13 @@ public class Treatment implements Serializable{
 	/*private Date startDate;
 	private Date endDate;*/
 	
+	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
+	
+	
+	//*Falta anotar en xml las que estan comentadas
 	
 	/*public enum typeTreatment {
 		MEDICATION, REHAB
@@ -28,15 +35,21 @@ public class Treatment implements Serializable{
 	//private String name;
 	//private typeTreatment treatment;
 	
+	@XmlTransient
 	@OneToOne(fetch = FetchType.LAZY, mappedBy="treatment")
 	private Illness illness; 
 	
+	@XmlElement
 	private String description;
+	
+	@XmlElement
 	private String tresults;
 	
+	@XmlTransient
 	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
 	private Allergies allergy;
 	
+	@XmlTransient
 	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
 	private Surgeries surgery;
 
