@@ -2,10 +2,14 @@ package pojos;
 
 import java.sql.Date;
 import javax.persistence.*;
+import javax.xml.bind.annotation.*;
 
+
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "VACCINE")
 public class Vaccine {
+	@XmlAttribute
 	@Id
 	@GeneratedValue(generator = "VACCINE")
 	@TableGenerator(name = "VACCINE", table = "sqlite_sequence",
@@ -15,12 +19,19 @@ public class Vaccine {
 	public enum typeVaccine{CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,HEPATITIS_B,PAPILLOMAVIRUS,
 		HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID,
 		VARICELLA,YELLOWFEVER};
+	
+	@XmlAttribute	
 	@Column(name = "name")
 	private typeVaccine nameVaccine;
+	
+	@XmlElement
 	private Date date;
+	
 	@Column(name = "observations")
+	@XmlElement
 	private String description;
 	
+	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
