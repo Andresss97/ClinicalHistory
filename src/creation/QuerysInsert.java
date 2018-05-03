@@ -340,14 +340,16 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertSurgeries (Surgeries surgeries) throws SQLException {
+	public void insertSurgeries (Surgeries surgeries,Integer idPatient,Integer idTreatment) throws SQLException {
 		String query;
 
-		query = "INSERT into surgeries (date, type) values (?,?)";
+		query = "INSERT into surgeries (date, type,idpatient,idtreatment,) values (?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setDate(1, surgeries.getDate());
 		st.setString(2, surgeries.getType());
+		st.setInt(3, idPatient);
+		st.setInt(4, idTreatment);
 		
 		st.executeUpdate();
 		st.close();
