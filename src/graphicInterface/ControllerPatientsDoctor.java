@@ -1,5 +1,6 @@
 package graphicInterface;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -11,8 +12,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
 import jpa.ReadJPA;
 import pojos.Patient;
 
@@ -35,10 +40,33 @@ public class ControllerPatientsDoctor implements Initializable {
 
     @FXML
     private JFXButton sClinicalRecord;
-
+    
     @FXML
-    void onClickClinicalRecord(ActionEvent event) {
-
+    private BorderPane container;
+    
+    @FXML
+    void onClickClinicalRecord(ActionEvent event) throws IOException {
+    	
+    	if(list.getSelectionModel().getSelectedItem() == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+        	alert.setContentText("You must select a patient");
+        	alert.setTitle("Warning");
+        	alert.setHeaderText("Clinical record view");
+        	alert.show();
+        	return;
+    	}
+    	
+    	Patient patient = (Patient) list.getSelectionModel().getSelectedItem();
+    	container.getChildren().clear();
+    	BorderPane root = null;
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("ClinicalRecord.fxml"));
+		root = loader.load();
+		ControllerClinicalRecord controller = loader.<ControllerClinicalRecord>getController();
+		controller.initComponents(patient);
+		
+		root.prefHeightProperty().bind(container.heightProperty());
+		root.prefWidthProperty().bind(container.widthProperty());
+		container.setCenter(root);
     }
 
     @FXML

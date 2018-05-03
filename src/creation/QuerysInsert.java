@@ -261,7 +261,7 @@ public class QuerysInsert {
 		
 	}
 		
-	public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
+	/*public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
 		String query;
 
 		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance) values (?,?,?,?,?)";
@@ -298,7 +298,7 @@ public class QuerysInsert {
 		
 		st.executeUpdate();
 		st.close();
-	}
+	}*/
 	
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;

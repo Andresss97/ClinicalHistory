@@ -242,9 +242,12 @@ public abstract class DBCreation {
 
 		try {
 			st = con.getConnect().createStatement();
-			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "ADDICTIONS text,"
-					+ "OBSERVATIONS text," + "LASTMODIFICATION date," + "BLOODGROUP varchar (15),"
-					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
+			
+			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL, " 
+			+ "ADDICTIONSALCOHOL varchar(10), ADDICTIONSDRUGS varchar(10),"
+			+ "ADDICTIONSOTHERS varchar(10), BLOODGROUP varchar (15), INSURANCECOMPANY varchar(30), "
+			+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
+			
 			st.execute(in);
 			st.close();
 		} catch (Exception ex) {

@@ -83,7 +83,7 @@ public class QuerysUpdate {
 	    st.close();
 	}
 	
-	private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
+	/*private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
 		String query;
 		query = "UPDATE clinicalHistory "
 				+ " SET addictions = ? "
@@ -99,7 +99,7 @@ public class QuerysUpdate {
 		
 		st.executeUpdate();
 		st.close();
-	}
+	}*/
 	
 	private void updateAllergy (Allergies allergy) throws SQLException {
 		String query;
