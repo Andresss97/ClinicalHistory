@@ -528,7 +528,7 @@ public class QuerysSelect {
 		
 		while (set.next()) {
 			Allergies allerg = new Allergies ();
-			allerg.setGroup(set.getString("group"));
+			allerg.setType(set.getString("type"));
 			allerg.setID(set.getInt("id"));
 			allerg.setObservations(set.getString("observations"));
 			

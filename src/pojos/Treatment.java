@@ -4,6 +4,7 @@ import java.sql.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
+//*CLASE NO ACABADA endate y startdate salen en las tables
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity

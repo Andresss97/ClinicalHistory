@@ -19,7 +19,7 @@ public class Allergies implements Serializable {
 	
 	@XmlElement
 	@Column(name = "type")
-	private String group;
+	private String type;
 	
 	@XmlElement
 	private String observations;
@@ -36,7 +36,7 @@ public class Allergies implements Serializable {
 
 	public Allergies() {
 		this.ID = null;
-		this.group = null;
+		this.type = null;
 		this.observations = null;
 		this.treatment = null;
 	}
@@ -49,12 +49,12 @@ public class Allergies implements Serializable {
 		this.ID = ID;
 	}
 
-	public String getGroup() {
-		return group;
+	public String getType() {
+		return type;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getObservations() {
@@ -105,7 +105,7 @@ public class Allergies implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Allergies [ID=" + ID + ", group=" + group + ", observations=" + observations + "]";
+		return "Allergies [ID=" + ID + ", group=" + type + ", observations=" + observations + "]";
 	}
 	
 }

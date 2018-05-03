@@ -3,9 +3,12 @@ package jpa;
 import graphicInterface.Main;
 import pojos.*;
 
+
+
+
 public class UpdateJPA {
 	
-private JPAConnector con = null;
+	private JPAConnector con = null;
 	
 	public void ReadJPA() {
 		this.con = (JPAConnector) Main.jpaConector;
