@@ -137,10 +137,10 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertIllness(Illness illness) throws SQLException {
+	public void insertIllness(Illness illness,Integer idTreatment ,Integer idPatient) throws SQLException {
 		String query;
 
-		query = "INSERT into illness (name,type,description,date,Tresults) values (?,?,?,?)";
+		query = "INSERT into illness (name,type,description,date,Tresults,idtreatment,idpatient,) values (?,?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setString(1,illness.getName());
@@ -154,16 +154,18 @@ public class QuerysInsert {
 		
 		st.setString(3,illness.getDescription());
 		st.setDate(4,illness.getDate());;
+		st.setInt(5, idTreatment);
+		st.setInt(6, idPatient);
 		
 		st.executeUpdate();
 		st.close();
 	
 	}
 	
-	public void insertVaccine(Vaccine vaccine) throws SQLException{
+	public void insertVaccine(Vaccine vaccine,Integer idPatient) throws SQLException{
 		String query;
 		
-		query = "INSERT into vaccine (name,date,observations,) values(?,?,?)";
+		query = "INSERT into vaccine (name,date,observations,idpatient,) values(?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		switch(vaccine.getNameVaccine()){
@@ -233,15 +235,18 @@ public class QuerysInsert {
 		
 		st.setDate(2, vaccine.getDate());
 		st.setString(3, vaccine.getDescription());
+		st.setInt(4, idPatient);
 		
 		st.executeUpdate();
 		st.close();	
 	}
 	
-	public void insertTreatment(Treatment treatment) throws SQLException {
+	
+	//*Ojo con treatment 
+	public void insertTreatment(Treatment treatment,Integer idPatient) throws SQLException {
 		String query;
 		
-		query = "INSERT into treatment (start,end, type, description,) values(?,?,?,?,?)";
+		query = "INSERT into treatment (start,end, type, description,tresults,idpatient,) values(?,?,?,?,?,?,)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		/*st.setDate(1, treatment.getStartDate());
@@ -255,16 +260,17 @@ public class QuerysInsert {
 		}*/
 		st.setString(4, treatment.getDescrpition());
 		st.setString(5, treatment.getResults());
+		st.setInt(6, idPatient);
 		
 		st.executeUpdate();
 		st.close();
 		
 	}
-		
-	public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
+		//*set num 5 esta como comentario
+	public void insertClinicalHistory(ClinicalHistory clinicalHistory,Integer idPatient) throws SQLException {
 		String query;
 
-		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance) values (?,?,?,?,?)";
+		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance,idpatient,) values (?,?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setString(1, clinicalHistory.getAddictions());
@@ -296,10 +302,13 @@ public class QuerysInsert {
 		}
 		//st.setInt(5, clinicalHistory.getMedicalInsurance());
 		
+		st.setInt(6, idPatient);
+		
 		st.executeUpdate();
 		st.close();
 	}
 	
+	//*No entiendo q pasa con main patient.getID
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;
 
@@ -316,14 +325,16 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertAllergies(Allergies allergies) throws SQLException {
+	public void insertAllergies(Allergies allergies, Integer idpatient, Integer idtreatment) throws SQLException {
 		String query;
 
-		query = "INSERT into allergies (group, observations) values (?,?)";
+		query = "INSERT into allergies (group, observations, idpatient, idtreatment,) values (?, ?, ?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
-		st.setString(1, allergies.getGroup());
+		st.setString(1, allergies.getType());
 		st.setString(2, allergies.getObservations());
+		st.setInt(3, idpatient);
+		st.setInt(4, idtreatment);
 		
 		st.executeUpdate();
 		st.close();

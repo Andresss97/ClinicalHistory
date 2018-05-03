@@ -110,7 +110,7 @@ public class QuerysUpdate {
 				+ " WHERE id = ?";
 		PreparedStatement st;
 		st = conn.getConnect().prepareStatement(query);
-		st.setString(1, allergy.getGroup());
+		st.setString(1, allergy.getType());
 		st.setString(2, allergy.getObservations());
 		st.setInt(3, allergy.getTreatment().getIDtreatment());
 		st.setInt(4, allergy.getID());
