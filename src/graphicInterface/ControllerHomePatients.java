@@ -227,16 +227,18 @@ public class ControllerHomePatients implements Initializable {
 		tSurname.setText(Main.patient.getSurname());
 		tNif.setText(Main.patient.getNIF());
 		
-		InputStream in = new ByteArrayInputStream(Main.patient.getPhoto());
-		BufferedImage i = null;
-		try {
-			i = ImageIO.read(in);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(Main.patient != null) {
+			InputStream in = new ByteArrayInputStream(Main.patient.getPhoto());
+			BufferedImage i = null;
+			try {
+				i = ImageIO.read(in);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Image img = SwingFXUtils.toFXImage(i, null);
+			this.image.setImage(img);
 		}
-		Image img = SwingFXUtils.toFXImage(i, null);
-		this.image.setImage(img);
-	
+		
 		ObservableList list = FXCollections.observableArrayList("Alphabetically", "Date");
 		orderBy.setItems(list);
 		

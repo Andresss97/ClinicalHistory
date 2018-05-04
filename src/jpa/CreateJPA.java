@@ -7,18 +7,13 @@ public class CreateJPA {
 	
 private JPAConnector con = null;
 	
-	public void ReadJPA() {
+	public CreateJPA() {
 		this.con = (JPAConnector) Main.jpaConector;
 	}
-	
-	
-	public void createVaccine(Vaccine vaccine) {
-		con.getEntityManager().getTransaction().begin();
-		con.getEntityManager().persist(vaccine);
-		con.getEntityManager().getTransaction().commit();
-		
-	}
-	
-	
 
+	public void createVaccine(Vaccine vaccine) {
+		this.con.getEntityManager().getTransaction().begin();
+		this.con.getEntityManager().persist(vaccine);
+		this.con.getEntityManager().getTransaction().commit();
+	}
 }

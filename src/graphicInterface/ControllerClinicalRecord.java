@@ -27,9 +27,13 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import jpa.CreateJPA;
 import pojos.Appointment;
 import pojos.Patient;
 import pojos.Vaccine;
@@ -101,13 +105,13 @@ public class ControllerClinicalRecord implements Initializable {
     private TableView<Vaccine> tableVaccines;
 
     @FXML
-    private TableColumn<?, ?> vaccineName;
+    private TableColumn<Vaccine, typeVaccine> vaccineName;
 
     @FXML
-    private TableColumn<?, ?> vaccineDate;
+    private TableColumn<Vaccine, Date> vaccineDate;
 
     @FXML
-    private TableColumn<?, ?> vaccineObservations;
+    private TableColumn<Vaccine, String> vaccineObservations;
 
     @FXML
     private JFXComboBox<String> vaccineAddName;
@@ -253,12 +257,20 @@ public class ControllerClinicalRecord implements Initializable {
     @FXML
     void onClickAddVaccine(ActionEvent event) {
     	Vaccine vaccine = new Vaccine();
+    	CreateJPA create = new CreateJPA();
+    	
     	vaccine.setNameVaccine(typeVaccine.valueOf(vaccineAddName.getSelectionModel().getSelectedItem()));
     	LocalDate ld = vaccinesAddDate.getValue();
     	vaccine.setDate(Date.valueOf(ld));
     	vaccine.setDescription(vaccinessAddObservations.getText());
+    	vaccine.setPatient(this.patient);
+    	create.createVaccine(vaccine);
     	
+    	vaccineAddName.getSelectionModel().clearSelection();
+    	vaccinesAddDate.setValue(null);
+    	vaccinessAddObservations.clear();
     	
+    	this.tableVaccines.getItems().add(vaccine);
     }
 
     @FXML
@@ -306,11 +318,21 @@ public class ControllerClinicalRecord implements Initializable {
 		ObservableList list = FXCollections.observableArrayList(patient.getAppointments());
 		this.list.getItems().addAll(list);
 		
+		vaccineName.setCellValueFactory(new PropertyValueFactory<Vaccine, typeVaccine>("nameVaccine"));
+		vaccineDate.setCellValueFactory(new PropertyValueFactory<Vaccine, Date>("date"));
+		vaccineObservations.setCellValueFactory(new PropertyValueFactory<Vaccine, String>("description"));
 		for(int i = 0; i < patient.getVaccines().size(); i++) {
 			tableVaccines.getItems().add(patient.getVaccines().get(i));
 		}
     }
-
+    
+    @FXML
+    void onRightClick(MouseEvent event) {
+    	if(event.getButton() == MouseButton.SECONDARY) {
+    		System.out.println("He estado aqui");
+    	}
+    }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("YES", "NONE");
@@ -318,15 +340,15 @@ public class ControllerClinicalRecord implements Initializable {
 		drugs.setItems(list);
 		others.setItems(list);
 		
-		ObservableList list2 = FXCollections.observableArrayList("AP, BP, ABP, AN, BN, ABN, ZP, ZN");
+		ObservableList list2 = FXCollections.observableArrayList("AP", "BP", "ABP", "AN", "BN", "ABN", "ZP", "ZN");
 		bGroup.setItems(list2);
 		
-		ObservableList list3 = FXCollections.observableArrayList("SANITAS, ADESLAS, MAPFRE, AEGON, PLUS ULTRA SEGUROS");
+		ObservableList list3 = FXCollections.observableArrayList("SANITAS", "ADESLAS", "MAPFRE", "AEGON", "PLUS ULTRA SEGUROS");
 		mInsCompany.setItems(list3);
 		
-		ObservableList list4 = FXCollections.observableArrayList("CHOLERA,DIPHTHERIA,INFLUENZA_A,INFLUENZA_B,HEPATITIS_A,"
-				+ "HEPATITIS_B,PAPILLOMAVIRUS, HERPES,MEASLES,MENINGOCOCCAL,PNEUMOCOCCAL,"
-				+ "RABIES,ROTAVIRUS,RUBELLA,SMALLPOX,TETANUS,TUBERCULOSIS,TYPHOID, VARICELLA,YELLOWFEVER");
+		ObservableList list4 = FXCollections.observableArrayList("CHOLERA", "DIPHTHERIA", "INFLUENZA_A", "INFLUENZA_B", "HEPATITIS_A", 
+				"HEPATITIS_B", "PAPILLOMAVIRUS", "HERPES", "MEASLES", "MENINGOCOCCAL", "PNEUMOCOCCAL", 
+				"RABIES","ROTAVIRUS", "RUBELLA", "SMALLPOX", "TETANUS", "TUBERCULOSIS", "TYPHOID", "VARICELLA", "YELLOWFEVER");
 		vaccineAddName.setItems(list4);
 	}
 }

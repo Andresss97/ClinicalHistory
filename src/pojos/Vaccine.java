@@ -89,7 +89,6 @@ public class Vaccine {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 	
 	@Override
 	public int hashCode() {
@@ -127,7 +126,4 @@ public class Vaccine {
 		return "Vaccine [IDvaccine=" + ID + ", nameVaccine=" + nameVaccine + ", date=" + date + ", description="
 				+ description + "]";
 	}
-	
-	
-	
 }
