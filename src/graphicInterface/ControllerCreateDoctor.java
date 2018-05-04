@@ -124,6 +124,7 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setUsername(user.getText());
 		doctor.setPassword(password.getText());
 		
+		//*remember that I change the insert
 		try {
 			query.insertDoctor(doctor, id);
 			query.insertUser1(doctor, null);
