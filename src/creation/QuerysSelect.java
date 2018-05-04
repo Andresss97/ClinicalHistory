@@ -363,7 +363,7 @@ public class QuerysSelect {
 		return type;
 	}
 	
-	public List<ClinicalHistory> selectClinicalHistory (int id) throws SQLException { 
+	/*public List<ClinicalHistory> selectClinicalHistory (int id) throws SQLException { 
 		String query;
 		
 		query = "SELECT * FROM ClinicalHistory where idpatient = ? ";
@@ -406,7 +406,7 @@ public class QuerysSelect {
 		set.close();
 		
 		return clinicalH ;		
-	}
+	}*/
 	
 	public ArrayList<String> selectHoursDoctorApp(int id) throws SQLException {
 		String query = "SELECT hour from appointment where iddoctor = ?";

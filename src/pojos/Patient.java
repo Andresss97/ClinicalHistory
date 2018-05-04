@@ -75,6 +75,7 @@ public class Patient extends Person{
 		this.allergies = new LinkedList<>();
 		this.surgeries = new LinkedList<>();
 		this.vaccines = new LinkedList<>();
+		this.cHistory = new ClinicalHistory();
 	}
 
 	public float getWeight() {

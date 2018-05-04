@@ -18,15 +18,20 @@ public class ClinicalHistory implements Serializable {
 	pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "CLINICALHISTORY")
 	private Integer ID;
 	
-	@XmlElement
-	private String addictions;
+	public enum ADDICTIONS {
+		YES, NONE
+	};
 	
 	@XmlElement
-	private String observations;
+	@Column(name = "")
+	private ADDICTIONS addictionsAlcohol;
 	
 	@XmlElement
-	private Date lastModification;
-
+	private ADDICTIONS addictionsDrugs;
+	
+	@XmlElement
+	private ADDICTIONS addictionsOthers;
+	
 	@XmlTransient
 	@OneToOne
 	@JoinColumn(name = "IDPATIENT")
@@ -38,15 +43,16 @@ public class ClinicalHistory implements Serializable {
 
 	@XmlElement
 	private BLOODGROUP bloodgroup;
-	//private int medicalInsurance;
+	
+	@Column(name = "insurancecompany")
+	private String medicalInsurance;
 
 	public ClinicalHistory() {
 		this.ID = null;
-		this.addictions = null;
-		this.observations = null;
-		this.lastModification = null;
 		this.bloodgroup = null;
-		//this.medicalInsurance = 0;
+		this.addictionsAlcohol = null;
+		this.addictionsDrugs = null;
+		this.addictionsOthers = null;
 	}
 
 	public int getID() {
@@ -57,30 +63,6 @@ public class ClinicalHistory implements Serializable {
 		this.ID = ID;
 	}
 
-	public String getAddictions() {
-		return addictions;
-	}
-
-	public void setAddictions(String addictions) {
-		this.addictions = addictions;
-	}
-
-	public String getObservations() {
-		return observations;
-	}
-
-	public void setObservations(String observations) {
-		this.observations = observations;
-	}
-
-	public Date getLastModification() {
-		return lastModification;
-	}
-
-	public void setLastModification(Date lastModification) {
-		this.lastModification = lastModification;
-	}
-
 	public BLOODGROUP getBloodgroup() {
 		return bloodgroup;
 	}
@@ -88,14 +70,6 @@ public class ClinicalHistory implements Serializable {
 	public void setBloodgroup(BLOODGROUP bloodgroup) {
 		this.bloodgroup = bloodgroup;
 	}
-
-	/*public int getMedicalInsurance() {
-		return medicalInsurance;
-	}
-
-	public void setMedicalInsurance(int medicalInsurance) {
-		this.medicalInsurance = medicalInsurance;
-	}*/
 
 	@Override
 	public int hashCode() {
@@ -127,11 +101,40 @@ public class ClinicalHistory implements Serializable {
 		this.patient = patient;
 	}
 
-	@Override
-	public String toString() {
-		return "ClinicalHistory [ID=" + ID + ", addictions=" + addictions + ", observations=" + observations
-				+ ", lastModification=" + lastModification + ", bloodgroup=" + bloodgroup + ", medicalInsurance="
-				+ /*medicalInsurance*/ "]";
+	public ADDICTIONS getAddictionAlcohol() {
+		return addictionsAlcohol;
+	}
+
+	public void setAddictionAlcohol(ADDICTIONS addictionAlcohol) {
+		this.addictionsAlcohol = addictionAlcohol;
+	}
+
+	public ADDICTIONS getAddictionsDrugs() {
+		return addictionsDrugs;
+	}
+
+	public void setAddictionsDrugs(ADDICTIONS addictionsDrugs) {
+		this.addictionsDrugs = addictionsDrugs;
+	}
+
+	public ADDICTIONS getAddictionsOthers() {
+		return addictionsOthers;
+	}
+
+	public void setAddictionsOthers(ADDICTIONS addictionsOthers) {
+		this.addictionsOthers = addictionsOthers;
+	}
+
+	public String getMedicalInsurance() {
+		return medicalInsurance;
+	}
+
+	public void setMedicalInsurance(String medicalInsurance) {
+		this.medicalInsurance = medicalInsurance;
+	}
+
+	public void setID(Integer iD) {
+		ID = iD;
 	}
 	
 }

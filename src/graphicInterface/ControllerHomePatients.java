@@ -106,9 +106,9 @@ public class ControllerHomePatients implements Initializable {
 	void onClickMProfile(ActionEvent event) throws IOException {
 		cContainer.getChildren().clear();
 		BorderPane root = null;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePatient.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("ClinicalRecord.fxml"));
 		root = loader.load();
-		ControllerUpdatePatient controller = loader.<ControllerUpdatePatient>getController();
+		ControllerClinicalRecord controller = loader.<ControllerClinicalRecord>getController();
 		controller.initComponents(Main.patient);
 		
 		root.prefHeightProperty().bind(cContainer.heightProperty());
