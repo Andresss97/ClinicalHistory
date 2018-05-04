@@ -153,6 +153,13 @@ public abstract class DBCreation {
 					+ "NAME varchar(25) NOT NULL," + "DATE date," + "OBSERVATIONS text,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('VACCINE', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
+			stmtSeq.close();
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "Vaccine");

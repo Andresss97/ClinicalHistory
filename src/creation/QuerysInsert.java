@@ -267,7 +267,7 @@ public class QuerysInsert {
 		
 	}
 		//*set num 5 esta como comentario
-	public void insertClinicalHistory(ClinicalHistory clinicalHistory,Integer idPatient) throws SQLException {
+	/*public void insertClinicalHistory(ClinicalHistory clinicalHistory,Integer idPatient) throws SQLException {
 		String query;
 
 		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance,idpatient,) values (?,?,?,?,?,?)";
@@ -306,7 +306,7 @@ public class QuerysInsert {
 		
 		st.executeUpdate();
 		st.close();
-	}
+	}*/
 	
 	//*No entiendo q pasa con main patient.getID
 	public void insertAppointment(Appointment appointment) throws SQLException {

@@ -85,7 +85,7 @@ public class ControllerHomeDoctors implements Initializable {
     
     @FXML
     void oClickHome(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("HomePatient.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("HomeDoctors.fxml"));
 		Scene scene = bar.getScene();
     	Stage window = (Stage) scene.getWindow();
     	Scene scene2 = new Scene(root);
