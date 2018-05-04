@@ -3,9 +3,8 @@ package xml;
 import java.io.File;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
+
 
 import pojos.*;
 
@@ -93,5 +92,12 @@ public class DataBaseMarshaller {
 		marshaller.marshal(vaccine, file);
 		marshaller.marshal(vaccine, System.out);
 	}
-
+	
+	public void marshallLists(XmlLists lists,File file) throws JAXBException {
+		jaxbContext	=	JAXBContext.newInstance(lists.getClass());
+		marshaller	=	jaxbContext.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
+		marshaller.marshal(lists, file);
+		marshaller.marshal(lists, System.out);
+	}
 }
