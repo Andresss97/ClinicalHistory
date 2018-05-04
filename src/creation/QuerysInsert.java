@@ -140,7 +140,7 @@ public class QuerysInsert {
 	public void insertIllness(Illness illness,Integer idTreatment ,Integer idPatient) throws SQLException {
 		String query;
 
-		query = "INSERT into illness (name,type,description,date,Tresults) values (?,?,?,?)";
+		query = "INSERT into illness (name,type,description,date,Tresults,idtreatment,idpatient,) values (?,?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setString(1,illness.getName());
@@ -154,6 +154,8 @@ public class QuerysInsert {
 		
 		st.setString(3,illness.getDescription());
 		st.setDate(4,illness.getDate());;
+		st.setInt(5, idTreatment);
+		st.setInt(6, idPatient);
 		
 		st.executeUpdate();
 		st.close();
@@ -258,16 +260,17 @@ public class QuerysInsert {
 		}*/
 		st.setString(4, treatment.getDescrpition());
 		st.setString(5, treatment.getResults());
+		st.setInt(6, idPatient);
 		
 		st.executeUpdate();
 		st.close();
 		
 	}
-		
-	/*public void insertClinicalHistory(ClinicalHistory clinicalHistory) throws SQLException {
+		//*set num 5 esta como comentario
+	/*public void insertClinicalHistory(ClinicalHistory clinicalHistory,Integer idPatient) throws SQLException {
 		String query;
 
-		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance) values (?,?,?,?,?)";
+		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance,idpatient,) values (?,?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setString(1, clinicalHistory.getAddictions());
@@ -298,6 +301,8 @@ public class QuerysInsert {
 			st.setString(4,"Zero positive");	
 		}
 		//st.setInt(5, clinicalHistory.getMedicalInsurance());
+		
+		st.setInt(6, idPatient);
 		
 		st.executeUpdate();
 		st.close();
