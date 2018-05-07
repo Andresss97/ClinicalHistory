@@ -11,44 +11,22 @@ public class ExportDataBase {
 	
 	private DataBaseMarshaller marshaller;
 	
+	public void export (XmlLists lists, List <Address> addresses, List <Allergies> allergies, List <Appointment> appointments,
+	  List <ClinicalHistory> clinicalHistories, List <Doctor> doctors, List <Illness> illnesses, List <Patient> patients, 
+	  List <Surgeries> surgeries, List <Treatment> treatments, List <Vaccine> vaccines, File file) throws JAXBException {
+		
+		lists.setAddresses(addresses);
+		lists.setAllergies(allergies);
+		lists.setAppointments(appointments);
+		lists.setClinicalHistories(clinicalHistories);
+		lists.setDoctors(doctors);
+		lists.setIllnesses(illnesses);
+		lists.setPatients(patients);
+		lists.setSurgeries(surgeries);
+		lists.setTreatments(treatments);
+		lists.setVaccines(vaccines);
 	
-	public void exportPatients(List<Patient>patients,File file) throws JAXBException {
-		for (Patient patient : patients) {
-			marshaller.marshallPatient(patient, file);
-		}			
+		marshaller.marshallLists(lists, file);
 	}
-	
-	public void exportAddress(List<Address>addresses,File file) throws JAXBException {
-		for (Address address : addresses) {
-			marshaller.marshallAddress(address, file);;
-		}			
-	}
-	
-	public void exportAllergies(List<Allergies>allergies1,File file) throws JAXBException {
-		for(Allergies allergies : allergies1) {
-			marshaller.marshallAllergies(allergies, file);
-		}
-	}
-	
-	public void exportAppointment(List<Appointment>appointments,File file) throws JAXBException {
-		for(Appointment appointment : appointments) {
-			marshaller.marshallAppointment(appointment, file);
-		}
-	}
-	
-	public void exportClinicalHistory(List<ClinicalHistory> clinicalhistories,File file) throws JAXBException {
-		for(ClinicalHistory ch : clinicalhistories) {
-			marshaller.marshallClinicalHistory(ch, file);
-		}
-	}
-	
-	public void exportDoctor(List<Doctor>doctors,File file) throws JAXBException {
-		for(Doctor doctor : doctors) {
-			marshaller.marshallDoctor(doctor, file);
-		}
-	}
-	
-	
-	
 
 }

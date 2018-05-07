@@ -248,11 +248,11 @@
                      <center>
                         <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn fx:id="illnessesType" editable="false" prefWidth="56.0" sortable="false" text="Type" />
-                            <TableColumn fx:id="dateOfIllness" editable="false" prefWidth="88.0" sortable="false" text="Date of illness" />
-                              <TableColumn fx:id="illnessName" editable="false" prefWidth="75.0" sortable="false" text="Name" />
-                              <TableColumn fx:id="illnessDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
-                              <TableColumn fx:id="illnessTreatment" editable="false" prefWidth="459.0" sortable="false" text="Treatment">
+                            <TableColumn editable="false" prefWidth="56.0" sortable="false" text="Type" />
+                            <TableColumn editable="false" prefWidth="88.0" sortable="false" text="Date of illness" />
+                              <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Name" />
+                              <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Description" />
+                              <TableColumn editable="false" prefWidth="459.0" sortable="false" text="Treatment">
                                  <columns>
                                     <TableColumn fx:id="illnessTypeTreatment" editable="false" prefWidth="75.0" sortable="false" text="Type" />
                                     <TableColumn fx:id="illnesssDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
