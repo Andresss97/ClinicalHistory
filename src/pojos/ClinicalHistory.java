@@ -53,6 +53,7 @@ public class ClinicalHistory implements Serializable {
 		this.addictionsAlcohol = null;
 		this.addictionsDrugs = null;
 		this.addictionsOthers = null;
+		this.medicalInsurance = null;
 	}
 
 	public int getID() {

@@ -105,7 +105,7 @@ public class ControllerCreateDoctor implements Initializable{
 		} catch (SQLException ex) {
 			System.out.println(ex.getMessage());
 		}
-
+		address.setID(id);
 		doctor.setName(name.getText());
 		doctor.setSurname(surname.getText());
 		doctor.setNIF(dni.getText());
@@ -123,10 +123,10 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setEmail(email.getText());
 		doctor.setUsername(user.getText());
 		doctor.setPassword(password.getText());
-		
+		doctor.setAddress(address);
 		//*remember that I change the insert
 		try {
-			query.insertDoctor(doctor, id);
+			query.insertDoctor(doctor);
 			query.insertUser1(doctor, null);
 		}
 		catch(SQLException ex) {

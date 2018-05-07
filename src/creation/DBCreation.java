@@ -249,8 +249,8 @@ public abstract class DBCreation {
 
 		try {
 			st = con.getConnect().createStatement();
-			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "ADDICTIONS text,"
-					+ "OBSERVATIONS text," + "LASTMODIFICATION date," + "BLOODGROUP varchar (15),"
+			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "ADDICTIONSALCOHOL varchar(20), ADDICTIONSDRUGS varchar(20), ADDICTIONSOTHERS varchar(20), "
+					+ "OBSERVATIONS text," + "BLOODGROUP varchar (15), INSURANCECOMPANY varchar(50), "
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
 			st.close();

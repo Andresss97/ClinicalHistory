@@ -340,6 +340,7 @@ public class ControllerClinicalRecord implements Initializable {
 		vaccineName.setCellValueFactory(new PropertyValueFactory<Vaccine, typeVaccine>("nameVaccine"));
 		vaccineDate.setCellValueFactory(new PropertyValueFactory<Vaccine, Date>("date"));
 		vaccineObservations.setCellValueFactory(new PropertyValueFactory<Vaccine, String>("description"));
+		
 		this.refreshList();
     }
     

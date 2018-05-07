@@ -3,9 +3,6 @@ package jpa;
 import graphicInterface.Main;
 import pojos.*;
 
-
-
-
 public class UpdateJPA {
 	
 	private JPAConnector con = null;

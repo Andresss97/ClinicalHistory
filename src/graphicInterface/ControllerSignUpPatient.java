@@ -176,7 +176,8 @@ public class ControllerSignUpPatient implements Initializable{
 		} catch (Exception e) {
 			System.out.println(e.getMessage() + " das error aqui 1");
 		}
-
+    	address.setID(ad);
+    	
     	patient.setName(name.getText());
     	patient.setSurname(surname.getText());
     	patient.setNIF(nif.getText());
@@ -213,7 +214,7 @@ public class ControllerSignUpPatient implements Initializable{
 		}
 
     	try {
-			query.insertPatient(patient, ad);
+			query.insertPatient(patient);
 			ad = query2.selectLastId("patient");
 			query.insertUser1(null, patient);
 		} catch (Exception e) {

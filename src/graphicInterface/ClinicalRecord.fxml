@@ -128,7 +128,7 @@
                      <bottom>
                         <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
                            <children>
-                              <JFXButton fx:id="modify" onAction="#onClickModify" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #249ce8;" text="Modify" textFill="WHITE" />
+                              <JFXButton fx:id="modify" onAction="#onClickModify" prefHeight="25.0" prefWidth="115.0" style="-fx-background-color: #249ce8;" text="Modify" textFill="WHITE" visible="false" />
                               <JFXButton fx:id="set" layoutX="584.0" layoutY="10.0" onAction="#onClickSet" prefHeight="25.0" prefWidth="108.0" style="-fx-background-color: #249ce8;" text="Set" textFill="WHITE" />
                            </children>
                         </HBox>
