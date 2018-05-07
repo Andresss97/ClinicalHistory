@@ -10,16 +10,13 @@ public class UpdateJPA {
 	
 	private JPAConnector con = null;
 	
-	public void ReadJPA() {
+	public UpdateJPA() {
 		this.con = (JPAConnector) Main.jpaConector;
 	}
 	
-	public void updatePatientVaccine(Patient patient, Vaccine vaccine) {
+	public void updatePatientVaccine(Vaccine vaccine, Patient patient) {
 		con.getEntityManager().getTransaction().begin();
-	
-		patient.addVaccine(vaccine);
-		vaccine.setPatient(patient);
-	
+		
 		con.getEntityManager().getTransaction().commit();
 	}
 	

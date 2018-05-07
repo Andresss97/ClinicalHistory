@@ -6,7 +6,7 @@ import pojos.*;
 public class DeleteJPA {
 	private JPAConnector con = null;
 	
-	public void ReadJPA() {
+	public DeleteJPA() {
 		this.con = (JPAConnector) Main.jpaConector;
 	}
 	
@@ -15,9 +15,4 @@ public class DeleteJPA {
 		con.getEntityManager().remove(vaccine);
 		con.getEntityManager().getTransaction().commit();
 	}
-	
-	
-	
-	
-
 }

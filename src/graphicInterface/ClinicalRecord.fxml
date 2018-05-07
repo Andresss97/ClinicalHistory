@@ -153,7 +153,7 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="tableVaccines" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableVaccines" onMouseClicked="#onRightClick" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
                             <TableColumn fx:id="vaccineName" editable="false" prefWidth="142.0" sortable="false" text="Name" />
                             <TableColumn fx:id="vaccineDate" editable="false" prefWidth="216.0" sortable="false" text="Date of administration" />

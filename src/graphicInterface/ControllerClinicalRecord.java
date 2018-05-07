@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -19,21 +20,36 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import jpa.CreateJPA;
+import jpa.DeleteJPA;
 import pojos.Appointment;
 import pojos.Patient;
 import pojos.Vaccine;
@@ -244,6 +260,8 @@ public class ControllerClinicalRecord implements Initializable {
     
     private Patient patient;
     
+    
+    
     @FXML
     void onClickAddIllness(ActionEvent event) {
 
@@ -321,16 +339,80 @@ public class ControllerClinicalRecord implements Initializable {
 		vaccineName.setCellValueFactory(new PropertyValueFactory<Vaccine, typeVaccine>("nameVaccine"));
 		vaccineDate.setCellValueFactory(new PropertyValueFactory<Vaccine, Date>("date"));
 		vaccineObservations.setCellValueFactory(new PropertyValueFactory<Vaccine, String>("description"));
-		for(int i = 0; i < patient.getVaccines().size(); i++) {
-			tableVaccines.getItems().add(patient.getVaccines().get(i));
-		}
+		this.refreshList();
     }
     
     @FXML
     void onRightClick(MouseEvent event) {
-    	if(event.getButton() == MouseButton.SECONDARY) {
-    		System.out.println("He estado aqui");
+    	if(event.getButton().equals(MouseButton.SECONDARY)) {
+    		ContextMenu menu = new ContextMenu();
+    		MenuItem delete = new MenuItem("Delete");
+    		MenuItem modify = new MenuItem("Modify");
+    		menu.getItems().addAll(delete, modify);
+    		
+    		this.tableVaccines.setContextMenu(menu);
+    		
+    		delete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if(tableVaccines.getSelectionModel().getSelectedItem() ==  null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select");
+						alert.setTitle("Warning");
+						alert.show();
+					}
+					
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+			    	alert.setContentText("Are you sure you want to delete this vaccine?");
+			    	alert.setTitle("Information");
+			    	alert.setHeaderText("Delete vaccine");
+			    	Optional<ButtonType> result = alert.showAndWait();
+			    	
+			    	if(result.get() == ButtonType.OK) {
+			    		DeleteJPA delete = new DeleteJPA();
+			    		Vaccine vaccine = tableVaccines.getSelectionModel().getSelectedItem();
+			    		delete.deleteVaccine(vaccine);
+			    		tableVaccines.setContextMenu(null);
+			    		tableVaccines.getItems().remove(vaccine);
+					
+			    		tableVaccines.autosize();
+			    	}
+				}
+    		});
+    		
+    		modify.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateVaccine.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerUpdateVaccine controller = loader.<ControllerUpdateVaccine>getController();
+						controller.initComponent(tableVaccines.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshList();
+				}
+    			
+    		});
     	}
+    }
+    
+    private void refreshList() {
+    	this.tableVaccines.getItems().clear();
+    	this.tableVaccines.getItems().addAll(this.patient.getVaccines());
     }
     
 	@Override
