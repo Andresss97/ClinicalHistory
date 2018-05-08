@@ -23,7 +23,6 @@ public class ClinicalHistory implements Serializable {
 	};
 	
 	@XmlElement
-	@Column(name = "")
 	private ADDICTIONS addictionsAlcohol;
 	
 	@XmlElement
@@ -33,7 +32,7 @@ public class ClinicalHistory implements Serializable {
 	private ADDICTIONS addictionsOthers;
 	
 	@XmlTransient
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
@@ -70,28 +69,6 @@ public class ClinicalHistory implements Serializable {
 
 	public void setBloodgroup(BLOODGROUP bloodgroup) {
 		this.bloodgroup = bloodgroup;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ClinicalHistory other = (ClinicalHistory) obj;
-		if (ID != other.ID)
-			return false;
-		return true;
 	}
 
 	public Patient getPatient() {
@@ -137,5 +114,29 @@ public class ClinicalHistory implements Serializable {
 	public void setID(Integer iD) {
 		ID = iD;
 	}
-	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClinicalHistory other = (ClinicalHistory) obj;
+		if (ID == null) {
+			if (other.ID != null)
+				return false;
+		} else if (!ID.equals(other.ID))
+			return false;
+		return true;
+	}
 }

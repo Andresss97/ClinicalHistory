@@ -78,6 +78,13 @@ public abstract class DBCreation {
 					+ "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)";
 
 			st.execute(in);
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('ALLERGIES', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
+			stmtSeq.close();
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "Allergies");
@@ -136,6 +143,13 @@ public abstract class DBCreation {
 					+ "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)";
 
 			st.execute(in);
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('SURGERIES', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
+			stmtSeq.close();
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "Surgeries");
@@ -198,6 +212,15 @@ public abstract class DBCreation {
 					+ "TRESULTS text,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
+			
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('TREATMENT', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
+			stmtSeq.close();
+			
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "Treatment");
@@ -216,6 +239,13 @@ public abstract class DBCreation {
 					+ "IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('ILLNESSES', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
+			stmtSeq.close();
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "Illnesses");
@@ -249,10 +279,17 @@ public abstract class DBCreation {
 
 		try {
 			st = con.getConnect().createStatement();
-			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "ADDICTIONSALCOHOL varchar(20), ADDICTIONSDRUGS varchar(20), ADDICTIONSOTHERS varchar(20), "
-					+ "OBSERVATIONS text," + "BLOODGROUP varchar (15), INSURANCECOMPANY varchar(50), "
+			in = "CREATE TABLE CLINICALHISTORY" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," + "ADDICTIONSALCOHOL int, ADDICTIONSDRUGS int, ADDICTIONSOTHERS int, "
+					+ "BLOODGROUP int, INSURANCECOMPANY varchar(50), "
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
+			
+			Statement stmtSeq = con.getConnect().createStatement();
+
+			String sqlSeq = "INSERT INTO sqlite_sequence (name, seq) VALUES ('CLINICALHISTORY', 1)";
+
+			stmtSeq.executeUpdate(sqlSeq);
+			
 			st.close();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage() + "ClinicalHistory");

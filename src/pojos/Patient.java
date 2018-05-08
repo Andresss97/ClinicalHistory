@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 @Table(name = "PATIENT")
-public class Patient extends Person{
+public class Patient extends Person {
 	
 	@XmlAttribute
 	@Id
@@ -17,7 +17,7 @@ public class Patient extends Person{
 	@TableGenerator(name = "PATIENT", table = "sqlite_sequence",
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "PATIENT")
 	private Integer ID;
-	
+
 	@XmlElement
 	private float weight;
 	
@@ -40,7 +40,7 @@ public class Patient extends Person{
 	private LinkedList<Appointment> appointments;
 	
 	@XmlElement
-	@OneToMany(mappedBy="patient")
+	@OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
 	private LinkedList<Illness> illnesses;
 	
 	
@@ -53,7 +53,7 @@ public class Patient extends Person{
 	private LinkedList<Surgeries> surgeries;
 	
 	@XmlElement
-	@OneToMany(mappedBy="patient")
+	@OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
 	private LinkedList<Treatment> treatment;
 	
 	@XmlElement
@@ -61,7 +61,7 @@ public class Patient extends Person{
 	private LinkedList<Vaccine> vaccines;
 	
 	@XmlElement
-	@OneToOne(mappedBy="patient")
+	@OneToOne(mappedBy="patient", cascade = CascadeType.ALL)
 	private ClinicalHistory cHistory;
 	
 	public Patient() { 
@@ -150,14 +150,6 @@ public class Patient extends Person{
 		this.vaccines = vaccines;
 	}
 	
-	public ClinicalHistory getClinicalHistory() {
-		return this.cHistory;
-	}
-	
-	public void setClinicalHistory(ClinicalHistory cHistory) {
-		this.cHistory= cHistory;
-	}
-	
 	public void addDoctor(Doctor doctor){
 		this.doctors.add(doctor);
 	} 
@@ -206,8 +198,30 @@ public class Patient extends Person{
 		this.vaccines.remove(vaccine);
 	}
 	
+	public int getID2() {
+		return ID;
+	}
+
+	public void setID2(Integer iD) {
+		ID = iD;
+	}
+
+	public LinkedList<Treatment> getTreatment() {
+		return treatment;
+	}
+
+	public void setTreatment(LinkedList<Treatment> treatment) {
+		this.treatment = treatment;
+	}
 	
-	
+	public ClinicalHistory getcHistory() {
+		return cHistory;
+	}
+
+	public void setcHistory(ClinicalHistory cHistory) {
+		this.cHistory = cHistory;
+	}
+
 	@Override
 	public String toString() {
 		return "Patient: "+ name + " " + surname;
