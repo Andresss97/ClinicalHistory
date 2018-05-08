@@ -13,9 +13,13 @@ public class UpdateJPA {
 	
 	public void updatePatientVaccine(Vaccine vaccine, Patient patient) {
 		con.getEntityManager().getTransaction().begin();
-		
+		con.getEntityManager().flush();
 		con.getEntityManager().getTransaction().commit();
 	}
 	
-
+	public void updateClinicalRecord(Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
 }

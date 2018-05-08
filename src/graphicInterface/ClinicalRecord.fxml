@@ -16,6 +16,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -189,6 +190,11 @@
                      </bottom>
                   </BorderPane>
                </content></Tab>
+            <Tab text="Allergies">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
             <Tab text="Surgeries">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -246,13 +252,13 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableIllness" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn editable="false" prefWidth="56.0" sortable="false" text="Type" />
-                            <TableColumn editable="false" prefWidth="88.0" sortable="false" text="Date of illness" />
-                              <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Name" />
-                              <TableColumn editable="false" prefWidth="75.0" sortable="false" text="Description" />
-                              <TableColumn editable="false" prefWidth="459.0" sortable="false" text="Treatment">
+                            <TableColumn fx:id="illnessesType" editable="false" prefWidth="56.0" sortable="false" text="Type" />
+                            <TableColumn fx:id="dateOfIllness" editable="false" prefWidth="88.0" sortable="false" text="Date of illness" />
+                              <TableColumn fx:id="illnessName" editable="false" prefWidth="75.0" sortable="false" text="Name" />
+                              <TableColumn fx:id="illnessDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
+                              <TableColumn fx:id="illnessTreatment" editable="false" prefWidth="459.0" sortable="false" text="Treatment">
                                  <columns>
                                     <TableColumn fx:id="illnessTypeTreatment" editable="false" prefWidth="75.0" sortable="false" text="Type" />
                                     <TableColumn fx:id="illnesssDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
@@ -316,7 +322,6 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </JFXButton>
-            <JFXButton fx:id="print" onAction="#onClickPrint" prefHeight="25.0" prefWidth="1111.0" style="-fx-background-color: #249ce8;" text="Print" textFill="WHITE" />
          </children>
          <BorderPane.margin>
             <Insets right="20.0" top="44.0" />

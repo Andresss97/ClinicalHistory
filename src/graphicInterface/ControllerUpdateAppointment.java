@@ -169,7 +169,6 @@ public class ControllerUpdateAppointment implements Initializable {
 	}
 	
 	public void initComponents(Appointment app) {
-		int count = -1;
 		QuerysSelect qs = new QuerysSelect();
 		this.app = app;
 		rAppointment.setText(this.app.getReason());

@@ -42,7 +42,7 @@ public class Illness implements Serializable {
 	private String name;
 	
 	@XmlElement
-	@OneToOne(fetch=FetchType.LAZY) 
+	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL) 
 	@JoinColumn(name="IDTREATMENT")
 	private Treatment treatment;
 

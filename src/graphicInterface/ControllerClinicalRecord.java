@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
+import creation.QuerysInsert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
@@ -51,8 +53,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jpa.CreateJPA;
 import jpa.DeleteJPA;
+import jpa.UpdateJPA;
 import pojos.Appointment;
+import pojos.ClinicalHistory;
+import pojos.ClinicalHistory.ADDICTIONS;
+import pojos.ClinicalHistory.BLOODGROUP;
+import pojos.Illness;
+import pojos.Illness.typeDisease;
 import pojos.Patient;
+import pojos.Surgeries;
+import pojos.Treatment;
+import pojos.Treatment.typeTreatment;
 import pojos.Vaccine;
 import pojos.Vaccine.typeVaccine;
 
@@ -95,19 +106,19 @@ public class ControllerClinicalRecord implements Initializable {
     private ImageView image;
 
     @FXML
-    private JFXComboBox<?> alcohol;
+    private JFXComboBox<String> alcohol;
 
     @FXML
-    private JFXComboBox<?> drugs;
+    private JFXComboBox<String> drugs;
 
     @FXML
-    private JFXComboBox<?> others;
+    private JFXComboBox<String> others;
 
     @FXML
-    private JFXComboBox<?> bGroup;
+    private JFXComboBox<String> bGroup;
 
     @FXML
-    private JFXComboBox<?> mInsCompany;
+    private JFXComboBox<String> mInsCompany;
 
     @FXML
     private JFXButton modify;
@@ -143,31 +154,31 @@ public class ControllerClinicalRecord implements Initializable {
     private JFXButton vaccinesAdd;
 
     @FXML
-    private TableView<?> tableSurgeries;
+    private TableView<Surgeries> tableSurgeries;
 
     @FXML
-    private TableColumn<?, ?> surgeriesType;
+    private TableColumn<Surgeries, ?> surgeriesType;
 
     @FXML
-    private TableColumn<?, ?> surgeriesDate;
+    private TableColumn<Surgeries, ?> surgeriesDate;
 
     @FXML
-    private TableColumn<?, ?> surgeriesTreatment;
+    private TableColumn<Treatment, ?> surgeriesTreatment;
 
     @FXML
-    private TableColumn<?, ?> surgeriesTypeTreatment;
+    private TableColumn<Treatment, ?> surgeriesTypeTreatment;
 
     @FXML
-    private TableColumn<?, ?> surgeriesDescription;
+    private TableColumn<Treatment, ?> surgeriesDescription;
 
     @FXML
-    private TableColumn<?, ?> surgeriesStartDate;
+    private TableColumn<Treatment, ?> surgeriesStartDate;
 
     @FXML
-    private TableColumn<?, ?> surgeriesEndDate;
+    private TableColumn<Treatment, ?> surgeriesEndDate;
 
     @FXML
-    private TableColumn<?, ?> surgeriesTestResults;
+    private TableColumn<Treatment, ?> surgeriesTestResults;
 
     @FXML
     private JFXTextField typeSurgeries;
@@ -192,39 +203,42 @@ public class ControllerClinicalRecord implements Initializable {
 
     @FXML
     private JFXButton addSurgery;
+    
+    @FXML
+    private TableView<Illness> tableIllness;
+    
+    @FXML
+    private TableColumn<Illness, typeDisease> illnessesType;
 
     @FXML
-    private TableColumn<?, ?> illnessesType;
+    private TableColumn<Illness, Date> dateOfIllness;
 
     @FXML
-    private TableColumn<?, ?> dateOfIllness;
+    private TableColumn<Illness, String> illnessName;
 
     @FXML
-    private TableColumn<?, ?> illnessName;
+    private TableColumn<Illness, String> illnessDescription;
 
     @FXML
-    private TableColumn<?, ?> illnessDescription;
+    private TableColumn<Illness, Treatment> illnessTreatment;
 
     @FXML
-    private TableColumn<?, ?> illnessTreatment;
+    private TableColumn<Treatment, typeTreatment> illnessTypeTreatment;
 
     @FXML
-    private TableColumn<?, ?> illnessTypeTreatment;
+    private TableColumn<Treatment, String> illnesssDescription;
 
     @FXML
-    private TableColumn<?, ?> illnesssDescription;
+    private TableColumn<Treatment, Date> illnesssStartDate;
 
     @FXML
-    private TableColumn<?, ?> illnesssStartDate;
+    private TableColumn<Treatment, Date> illnessEndDate;
 
     @FXML
-    private TableColumn<?, ?> illnessEndDate;
+    private TableColumn<Treatment, String> illnessTestResults;
 
     @FXML
-    private TableColumn<?, ?> illnessTestResults;
-
-    @FXML
-    private JFXComboBox<?> typeIllness;
+    private JFXComboBox<String> typeIllness;
 
     @FXML
     private DatePicker dateIllness;
@@ -236,7 +250,7 @@ public class ControllerClinicalRecord implements Initializable {
     private JFXTextField descripIllness;
 
     @FXML
-    private JFXComboBox<?> typeTreatmentIllness;
+    private JFXComboBox<String> typeTreatmentIllness;
 
     @FXML
     private JFXTextField descriptionTreatmentIllness;
@@ -261,16 +275,49 @@ public class ControllerClinicalRecord implements Initializable {
     
     private Patient patient;
     
-    
+    private ObservableList<String> list4;
     
     @FXML
     void onClickAddIllness(ActionEvent event) {
-
+    	Illness illness = new Illness();
+    	Treatment treatment = new Treatment();
+    	CreateJPA create = new CreateJPA();
+    	
+    	illness.setTypeDisease(typeDisease.valueOf(this.typeIllness.getSelectionModel().getSelectedItem()));
+    	illness.setDate(Date.valueOf(this.dateIllness.getValue()));
+    	illness.setDescription(this.descripIllness.getText());
+    	illness.setName(this.nameIllness.getText());
+    	illness.setPatient(this.patient);
+    	
+    	treatment.setTreatment(typeTreatment.valueOf(this.typeTreatmentIllness.getSelectionModel().getSelectedItem()));
+    	treatment.setStartDate(Date.valueOf(this.startDateTreatmentIllness.getValue()));
+    	treatment.setEndDate(Date.valueOf(this.endDateTreatmentIllness.getValue()));
+    	treatment.setDescrpition(this.descriptionTreatmentIllness.getText());
+    	treatment.setIllness(illness);
+    	treatment.setResults(this.testResultsTreatmentIllness.getText());
+    	treatment.setPatient(this.patient);
+    	
+    	illness.setTreatment(treatment);
+    	
+    	create.createIllnes(illness);
+    	create.createTreatment(treatment);
+    	
+    	this.typeIllness.getSelectionModel().clearSelection();
+    	this.dateIllness.setValue(null);
+    	this.descripIllness.clear();
+    	this.nameIllness.clear();
+    	this.typeTreatmentIllness.getSelectionModel().clearSelection();
+    	this.startDateTreatmentIllness.setValue(null);
+    	this.endDateTreatmentIllness.setValue(null);
+    	this.testResultsTreatmentIllness.clear();
+    	
+    	this.tableIllness.getItems().add(illness);
     }
 
     @FXML
     void onClickAddSurgery(ActionEvent event) {
-
+    	Surgeries surgery = new Surgeries();
+    	Treatment treatment = new Treatment();
     }
 
     @FXML
@@ -294,7 +341,16 @@ public class ControllerClinicalRecord implements Initializable {
 
     @FXML
     void onClickModify(ActionEvent event) {
-
+    	UpdateJPA update = new UpdateJPA();
+    	
+    	this.patient.getcHistory().setAddictionAlcohol(ADDICTIONS.valueOf(this.alcohol.getSelectionModel().getSelectedItem()));
+    	this.patient.getcHistory().setAddictionsDrugs(ADDICTIONS.valueOf(this.drugs.getSelectionModel().getSelectedItem()));
+    	this.patient.getcHistory().setAddictionsOthers(ADDICTIONS.valueOf(this.others.getSelectionModel().getSelectedItem()));
+    	this.patient.getcHistory().setBloodgroup(BLOODGROUP.valueOf(this.bGroup.getSelectionModel().getSelectedItem()));
+    	this.patient.getcHistory().setMedicalInsurance(this.mInsCompany.getSelectionModel().getSelectedItem());
+    	this.patient.getcHistory().setPatient(this.patient);
+    	
+    	update.updateClinicalRecord(patient);
     }
 
     @FXML
@@ -309,11 +365,27 @@ public class ControllerClinicalRecord implements Initializable {
 
     @FXML
     void onClickSet(ActionEvent event) {
+    	ClinicalHistory cl = new ClinicalHistory();
+    	CreateJPA create = new CreateJPA();
+    	
+    	cl.setAddictionAlcohol(ADDICTIONS.valueOf(this.alcohol.getSelectionModel().getSelectedItem()));
+    	cl.setAddictionsDrugs(ADDICTIONS.valueOf(this.drugs.getSelectionModel().getSelectedItem()));
+    	cl.setAddictionsOthers(ADDICTIONS.valueOf(this.others.getSelectionModel().getSelectedItem()));
+    	cl.setBloodgroup(BLOODGROUP.valueOf(this.bGroup.getSelectionModel().getSelectedItem()));
+    	cl.setMedicalInsurance(this.mInsCompany.getSelectionModel().getSelectedItem());
+    	cl.setPatient(this.patient);
 
+    	create.createClinicalRecord(cl);
+    	
+    	this.patient.setcHistory(cl);
+    	
+    	this.modify.setVisible(true);
+    	this.set.setVisible(false);
     }
     
     public void initComponents(Patient patient) {
     	this.patient = patient;
+    	System.out.println(patient.getID());
     	name.setText(patient.getName());
     	surname.setText(patient.getSurname());
     	dBirth.setValue(patient.getDob().toLocalDate());
@@ -342,6 +414,34 @@ public class ControllerClinicalRecord implements Initializable {
 		vaccineObservations.setCellValueFactory(new PropertyValueFactory<Vaccine, String>("description"));
 		
 		this.refreshList();
+		
+		if(this.patient.getcHistory() == null) {
+			set.setVisible(true);
+			modify.setVisible(false);
+		}
+		else if(this.patient.getcHistory() != null) {
+			set.setVisible(false);
+			modify.setVisible(true);
+			
+			alcohol.getSelectionModel().select(this.patient.getcHistory().getAddictionAlcohol().toString());
+			drugs.getSelectionModel().select(this.patient.getcHistory().getAddictionsDrugs().toString());
+			others.getSelectionModel().select(this.patient.getcHistory().getAddictionsOthers().toString());
+			bGroup.getSelectionModel().select(this.patient.getcHistory().getBloodgroup().toString());
+			mInsCompany.getSelectionModel().select(this.patient.getcHistory().getMedicalInsurance());
+		}
+		
+		illnessesType.setCellValueFactory(new PropertyValueFactory<Illness, typeDisease>("type"));
+		dateOfIllness.setCellValueFactory(new PropertyValueFactory<Illness, Date>("date"));
+		illnessName.setCellValueFactory(new PropertyValueFactory<Illness, String>("name"));
+		illnessDescription.setCellValueFactory(new PropertyValueFactory<Illness, String>("description"));
+		illnessTreatment.setCellValueFactory(new PropertyValueFactory<Illness, Treatment>("treatment"));
+		illnessTypeTreatment.setCellValueFactory(new PropertyValueFactory<Treatment, typeTreatment>("treatment"));
+		illnesssDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
+		illnesssStartDate.setCellValueFactory(new PropertyValueFactory<Treatment, Date>("startDate"));
+		illnessEndDate.setCellValueFactory(new PropertyValueFactory<Treatment, Date>("endDate"));
+		illnessTestResults.setCellValueFactory(new PropertyValueFactory<Treatment, String>("tResults"));
+		
+		this.refreshIllness();
     }
     
     @FXML
@@ -417,6 +517,11 @@ public class ControllerClinicalRecord implements Initializable {
     	this.tableVaccines.getItems().addAll(this.patient.getVaccines());
     }
     
+    private void refreshIllness() {
+    	this.tableIllness.getItems().clear();
+    	this.tableIllness.getItems().addAll(this.patient.getIllnesses());
+    }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("YES", "NONE");
@@ -430,10 +535,17 @@ public class ControllerClinicalRecord implements Initializable {
 		ObservableList list3 = FXCollections.observableArrayList("SANITAS", "ADESLAS", "MAPFRE", "AEGON", "PLUS ULTRA SEGUROS");
 		mInsCompany.setItems(list3);
 		
-		ObservableList list4 = FXCollections.observableArrayList("CHOLERA", "DIPHTHERIA", "INFLUENZA_A", "INFLUENZA_B", "HEPATITIS_A", 
+		list4 = FXCollections.observableArrayList("CHOLERA", "DIPHTHERIA", "INFLUENZA_A", "INFLUENZA_B", "HEPATITIS_A", 
 				"HEPATITIS_B", "PAPILLOMAVIRUS", "HERPES", "MEASLES", "MENINGOCOCCAL", "PNEUMOCOCCAL", 
 				"RABIES","ROTAVIRUS", "RUBELLA", "SMALLPOX", "TETANUS", "TUBERCULOSIS", "TYPHOID", "VARICELLA", "YELLOWFEVER");
 		vaccineAddName.setItems(list4);
+		
+		ObservableList list5 = FXCollections.observableArrayList("HEREDITARY", "PERSONAL");
+		typeIllness.setItems(list5);
+		
+		ObservableList list6 = FXCollections.observableArrayList("MEDICATION", "REHAB", "OTHER");
+		this.tSurgeryTreatment.setItems(list6);
+		this.typeTreatmentIllness.setItems(list6);
 	}
 }
 

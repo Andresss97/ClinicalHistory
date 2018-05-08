@@ -18,8 +18,10 @@ public class Treatment implements Serializable{
 		pkColumnName = "name", valueColumnName = "seq", pkColumnValue = "TREATMENT")
 	private Integer ID;
 	
-	/*private Date startDate;
-	private Date endDate;*/
+	@Column(name = "start")
+	private Date startDate;
+	@Column(name = "end")
+	private Date endDate;
 	
 	@XmlTransient
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -29,12 +31,12 @@ public class Treatment implements Serializable{
 	
 	//*Falta anotar en xml las que estan comentadas
 	
-	/*public enum typeTreatment {
-		MEDICATION, REHAB
-	};*/
+	public enum typeTreatment {
+		MEDICATION, REHAB, OTHER
+	};
 	
-	//private String name;
-	//private typeTreatment treatment;
+	@Column(name = "TYPE")
+	private typeTreatment treatment;
 	
 	@XmlTransient
 	@OneToOne(fetch = FetchType.LAZY, mappedBy="treatment")
@@ -44,7 +46,7 @@ public class Treatment implements Serializable{
 	private String description;
 	
 	@XmlElement
-	private String tresults;
+	private String tResults;
 	
 	@XmlTransient
 	@OneToOne (fetch = FetchType.LAZY, mappedBy = "treatment")
@@ -55,13 +57,12 @@ public class Treatment implements Serializable{
 	private Surgeries surgery;
 
 	public Treatment() {
-		//this.name = null;
 		this.ID = null;
-		/*this.startDate = null;
-		this.endDate = null;*/
-		//this.treatment = null;
+		this.startDate = null;
+		this.endDate = null;
+		this.treatment = null;
 		this.description = null;
-		this.tresults = null;
+		this.tResults = null;
 	}
 
 	public int getIDtreatment() {
@@ -73,14 +74,14 @@ public class Treatment implements Serializable{
 	}
 
 	public String getResults() {
-		return this.tresults;
+		return this.tResults;
 	}
 
 	public void setResults(String results) {
-		this.tresults = results;
+		this.tResults = results;
 	}
 
-	/*public Date getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
@@ -94,15 +95,15 @@ public class Treatment implements Serializable{
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}*/
+	}
 
-	/*public typeTreatment getTreatment() {
+	public typeTreatment getTreatment() {
 		return treatment;
 	}
 
 	public void setTreatment(typeTreatment treatment) {
 		this.treatment = treatment;
-	}*/
+	}
 
 	public String getDescrpition() {
 		return description;
@@ -141,14 +142,6 @@ public class Treatment implements Serializable{
 	public void setPatient(Patient patient) {
 		this.patient = patient;
 	}
-	
-	/*public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}*/
 
 	public Surgeries getSurgery() {
 		return surgery;
@@ -157,10 +150,21 @@ public class Treatment implements Serializable{
 	public void setSurgery(Surgeries surgery) {
 		this.surgery = surgery;
 	}
+	
+	
+	public Illness getIllness() {
+		return illness;
+	}
+
+	public void setIllness(Illness illness) {
+		this.illness = illness;
+	}
 
 	@Override
 	public String toString() {
-		return "Treatment [ID=" + ID + ", startDate=" + /*startDate + ", endDate=" + endDate + */", name=" + /*name
-				+ */", description=" + description + ", tresults=" + tresults + "]";
+		return "Treatment [startDate=" + startDate + ", endDate=" + endDate + ", treatment=" + treatment + ", illness="
+				+ illness + ", description=" + description + ", tResults=" + tResults + "]";
 	}
+
+
 }

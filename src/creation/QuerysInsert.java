@@ -42,8 +42,6 @@ public class QuerysInsert {
 		st.setString(8, doctor.getSurname());
 		st.setString(9,doctor.getNIF());
 		st.setDate(10, doctor.getDob());
-		//Blob blob = new SerialBlob(doctor.getPhoto());
-		//st.setBlob(11, blob);
 		st.setInt(11, doctor.getAddress().getID());
 		
 		st.executeUpdate();
@@ -266,47 +264,23 @@ public class QuerysInsert {
 		st.close();
 		
 	}
-		//*set num 5 esta como comentario
-	/*public void insertClinicalHistory(ClinicalHistory clinicalHistory,Integer idPatient) throws SQLException {
-		String query;
-
-		query = "INSERT into clinicalHistory (addictions, observations, lastModification, bloodgroup, medicalInsurance,idpatient,) values (?,?,?,?,?,?)";
+	
+	public void insertClinicalRecord(ClinicalHistory cl) throws SQLException {
+		String query = "INSERT into clinicalhistory (addictionsalcohol, addictionsdrugs, addictionsothers,"
+				+ " bloodgroup, insurancecompany,"
+				+ " idpatient) values (?,?,?,?,?,?)";
+		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		st.setString(1, clinicalHistory.getAddictions());
-		st.setString(2, clinicalHistory.getObservations());
-		st.setDate(3, clinicalHistory.getLastModification());
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ABN)) {
-			st.setString(4,"AB negative");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ABP)) {
-			st.setString(4,"A positive");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.AN)) {
-			st.setString(4,"A negative");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.AP)) {
-			st.setString(4,"AB positive");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.BN)) {
-			st.setString(4,"B negative");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.BP)) {
-			st.setString(4,"B positive");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ZN)) {
-			st.setString(4,"Zero negative");	
-		}
-		if(clinicalHistory.getBloodgroup().equals(BLOODGROUP.ZP)) {
-			st.setString(4,"Zero positive");	
-		}
-		//st.setInt(5, clinicalHistory.getMedicalInsurance());
-		
-		st.setInt(6, idPatient);
+		st.setInt(1, cl.getAddictionAlcohol().ordinal());
+		st.setInt(2, cl.getAddictionsDrugs().ordinal());
+		st.setInt(3, cl.getAddictionsOthers().ordinal());
+		st.setInt(4, cl.getBloodgroup().ordinal());
+		st.setString(5, cl.getMedicalInsurance());
+		st.setInt(6, cl.getPatient().getID2());
 		
 		st.executeUpdate();
 		st.close();
-	}*/
+	}
 	
 	//*No entiendo q pasa con main patient.getID
 	public void insertAppointment(Appointment appointment) throws SQLException {

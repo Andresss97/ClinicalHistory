@@ -32,7 +32,7 @@ public class Vaccine {
 	private String description;
 	
 	@XmlTransient
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "IDPATIENT")
 	private Patient patient;
 	
