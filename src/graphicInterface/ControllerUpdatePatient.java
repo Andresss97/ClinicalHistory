@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 
+import creation.QuerysSelect;
 import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -143,7 +144,15 @@ public class ControllerUpdatePatient implements Initializable{
     	Patient patient = new Patient();
     	Address address = new Address();
     	QuerysUpdate qu = new QuerysUpdate();
+    	QuerysSelect qs = new QuerysSelect();
+    	int idUser = 0;
     	
+    	try {
+			idUser = qs.selectIdUser2(this.patient);
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
     	patient.setID(this.patient.getID());
     	patient.getAppointments().addAll(this.patient.getAppointments());
     	address.setID(this.patient.getAddress().getID());
@@ -187,6 +196,7 @@ public class ControllerUpdatePatient implements Initializable{
     	try {
     		qu.updatePatient(patient);
     		qu.updateAddress(address);
+    		qu.updateUserPatient(patient, idUser);
     	}
     	catch(SQLException ex) {
     		System.out.println(ex.getMessage());
@@ -239,6 +249,7 @@ public class ControllerUpdatePatient implements Initializable{
 		else {
 			this.gender.getSelectionModel().select("Female");
 		}
+		System.out.println("llegas aqui");
     }
     
     private void onHomeClick() {

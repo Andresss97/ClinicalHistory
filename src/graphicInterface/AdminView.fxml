@@ -53,9 +53,10 @@
                   <Button fx:id="modify" mnemonicParsing="false" onAction="#onClickModify" prefHeight="28.0" prefWidth="132.0" style="-fx-background-color: #249ce8;" text="Modify account" textFill="WHITE" />
                   <Button fx:id="delete" layoutX="35.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="29.0" prefWidth="130.0" style="-fx-background-color: #249ce8;" text="Delete account" textFill="WHITE">
                      <VBox.margin>
-                        <Insets top="25.0" />
+                        <Insets bottom="25.0" top="25.0" />
                      </VBox.margin>
                   </Button>
+                  <Button layoutX="37.0" layoutY="63.0" mnemonicParsing="false" onAction="#onClickXML" prefHeight="29.0" prefWidth="130.0" style="-fx-background-color: #249ce8;" text="Generate XML" textFill="WHITE" fx:id="xml" />
                </children>
                <BorderPane.margin>
                   <Insets bottom="25.0" right="25.0" top="10.0" />
@@ -78,7 +79,7 @@
                         <Insets left="15.0" />
                      </padding>
                   </Region>
-                  <JFXComboBox fx:id="orderBy" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="129.0" promptText="Order by:" />
+                  <JFXComboBox fx:id="orderBy" focusColor="#249ce8" labelFloat="true" onAction="#onClickOrderBy" prefHeight="25.0" prefWidth="129.0" promptText="Order by:" />
                </children>
                <BorderPane.margin>
                   <Insets left="50.0" right="233.0" top="20.0" />

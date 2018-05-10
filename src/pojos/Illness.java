@@ -30,13 +30,10 @@ public class Illness implements Serializable {
 	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDPATIENT")
 	private Patient patient;
-	
-	public enum typeDisease {
-		HEREDITARY, PERSONAL
-	};
 
 	@XmlAttribute
-	private typeDisease type;
+	@Column(name = "TYPE")
+	private String value;
 	
 	@XmlAttribute
 	private String name;
@@ -51,15 +48,15 @@ public class Illness implements Serializable {
 		this.name = null;
 		this.description = null;
 		this.date = null;
-		this.type = null;
+		this.value = null;
 		this.ID = null;
 	}
 
-	public Illness(String name, String des, Date date, typeDisease type) {
+	public Illness(String name, String des, Date date, String type) {
 		this.name = name;
 		this.description = des;
 		this.date = date;
-		this.type = type;
+		this.value = type;
 	}
 
 	public int getID() {
@@ -102,12 +99,12 @@ public class Illness implements Serializable {
 		this.description = description;
 	}
 
-	public typeDisease getTypeDisease() {
-		return this.type;
+	public String getValue() {
+		return this.value;
 	}
 
-	public void setTypeDisease(typeDisease type) {
-		this.type = type;
+	public void setValue(String type) {
+		this.value = type;
 	}
 
 	@Override
@@ -142,7 +139,7 @@ public class Illness implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Illness [description=" + description + ", date_disease=" + date + ", type=" + type + ", name="
+		return "Illness [description=" + description + ", date_disease=" + date + ", type=" + value + ", name="
 				+ name + "]";
 	}
 

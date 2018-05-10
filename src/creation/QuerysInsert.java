@@ -12,7 +12,6 @@ import graphicInterface.Main;
 //import pojos.Treatment.typeTreatment;
 import pojos.*;
 import pojos.ClinicalHistory.BLOODGROUP;
-import pojos.Illness.typeDisease;
 
 public class QuerysInsert {
 	
@@ -133,31 +132,6 @@ public class QuerysInsert {
 		st.setInt(3, 3);
 		st.executeUpdate();
 		st.close();
-	}
-	
-	public void insertIllness(Illness illness ) throws SQLException {
-		String query;
-
-		query = "INSERT into illness (name,type,description,date,Tresults,idtreatment,idpatient,) values (?,?,?,?,?,?)";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		st.setString(1,illness.getName());
-		
-		if(illness.getTypeDisease().equals(typeDisease.HEREDITARY)) {
-			st.setString(2,"Hereditary");
-		}
-		else {
-			st.setString(2, "Personal");
-		}
-		
-		st.setString(3,illness.getDescription());
-		st.setDate(4,illness.getDate());;
-		st.setInt(5, illness.getTreatment().getIDtreatment());
-		st.setInt(6, illness.getPatient().getID());
-		
-		st.executeUpdate();
-		st.close();
-	
 	}
 	
 	public void insertVaccine(Vaccine vaccine) throws SQLException{

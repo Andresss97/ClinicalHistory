@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import creation.QuerysSelect;
 import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -123,6 +124,15 @@ public class ControllerUpdatePatientAdmin implements Initializable {
     	Patient patient = new Patient();
     	Address address = new Address();
     	QuerysUpdate qu = new QuerysUpdate();
+    	QuerysSelect qs = new QuerysSelect();
+    	int idUser = 0;
+    	
+    	try {
+			idUser = qs.selectIdUser2(this.patient);
+		} catch (SQLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
     	
     	patient.setID(this.patient.getID());
     	address.setID(this.patient.getAddress().getID());
@@ -164,6 +174,7 @@ public class ControllerUpdatePatientAdmin implements Initializable {
     	try {
     		qu.updatePatient(patient);
     		qu.updateAddress(address);
+    		qu.updateUserPatient(patient, idUser);
     	}
     	catch(SQLException ex) {
     		System.out.println(ex.getMessage());

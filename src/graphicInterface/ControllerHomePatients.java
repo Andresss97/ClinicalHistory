@@ -106,9 +106,9 @@ public class ControllerHomePatients implements Initializable {
 	void onClickMProfile(ActionEvent event) throws IOException {
 		cContainer.getChildren().clear();
 		BorderPane root = null;
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("ClinicalRecord.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdatePatient.fxml"));
 		root = loader.load();
-		ControllerClinicalRecord controller = loader.<ControllerClinicalRecord>getController();
+		ControllerUpdatePatient controller = loader.<ControllerUpdatePatient>getController();
 		controller.initComponents(Main.patient);
 		
 		root.prefHeightProperty().bind(cContainer.heightProperty());
@@ -227,7 +227,7 @@ public class ControllerHomePatients implements Initializable {
 		tSurname.setText(Main.patient.getSurname());
 		tNif.setText(Main.patient.getNIF());
 		
-		if(Main.patient != null) {
+		if(Main.patient.getPhoto() != null) {
 			InputStream in = new ByteArrayInputStream(Main.patient.getPhoto());
 			BufferedImage i = null;
 			try {
