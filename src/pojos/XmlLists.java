@@ -1,6 +1,5 @@
 package pojos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,16 +10,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement (name = "XmlLists")
 
 public class XmlLists {
-	private ArrayList<Address> addresses;
-	private ArrayList<Allergies> allergies;
-	private ArrayList<Appointment> appointments;
-	private ArrayList<ClinicalHistory> clinicalHistories;
-	private ArrayList<Doctor> doctors;
-	private ArrayList<Illness> illnesses;
-	private ArrayList<Patient> patients;
-	private ArrayList<Surgeries> surgeries;
-	private ArrayList<Treatment> treatments;
-	private ArrayList<Vaccine> vaccines;
+	private List <Address> addresses;
+	private List <Allergies> allergies;
+	private List <Appointment> appointments;
+	private List <ClinicalHistory> clinicalHistories;
+	private List <Doctor> doctors;
+	private List <Illness> illnesses;
+	private List <Patient> patients;
+	private List <Surgeries> surgeries;
+	private List <Treatment> treatments;
+	private List <Vaccine> vaccines;
+	
 
 	
 	
@@ -39,121 +39,123 @@ public class XmlLists {
 		
 	}
 
-	public ArrayList<Address> getAddresses() {
+
+
+	public List<Address> getAddresses() {
 		return addresses;
 	}
 
 
 
-	public void setAddresses(ArrayList<Address> addresses) {
+	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
 
 
 
-	public ArrayList<Allergies> getAllergies() {
+	public List<Allergies> getAllergies() {
 		return allergies;
 	}
 
 
 
-	public void setAllergies(ArrayList<Allergies> allergies) {
+	public void setAllergies(List<Allergies> allergies) {
 		this.allergies = allergies;
 	}
 
 
 
-	public ArrayList<Appointment> getAppointments() {
+	public List<Appointment> getAppointments() {
 		return appointments;
 	}
 
 
 
-	public void setAppointments(ArrayList<Appointment> appointments) {
+	public void setAppointments(List<Appointment> appointments) {
 		this.appointments = appointments;
 	}
 
 
 
-	public ArrayList<ClinicalHistory> getClinicalHistories() {
+	public List<ClinicalHistory> getClinicalHistories() {
 		return clinicalHistories;
 	}
 
 
 
-	public void setClinicalHistories(ArrayList<ClinicalHistory> clinicalHistories) {
+	public void setClinicalHistories(List<ClinicalHistory> clinicalHistories) {
 		this.clinicalHistories = clinicalHistories;
 	}
 
 
 
-	public ArrayList<Doctor> getDoctors() {
+	public List<Doctor> getDoctors() {
 		return doctors;
 	}
 
 
 
-	public void setDoctors(ArrayList<Doctor> doctors) {
+	public void setDoctors(List<Doctor> doctors) {
 		this.doctors = doctors;
 	}
 
 
 
-	public ArrayList<Illness> getIllnesses() {
+	public List<Illness> getIllnesses() {
 		return illnesses;
 	}
 
 
 
-	public void setIllnesses(ArrayList<Illness> illnesses) {
+	public void setIllnesses(List<Illness> illnesses) {
 		this.illnesses = illnesses;
 	}
 
 
 
-	public ArrayList<Patient> getPatients() {
+	public List<Patient> getPatients() {
 		return patients;
 	}
 
 
 
-	public void setPatients(ArrayList<Patient> patients) {
+	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
 	}
 
 
 
-	public ArrayList<Surgeries> getSurgeries() {
+	public List<Surgeries> getSurgeries() {
 		return surgeries;
 	}
 
 
 
-	public void setSurgeries(ArrayList<Surgeries> surgeries) {
+	public void setSurgeries(List<Surgeries> surgeries) {
 		this.surgeries = surgeries;
 	}
 
 
 
-	public ArrayList<Treatment> getTreatments() {
+	public List<Treatment> getTreatments() {
 		return treatments;
 	}
 
 
 
-	public void setTreatments(ArrayList<Treatment> treatments) {
+	public void setTreatments(List<Treatment> treatments) {
 		this.treatments = treatments;
 	}
 
 
 
-	public ArrayList<Vaccine> getVaccines() {
+	public List<Vaccine> getVaccines() {
 		return vaccines;
 	}
 
 
 
-	public void setVaccines(ArrayList<Vaccine> vaccines) {
+	public void setVaccines(List<Vaccine> vaccines) {
 		this.vaccines = vaccines;
 	}
 
