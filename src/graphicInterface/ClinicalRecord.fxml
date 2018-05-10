@@ -16,11 +16,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
@@ -191,27 +191,13 @@
                   </BorderPane>
                </content></Tab>
             <Tab text="Allergies">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-            <Tab text="Surgeries">
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="tableSurgeries" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableAllergies" onMouseClicked="#onLeftClickAllergies" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
-                            <TableColumn fx:id="surgeriesType" editable="false" prefWidth="75.0" sortable="false" text="Type" />
-                            <TableColumn fx:id="surgeriesDate" editable="false" prefWidth="116.0" sortable="false" text="Date of surgery" />
-                              <TableColumn fx:id="surgeriesTreatment" editable="false" prefWidth="459.0" sortable="false" text="Treatment">
-                                 <columns>
-                                    <TableColumn fx:id="surgeriesTypeTreatment" editable="false" prefWidth="75.0" sortable="false" text="Type" />
-                                    <TableColumn fx:id="surgeriesDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
-                                    <TableColumn fx:id="surgeriesStartDate" editable="false" prefWidth="75.0" sortable="false" text="Start date" />
-                                    <TableColumn fx:id="surgeriesEndDate" editable="false" prefWidth="75.0" sortable="false" text="End date" />
-                                    <TableColumn fx:id="surgeriesTestResults" editable="false" prefWidth="75.0" sortable="false" text="Test results" />
-                                 </columns>
-                              </TableColumn>
+                            <TableColumn fx:id="columnTypeAllergies" prefWidth="75.0" text="Type" />
+                            <TableColumn fx:id="columnObservationAllergies" prefWidth="75.0" text="Observations" />
                           </columns>
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -222,17 +208,53 @@
                         </TableView>
                      </center>
                      <bottom>
-                        <ScrollPane prefHeight="64.0" prefWidth="651.0" BorderPane.alignment="CENTER">
+                        <ScrollPane prefHeight="66.0" prefWidth="651.0" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
+                           <BorderPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </BorderPane.margin>
+                           <content>
+                              <HBox alignment="BASELINE_CENTER">
+                                 <children>
+                                    <JFXTextField fx:id="typeAllergies" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="323.0" promptText="Type" />
+                                    <Region prefHeight="2.0" prefWidth="94.0" HBox.hgrow="ALWAYS" />
+                                    <JFXTextField fx:id="observationsAllergies" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="309.0" promptText="Observations" />
+                                    <Region prefHeight="0.0" prefWidth="109.0" HBox.hgrow="ALWAYS" />
+                                    <JFXButton fx:id="addAllergies" onAction="#onClickAddAllergies" prefHeight="25.0" prefWidth="244.0" style="-fx-background-color: #249ce8;" text="Add" textFill="WHITE" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="15.0" />
+                                 </padding>
+                              </HBox>
+                           </content>
+                        </ScrollPane>
+                     </bottom>
+                  </BorderPane>
+               </content>
+            </Tab>
+            <Tab text="Surgeries">
+               <content>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0">
+                     <center>
+                        <TableView fx:id="tableSurgeries" onMouseClicked="#onClickLeftSurgeries" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                          <columns>
+                            <TableColumn fx:id="surgeriesType" editable="false" prefWidth="75.0" sortable="false" text="Type" />
+                            <TableColumn fx:id="surgeriesDate" editable="false" prefWidth="116.0" sortable="false" text="Date of surgery" />
+                          </columns>
+                           <BorderPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </BorderPane.margin>
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                        </TableView>
+                     </center>
+                     <bottom>
+                        <ScrollPane prefHeight="58.0" prefWidth="651.0" BorderPane.alignment="CENTER">
                            <content>
                               <ButtonBar>
                                  <buttons>
-                                    <JFXTextField fx:id="typeSurgeries" focusColor="#249ce8" labelFloat="true" promptText="Type" />
-                                    <DatePicker fx:id="dateOfSurgery" prefWidth="25.0" promptText="Date of surgery" />
-                                    <JFXComboBox fx:id="tSurgeryTreatment" focusColor="#249ce8" labelFloat="true" promptText="Type" />
-                                    <JFXTextField fx:id="descSurgeriesTreatment" focusColor="#249ce8" labelFloat="true" promptText="Description" />
-                                    <DatePicker fx:id="startDateSurgery" prefWidth="25.0" promptText="Start date" />
-                                    <DatePicker fx:id="endDateSurgery" promptText="End date" />
-                                    <JFXTextField fx:id="testResultsSurgery" focusColor="#249ce8" labelFloat="true" promptText="Test results" />
+                                    <JFXTextField fx:id="typeSurgeries" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="297.0" promptText="Type" />
+                                    <DatePicker fx:id="dateOfSurgery" prefHeight="25.0" prefWidth="314.0" promptText="Date of surgery" />
                                     <JFXButton fx:id="addSurgery" onAction="#onClickAddSurgery" prefHeight="25.0" style="-fx-background-color: #249ce8;" text="Add" textFill="WHITE" />
                                  </buttons>
                                  <padding>
@@ -252,21 +274,12 @@
                <content>
                   <BorderPane prefHeight="200.0" prefWidth="200.0">
                      <center>
-                        <TableView fx:id="tableIllness" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <TableView fx:id="tableIllness" onMouseClicked="#onClickLeftIllness" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                           <columns>
                             <TableColumn fx:id="illnessesType" editable="false" prefWidth="56.0" sortable="false" text="Type" />
                             <TableColumn fx:id="dateOfIllness" editable="false" prefWidth="88.0" sortable="false" text="Date of illness" />
                               <TableColumn fx:id="illnessName" editable="false" prefWidth="75.0" sortable="false" text="Name" />
                               <TableColumn fx:id="illnessDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
-                              <TableColumn fx:id="illnessTreatment" editable="false" prefWidth="459.0" sortable="false" text="Treatment">
-                                 <columns>
-                                    <TableColumn fx:id="illnessTypeTreatment" editable="false" prefWidth="75.0" sortable="false" text="Type" />
-                                    <TableColumn fx:id="illnesssDescription" editable="false" prefWidth="75.0" sortable="false" text="Description" />
-                                    <TableColumn fx:id="illnesssStartDate" editable="false" prefWidth="75.0" sortable="false" text="Start date" />
-                                    <TableColumn fx:id="illnessEndDate" editable="false" prefWidth="75.0" sortable="false" text="End date" />
-                                    <TableColumn fx:id="illnessTestResults" editable="false" prefWidth="75.0" sortable="false" text="Test results" />
-                                 </columns>
-                              </TableColumn>
                           </columns>
                            <BorderPane.margin>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -282,14 +295,9 @@
                               <ButtonBar>
                                  <buttons>
                                     <JFXComboBox fx:id="typeIllness" focusColor="#249ce8" labelFloat="true" prefWidth="35.0" promptText="Type" />
-                                    <DatePicker fx:id="dateIllness" prefWidth="20.0" promptText="Date of illness" />
+                                    <DatePicker fx:id="dateIllness" prefHeight="25.0" prefWidth="214.0" promptText="Date of illness" />
                                     <JFXTextField fx:id="nameIllness" focusColor="#249ce8" labelFloat="true" promptText="Name" />
                                     <JFXTextField fx:id="descripIllness" focusColor="#249ce8" labelFloat="true" promptText="Description" />
-                                    <JFXComboBox fx:id="typeTreatmentIllness" focusColor="#249ce8" labelFloat="true" prefWidth="35.0" promptText="Type" />
-                                    <JFXTextField fx:id="descriptionTreatmentIllness" focusColor="#249ce8" labelFloat="true" promptText="Treatment description" />
-                                    <DatePicker fx:id="startDateTreatmentIllness" prefWidth="20.0" promptText="Start date" />
-                                    <DatePicker fx:id="endDateTreatmentIllness" layoutX="1050.0" layoutY="10.0" prefWidth="20.0" promptText="End date" />
-                                    <JFXTextField fx:id="testResultsTreatmentIllness" focusColor="#249ce8" labelFloat="true" promptText="Test results" />
                                     <JFXButton fx:id="addIllness" onAction="#onClickAddIllness" style="-fx-background-color: #249ce8;" text="Add" textFill="WHITE" />
                                  </buttons>
                                  <opaqueInsets>

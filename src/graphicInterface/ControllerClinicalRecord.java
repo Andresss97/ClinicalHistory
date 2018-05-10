@@ -54,12 +54,12 @@ import javafx.stage.Stage;
 import jpa.CreateJPA;
 import jpa.DeleteJPA;
 import jpa.UpdateJPA;
+import pojos.Allergies;
 import pojos.Appointment;
 import pojos.ClinicalHistory;
 import pojos.ClinicalHistory.ADDICTIONS;
 import pojos.ClinicalHistory.BLOODGROUP;
 import pojos.Illness;
-import pojos.Illness.typeDisease;
 import pojos.Patient;
 import pojos.Surgeries;
 import pojos.Treatment;
@@ -157,28 +157,10 @@ public class ControllerClinicalRecord implements Initializable {
     private TableView<Surgeries> tableSurgeries;
 
     @FXML
-    private TableColumn<Surgeries, ?> surgeriesType;
+    private TableColumn<Surgeries, String> surgeriesType;
 
     @FXML
-    private TableColumn<Surgeries, ?> surgeriesDate;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesTreatment;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesTypeTreatment;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesDescription;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesStartDate;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesEndDate;
-
-    @FXML
-    private TableColumn<Treatment, ?> surgeriesTestResults;
+    private TableColumn<Surgeries, Date> surgeriesDate;
 
     @FXML
     private JFXTextField typeSurgeries;
@@ -187,28 +169,13 @@ public class ControllerClinicalRecord implements Initializable {
     private DatePicker dateOfSurgery;
 
     @FXML
-    private JFXComboBox<?> tSurgeryTreatment;
-
-    @FXML
-    private JFXTextField descSurgeriesTreatment;
-
-    @FXML
-    private DatePicker startDateSurgery;
-
-    @FXML
-    private DatePicker endDateSurgery;
-
-    @FXML
-    private JFXTextField testResultsSurgery;
-
-    @FXML
     private JFXButton addSurgery;
     
     @FXML
     private TableView<Illness> tableIllness;
     
     @FXML
-    private TableColumn<Illness, typeDisease> illnessesType;
+    private TableColumn<Illness, String> illnessesType;
 
     @FXML
     private TableColumn<Illness, Date> dateOfIllness;
@@ -218,24 +185,6 @@ public class ControllerClinicalRecord implements Initializable {
 
     @FXML
     private TableColumn<Illness, String> illnessDescription;
-
-    @FXML
-    private TableColumn<Illness, Treatment> illnessTreatment;
-
-    @FXML
-    private TableColumn<Treatment, typeTreatment> illnessTypeTreatment;
-
-    @FXML
-    private TableColumn<Treatment, String> illnesssDescription;
-
-    @FXML
-    private TableColumn<Treatment, Date> illnesssStartDate;
-
-    @FXML
-    private TableColumn<Treatment, Date> illnessEndDate;
-
-    @FXML
-    private TableColumn<Treatment, String> illnessTestResults;
 
     @FXML
     private JFXComboBox<String> typeIllness;
@@ -250,22 +199,25 @@ public class ControllerClinicalRecord implements Initializable {
     private JFXTextField descripIllness;
 
     @FXML
-    private JFXComboBox<String> typeTreatmentIllness;
-
-    @FXML
-    private JFXTextField descriptionTreatmentIllness;
-
-    @FXML
-    private DatePicker startDateTreatmentIllness;
-
-    @FXML
-    private DatePicker endDateTreatmentIllness;
-
-    @FXML
-    private JFXTextField testResultsTreatmentIllness;
-
-    @FXML
     private JFXButton addIllness;
+    
+    @FXML
+    private TableView<Allergies> tableAllergies;
+
+    @FXML
+    private TableColumn<Allergies, String> columnTypeAllergies;
+
+    @FXML
+    private TableColumn<Allergies, String> columnObservationAllergies;
+
+    @FXML
+    private JFXTextField typeAllergies;
+
+    @FXML
+    private JFXTextField observationsAllergies;
+
+    @FXML
+    private JFXButton addAllergies;
 
     @FXML
     private JFXButton pdf;
@@ -278,38 +230,524 @@ public class ControllerClinicalRecord implements Initializable {
     private ObservableList<String> list4;
     
     @FXML
+    void onClickAddAllergies(ActionEvent event) {
+    	CreateJPA create = new CreateJPA();
+    	Allergies allergy = new Allergies();
+    	
+    	allergy.setType(typeAllergies.getText());
+    	allergy.setObservations(observationsAllergies.getText());
+    	allergy.setPatient(this.patient);
+    	
+    	create.createAllergy(allergy);
+    	
+    	typeAllergies.clear();
+    	observationsAllergies.clear();
+    	
+    	this.tableAllergies.getItems().add(allergy);
+    }
+    
+    @FXML
+    void onClickLeftIllness(MouseEvent event) {
+		if (event.getButton().equals(MouseButton.SECONDARY)) {
+			ContextMenu menu = new ContextMenu();
+			MenuItem delete = new MenuItem("Delete");
+			MenuItem modify = new MenuItem("Modify");
+			MenuItem addTreatment = new MenuItem("Add Treatment");
+			MenuItem modifyTreatment = new MenuItem("Modify Treatment");
+			menu.getItems().addAll(delete, modify, addTreatment, modifyTreatment);
+
+			this.tableIllness.setContextMenu(menu);
+
+			delete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableIllness.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must selectan illness");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setContentText("Are you sure you want to delete this illness?");
+					alert.setTitle("Information");
+					alert.setHeaderText("Delete illness");
+					Optional<ButtonType> result = alert.showAndWait();
+
+					if (result.get() == ButtonType.OK) {
+						DeleteJPA delete = new DeleteJPA();
+						Illness illness = tableIllness.getSelectionModel().getSelectedItem();
+						if(illness.getTreatment() != null) {
+							delete.deleteTreatment(illness.getTreatment());
+						}
+						delete.deleteIllness(illness);
+						patient.getIllnesses().remove(illness);
+						tableIllness.getItems().remove(illness);
+
+						tableIllness.autosize();
+					}
+				}
+
+			});
+			
+			modify.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableIllness.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Modify information");
+						alert.setContentText("You must select an illness");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateIllness.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerUpdateIllness controller = loader.<ControllerUpdateIllness>getController();
+						controller.initComponent(tableIllness.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshIllness();
+				}
+			});
+			
+			addTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableIllness.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Add treatment information");
+						alert.setContentText("You must select an illness");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					if (tableIllness.getSelectionModel().getSelectedItem().getTreatment() != null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Treatment information");
+						alert.setContentText("There is an existing treatment for this illness");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initIllness(tableIllness.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshIllness();
+				}
+			});
+			
+			modifyTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableIllness.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Update information");
+						alert.setContentText("You must select an illness");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initIllness(tableIllness.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshIllness();
+				}
+			});
+		}
+    }
+
+    @FXML
+    void onClickLeftSurgeries(MouseEvent event) {
+		if (event.getButton().equals(MouseButton.SECONDARY)) {
+			ContextMenu menu = new ContextMenu();
+			MenuItem delete = new MenuItem("Delete");
+			MenuItem modify = new MenuItem("Modify");
+			MenuItem addTreatment = new MenuItem("Add Treatment");
+			MenuItem modifyTreatment = new MenuItem("Modify Treatment");
+			menu.getItems().addAll(delete, modify, addTreatment, modifyTreatment);
+
+			this.tableSurgeries.setContextMenu(menu);
+
+			delete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableSurgeries.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select a surgery");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setContentText("Are you sure you want to delete this surgery?");
+					alert.setTitle("Information");
+					alert.setHeaderText("Delete surgery");
+					Optional<ButtonType> result = alert.showAndWait();
+
+					if (result.get() == ButtonType.OK) {
+						DeleteJPA delete = new DeleteJPA();
+						Surgeries surgery = tableSurgeries.getSelectionModel().getSelectedItem();
+						if(surgery.getTreatment() != null) {
+							delete.deleteTreatment(surgery.getTreatment());
+						}
+						delete.deleteSurgery(surgery);
+						tableSurgeries.getItems().remove(surgery);
+						patient.getSurgeries().remove(surgery);
+						tableSurgeries.autosize();
+					}
+				}
+			});
+			
+			modify.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableSurgeries.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Modify information");
+						alert.setContentText("You must select a surgery");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateSurgery.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerUpdateSurgery controller = loader.<ControllerUpdateSurgery>getController();
+						controller.initComponent(tableSurgeries.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshSurgeries();
+				}
+			});
+			
+			addTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableSurgeries.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Add treatment information");
+						alert.setContentText("You must select a surgery");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					if (tableSurgeries.getSelectionModel().getSelectedItem().getTreatment() != null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Treatment information");
+						alert.setContentText("There is an existing treatment for this surgery");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initSurgery(tableSurgeries.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshSurgeries();
+				}
+			});
+			
+			modifyTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableSurgeries.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select a surgery");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initSurgery(tableSurgeries.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshSurgeries();
+				}
+			});
+		}
+    }
+    
+    @FXML
+    void onLeftClickAllergies(MouseEvent event) {
+		if (event.getButton().equals(MouseButton.SECONDARY)) {
+			ContextMenu menu = new ContextMenu();
+			MenuItem delete = new MenuItem("Delete");
+			MenuItem modify = new MenuItem("Modify");
+			MenuItem addTreatment = new MenuItem("Add Treatment");
+			MenuItem modifyTreatment = new MenuItem("Modify Treatment");
+			menu.getItems().addAll(delete, modify, addTreatment, modifyTreatment);
+
+			this.tableAllergies.setContextMenu(menu);
+
+			delete.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableAllergies.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select an allergy");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+
+					Alert alert = new Alert(AlertType.CONFIRMATION);
+					alert.setContentText("Are you sure you want to delete this allergy?");
+					alert.setTitle("Information");
+					alert.setHeaderText("Delete allergy");
+					Optional<ButtonType> result = alert.showAndWait();
+
+					if (result.get() == ButtonType.OK) {
+						DeleteJPA delete = new DeleteJPA();
+						Allergies allergy = tableAllergies.getSelectionModel().getSelectedItem();
+						delete.deleteAllergy(allergy);
+						tableAllergies.getItems().remove(allergy);
+						if(allergy.getTreatment() != null) {
+							delete.deleteTreatment(allergy.getTreatment());
+						}
+						patient.getAllergies().remove(allergy);
+						tableAllergies.autosize();
+					}
+				}
+
+			});
+			
+			modify.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableAllergies.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select an allergy");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateAllergies.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerUpdateAllergy controller = loader.<ControllerUpdateAllergy>getController();
+						controller.initComponents(tableAllergies.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshAllergies();
+				}
+			});
+			
+			addTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableAllergies.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select an allergy");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					
+					if (tableAllergies.getSelectionModel().getSelectedItem().getTreatment() != null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Treatment information");
+						alert.setContentText("Ther is an existing treatment for this allergy");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initAllergy(tableAllergies.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshAllergies();
+				}
+			});
+			
+			modifyTreatment.setOnAction(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent arg0) {
+					if (tableAllergies.getSelectionModel().getSelectedItem() == null) {
+						Alert alert = new Alert(AlertType.WARNING);
+						alert.setHeaderText("Delete information");
+						alert.setContentText("You must select an allergy");
+						alert.setTitle("Warning");
+						alert.show();
+						return;
+					}
+					
+					Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+					FXMLLoader loader = new FXMLLoader(getClass().getResource("AddTreatment.fxml"));
+					AnchorPane root = null;
+					try {
+						root = loader.load();
+						ControllerAddTreatment controller = loader.<ControllerAddTreatment>getController();
+						controller.initAllergy(tableAllergies.getSelectionModel().getSelectedItem());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				   	Stage modal = new Stage();
+			    	modal.setTitle("Babylon Studio");
+			    	modal.setScene(new Scene(root));
+			    	modal.initOwner(window);
+			    	modal.setResizable(false);
+			    	modal.initModality(Modality.APPLICATION_MODAL);
+			    	modal.showAndWait();
+			    	
+			    	refreshAllergies();
+				}
+			});
+		}
+    }
+    
+    @FXML
     void onClickAddIllness(ActionEvent event) {
     	Illness illness = new Illness();
-    	Treatment treatment = new Treatment();
     	CreateJPA create = new CreateJPA();
     	
-    	illness.setTypeDisease(typeDisease.valueOf(this.typeIllness.getSelectionModel().getSelectedItem()));
+    	illness.setValue(this.typeIllness.getSelectionModel().getSelectedItem());
     	illness.setDate(Date.valueOf(this.dateIllness.getValue()));
     	illness.setDescription(this.descripIllness.getText());
     	illness.setName(this.nameIllness.getText());
     	illness.setPatient(this.patient);
     	
-    	treatment.setTreatment(typeTreatment.valueOf(this.typeTreatmentIllness.getSelectionModel().getSelectedItem()));
-    	treatment.setStartDate(Date.valueOf(this.startDateTreatmentIllness.getValue()));
-    	treatment.setEndDate(Date.valueOf(this.endDateTreatmentIllness.getValue()));
-    	treatment.setDescrpition(this.descriptionTreatmentIllness.getText());
-    	treatment.setIllness(illness);
-    	treatment.setResults(this.testResultsTreatmentIllness.getText());
-    	treatment.setPatient(this.patient);
-    	
-    	illness.setTreatment(treatment);
-    	
     	create.createIllnes(illness);
-    	create.createTreatment(treatment);
     	
     	this.typeIllness.getSelectionModel().clearSelection();
     	this.dateIllness.setValue(null);
     	this.descripIllness.clear();
     	this.nameIllness.clear();
-    	this.typeTreatmentIllness.getSelectionModel().clearSelection();
-    	this.startDateTreatmentIllness.setValue(null);
-    	this.endDateTreatmentIllness.setValue(null);
-    	this.testResultsTreatmentIllness.clear();
     	
     	this.tableIllness.getItems().add(illness);
     }
@@ -317,7 +755,18 @@ public class ControllerClinicalRecord implements Initializable {
     @FXML
     void onClickAddSurgery(ActionEvent event) {
     	Surgeries surgery = new Surgeries();
-    	Treatment treatment = new Treatment();
+    	CreateJPA create = new CreateJPA();
+    	
+    	surgery.setType(typeSurgeries.getText());
+    	surgery.setDate(Date.valueOf(dateOfSurgery.getValue()));
+    	surgery.setPatient(this.patient);
+    	create.createSurgery(surgery);
+    	
+    	this.typeSurgeries.clear();
+    	this.dateOfSurgery.setValue(null);
+    	
+    	this.patient.getSurgeries().add(surgery);
+    	this.tableSurgeries.getItems().add(surgery);
     }
 
     @FXML
@@ -359,11 +808,6 @@ public class ControllerClinicalRecord implements Initializable {
     }
 
     @FXML
-    void onClickPrint(ActionEvent event) {
-
-    }
-
-    @FXML
     void onClickSet(ActionEvent event) {
     	ClinicalHistory cl = new ClinicalHistory();
     	CreateJPA create = new CreateJPA();
@@ -385,7 +829,6 @@ public class ControllerClinicalRecord implements Initializable {
     
     public void initComponents(Patient patient) {
     	this.patient = patient;
-    	System.out.println(patient.getID());
     	name.setText(patient.getName());
     	surname.setText(patient.getSurname());
     	dBirth.setValue(patient.getDob().toLocalDate());
@@ -430,18 +873,20 @@ public class ControllerClinicalRecord implements Initializable {
 			mInsCompany.getSelectionModel().select(this.patient.getcHistory().getMedicalInsurance());
 		}
 		
-		illnessesType.setCellValueFactory(new PropertyValueFactory<Illness, typeDisease>("type"));
+		illnessesType.setCellValueFactory(new PropertyValueFactory<Illness, String>("value"));
 		dateOfIllness.setCellValueFactory(new PropertyValueFactory<Illness, Date>("date"));
 		illnessName.setCellValueFactory(new PropertyValueFactory<Illness, String>("name"));
 		illnessDescription.setCellValueFactory(new PropertyValueFactory<Illness, String>("description"));
-		illnessTreatment.setCellValueFactory(new PropertyValueFactory<Illness, Treatment>("treatment"));
-		illnessTypeTreatment.setCellValueFactory(new PropertyValueFactory<Treatment, typeTreatment>("treatment"));
-		illnesssDescription.setCellValueFactory(new PropertyValueFactory<Treatment, String>("description"));
-		illnesssStartDate.setCellValueFactory(new PropertyValueFactory<Treatment, Date>("startDate"));
-		illnessEndDate.setCellValueFactory(new PropertyValueFactory<Treatment, Date>("endDate"));
-		illnessTestResults.setCellValueFactory(new PropertyValueFactory<Treatment, String>("tResults"));
 		
 		this.refreshIllness();
+		
+		surgeriesType.setCellValueFactory(new PropertyValueFactory<Surgeries, String>("type"));
+		surgeriesDate.setCellValueFactory(new PropertyValueFactory<Surgeries, Date>("date"));
+		this.refreshSurgeries();
+		
+		columnTypeAllergies.setCellValueFactory(new PropertyValueFactory<Allergies, String>("type"));
+		columnObservationAllergies.setCellValueFactory(new PropertyValueFactory<Allergies, String>("observations"));
+		this.refreshAllergies();
     }
     
     @FXML
@@ -460,9 +905,10 @@ public class ControllerClinicalRecord implements Initializable {
 					if(tableVaccines.getSelectionModel().getSelectedItem() ==  null) {
 						Alert alert = new Alert(AlertType.WARNING);
 						alert.setHeaderText("Delete information");
-						alert.setContentText("You must select");
+						alert.setContentText("You must selecta vaccine");
 						alert.setTitle("Warning");
 						alert.show();
+						return;
 					}
 					
 					Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -507,21 +953,33 @@ public class ControllerClinicalRecord implements Initializable {
 			    	
 			    	refreshList();
 				}
-    			
     		});
     	}
     }
     
     private void refreshList() {
     	this.tableVaccines.getItems().clear();
-    	this.tableVaccines.getItems().addAll(this.patient.getVaccines());
+    	ObservableList<Vaccine> list2 = FXCollections.observableArrayList(this.patient.getVaccines());
+    	this.tableVaccines.setItems(list2);
     }
     
     private void refreshIllness() {
     	this.tableIllness.getItems().clear();
-    	this.tableIllness.getItems().addAll(this.patient.getIllnesses());
+    	ObservableList<Illness> list2 = FXCollections.observableArrayList(this.patient.getIllnesses());
+    	this.tableIllness.setItems(list2);
     }
     
+    private void refreshSurgeries() {
+    	this.tableSurgeries.getItems().clear();
+    	ObservableList<Surgeries> list2 = FXCollections.observableArrayList(this.patient.getSurgeries());
+    	this.tableSurgeries.setItems(list2);
+    }
+    
+    private void refreshAllergies() {
+    	this.tableAllergies.getItems().clear();
+    	ObservableList<Allergies> list2 = FXCollections.observableArrayList(this.patient.getAllergies());
+    	this.tableAllergies.setItems(list2);
+    }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list = FXCollections.observableArrayList("YES", "NONE");
@@ -542,10 +1000,6 @@ public class ControllerClinicalRecord implements Initializable {
 		
 		ObservableList list5 = FXCollections.observableArrayList("HEREDITARY", "PERSONAL");
 		typeIllness.setItems(list5);
-		
-		ObservableList list6 = FXCollections.observableArrayList("MEDICATION", "REHAB", "OTHER");
-		this.tSurgeryTreatment.setItems(list6);
-		this.typeTreatmentIllness.setItems(list6);
 	}
 }
 

@@ -16,11 +16,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctors">
+<BorderPane prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctor">
    <top>
       <Label text="Update Doctor account" textFill="#249ce8" BorderPane.alignment="CENTER">
          <font>
@@ -53,9 +54,16 @@
                   <Image url="@../images/UserProfile.png" />
                </image>
             </ImageView>
+            <HBox prefHeight="25.0" prefWidth="308.0">
+               <children>
+                  <Button fx:id="browse" mnemonicParsing="false" onAction="#onBrowseClick" prefHeight="25.0" prefWidth="80.0" style="-fx-background-color: #249ce8;" text="Browse" textFill="WHITE" />
+                  <Region prefHeight="25.0" prefWidth="16.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="takePhoto" mnemonicParsing="false" onAction="#onTakePhotoClick" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #249ce8;" text="Take photo" textFill="WHITE" />
+               </children>
+            </HBox>
             <JFXComboBox fx:id="gender" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="1053.0" promptText="Gender">
                <VBox.margin>
-                  <Insets top="15.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </JFXComboBox>
          </children>

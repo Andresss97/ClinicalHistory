@@ -1,9 +1,14 @@
 package graphicInterface;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import javax.imageio.ImageIO;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -12,6 +17,7 @@ import com.jfoenix.controls.JFXTextField;
 import creation.QuerysSelect;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +28,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -131,7 +138,19 @@ public class ControllerHomeDoctors implements Initializable {
 
     @FXML
     void onClickmAccount(ActionEvent event) {
-
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("UpdateDoctor.fxml"));
+		BorderPane root = null;
+		try {
+			root = loader.load();
+			ControllerUpdateDoctor controller = loader.<ControllerUpdateDoctor>getController();
+			controller.initComponents(Main.doctor);
+			container.getChildren().clear();
+			root.prefHeightProperty().bind(container.heightProperty());
+			root.prefWidthProperty().bind(container.widthProperty());
+			container.setCenter(root);
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
     }
 
     @FXML
@@ -165,6 +184,18 @@ public class ControllerHomeDoctors implements Initializable {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+		
+		if(Main.doctor.getPhoto() != null) {
+			InputStream in = new ByteArrayInputStream(Main.doctor.getPhoto());
+			BufferedImage i = null;
+			try {
+				i = ImageIO.read(in);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			Image img = SwingFXUtils.toFXImage(i, null);
+			this.image.setImage(img);
 		}
 	}
 }

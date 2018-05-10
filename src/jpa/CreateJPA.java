@@ -34,4 +34,16 @@ private JPAConnector con = null;
 		this.con.getEntityManager().persist(treatment);
 		this.con.getEntityManager().getTransaction().commit();
 	}
+	
+	public void createSurgery(Surgeries surgery) {
+		this.con.getEntityManager().getTransaction().begin();
+		this.con.getEntityManager().persist(surgery);
+		this.con.getEntityManager().getTransaction().commit();
+	}
+	
+	public void createAllergy(Allergies allergy) {
+		this.con.getEntityManager().getTransaction().begin();
+		this.con.getEntityManager().persist(allergy);
+		this.con.getEntityManager().getTransaction().commit();
+	}
 }

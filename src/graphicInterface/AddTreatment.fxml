@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="564.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerAddTreatment">
+   <children>
+      <JFXButton fx:id="update" layoutX="249.0" layoutY="285.0" onAction="#onClickUpdate" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: #249ce8;" text="Update" textFill="WHITE" visible="false" />
+      <DatePicker fx:id="startDate" layoutX="65.0" layoutY="110.0" promptText="Start Date" />
+      <DatePicker fx:id="endDate" layoutX="312.0" layoutY="110.0" promptText="End Date" />
+      <JFXComboBox fx:id="type" focusColor="#249ce8" labelFloat="true" layoutX="65.0" layoutY="164.0" prefHeight="25.0" prefWidth="174.0" promptText="Type" />
+      <JFXTextField fx:id="description" focusColor="#249ce8" labelFloat="true" layoutX="312.0" layoutY="164.0" prefHeight="25.0" prefWidth="174.0" promptText="Description" />
+      <JFXTextField fx:id="tResults" focusColor="#249ce8" labelFloat="true" layoutX="195.0" layoutY="228.0" prefHeight="25.0" prefWidth="174.0" promptText="Test Results" />
+      <JFXButton fx:id="add" layoutX="403.0" layoutY="285.0" onAction="#onClickAdd" prefHeight="25.0" prefWidth="83.0" style="-fx-background-color: #249ce8;" text="Add" textFill="WHITE" />
+   </children>
+</AnchorPane>

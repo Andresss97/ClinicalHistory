@@ -22,4 +22,28 @@ public class UpdateJPA {
 		con.getEntityManager().flush();
 		con.getEntityManager().getTransaction().commit();
 	}
+	
+	public void updateAllergy(Allergies allergy, Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
+	
+	public void updateIllness(Illness illness, Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
+	
+	public void updateSurgery(Surgeries surgery, Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
+	
+	public void updateTreatment(Treatment treatment, Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
 }

@@ -28,7 +28,7 @@ public class Surgeries implements Serializable {
 	private Treatment treatment;
 	
 	@XmlTransient
-	@ManyToOne (fetch = FetchType.LAZY)
+	@ManyToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn (name = "IDPATIENT")
 	private Patient patient;
 	

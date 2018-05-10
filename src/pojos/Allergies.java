@@ -25,7 +25,7 @@ public class Allergies implements Serializable {
 	private String observations;
 	
 	@XmlElement
-	@OneToOne (fetch = FetchType.LAZY)
+	@OneToOne (fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinColumn (name = "IDTREATMENT")
 	private Treatment treatment;
 	

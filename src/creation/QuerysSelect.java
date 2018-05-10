@@ -24,6 +24,8 @@ import pojos.Doctor;
 import pojos.Patient;
 import pojos.Person;
 import pojos.Surgeries;
+import pojos.Treatment;
+import pojos.Treatment.typeTreatment;
 
 public class QuerysSelect {
 	private Conector conn = (Conector) Main.conector;
@@ -107,6 +109,7 @@ public class QuerysSelect {
 			else {
 				doctor.setGender("Female");
 			}
+			doctor.setPhoto(set.getBytes("photo"));
 			doctor.setUsername(set.getString("username"));
 			doctor.setPassword(set.getString("password"));
 			doctor.setID(set.getInt("id"));
@@ -240,11 +243,92 @@ public class QuerysSelect {
 		return list;
 	}
 	
+	public ArrayList<Doctor> selectDoctors() throws SQLException {
+		String query = "SELECT * from doctor";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<Doctor> list = new ArrayList<>();
+		Address address;
+		int idAddress;
+		
+		while (set.next()) {
+			Doctor doctor = new Doctor();
+			doctor.setName(set.getString("name"));
+			doctor.setSurname(set.getString("surname"));
+			doctor.setDob(set.getDate("dob"));
+			doctor.setEmail(set.getString("email"));
+			doctor.setNIF(set.getString("nif"));
+			doctor.setMobilePhone(set.getInt("mobilephone"));
+			String sp = this.selectIdSpeciality(set.getInt("idspeciality"));
+			doctor.setSpeciality(sp);
+			if(set.getString("gender").equals("Male")) {
+				doctor.setGender("Male");
+			}
+			else {
+				doctor.setGender("Female");
+			}
+			doctor.setUsername(set.getString("username"));
+			doctor.setPassword(set.getString("password"));
+			doctor.setID(set.getInt("id"));
+			idAddress = set.getInt("idaddress");
+			address = this.selectAddress(idAddress);
+			doctor.setAddress(address);
+			
+			list.add(doctor);
+		}
+		st.close();
+		set.close();
+		
+		return list;
+	}
+	
 	public ArrayList<Person> selectPatientsAccounts() throws SQLException {
 		String query = "SELECT * from patient";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		ResultSet set = st.executeQuery();
 		ArrayList<Person> list = new ArrayList<>();
+		int idAddress;
+		Address address;
+		
+		while (set.next()) {
+			Patient patient = new Patient();
+			patient.setName(set.getString("name"));
+			patient.setSurname(set.getString("surname"));
+			patient.setUsername(set.getString("username"));
+			patient.setPassword(set.getString("password"));
+			patient.setID(set.getInt("id"));
+			patient.setDob(set.getDate("dob"));
+			patient.setEmail(set.getString("email"));
+			patient.setNIF(set.getString("nif"));
+			patient.setWeight(set.getFloat("weight"));
+			patient.setHeight(set.getFloat("height"));
+			patient.setMobilePhone(set.getInt("mobilephone"));
+			patient.setHousePhone(set.getInt("homephone"));
+			patient.setPhoto(set.getBytes("photo"));
+			if(set.getString("gender").equals("Male")) {
+				patient.setGender("Male");
+			}
+			else {
+				patient.setGender("Female");
+			}
+			idAddress = set.getInt("idaddress");
+			address = this.selectAddress(idAddress);
+			patient.setAddress(address);
+			patient.getAddress().setID(idAddress);
+			list.add(patient);
+		}
+		
+		st.close();
+		set.close();
+		
+		return list;
+	}
+	
+	public ArrayList<Patient> selectPatients() throws SQLException {
+		String query = "SELECT * from patient";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ResultSet set = st.executeQuery();
+		ArrayList<Patient> list = new ArrayList<>();
 		int idAddress;
 		Address address;
 		
@@ -313,6 +397,29 @@ public class QuerysSelect {
 		return address;
 	}
 	
+	public ArrayList<Address> selectAddresses() throws SQLException {
+		String query = "SELECT * from address";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		ArrayList<Address> addresses = new ArrayList<>();
+		
+		ResultSet set = st.executeQuery();
+		while (set.next()) {
+			Address address = new Address();
+
+			address.setCity(set.getString("city"));
+			address.setStreet(set.getString("street"));
+			address.setHouseNumber(set.getInt("housenumber"));
+			address.setPostalCode(set.getInt("cp"));
+			address.setID(set.getInt("ID"));
+			addresses.add(address);
+		}
+
+		st.close();
+		set.close();
+
+		return addresses;
+	}
+	
 	public ArrayList<String> selectSpecialities() throws SQLException {
 		String query;
 		
@@ -363,51 +470,6 @@ public class QuerysSelect {
 		return type;
 	}
 	
-	/*public List<ClinicalHistory> selectClinicalHistory (int id) throws SQLException { 
-		String query;
-		
-		query = "SELECT * FROM ClinicalHistory where idpatient = ? ";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		st.setInt(1, id);
-		ResultSet set = st.executeQuery();
-		st.close();
-		
-		List<ClinicalHistory> clinicalH =new LinkedList();
-		while(set.next()){
-			ClinicalHistory clinicalHistory = new ClinicalHistory();
-			clinicalHistory.setAddictions(set.getString("additions"));
-			clinicalHistory.setID(set.getInt("ID"));
-			clinicalHistory.setLastModification(set.getDate("date"));
-			//clinicalHistory.setMedicalInsurance(set.getInt("medicalInsurance"));
-			clinicalHistory.setObservations(set.getString("observations"));
-			
-			if(set.getString("bloodGroup").equals("AP")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.AP);
-			}if(set.getString("bloodGroup").equals("AN")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.AN);
-			}if(set.getString("bloodGroup").equals("ABP")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.ABP);
-			}if(set.getString("bloodGroup").equals("ABN")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.ABN);
-			}if(set.getString("bloodGroup").equals("BP")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.BP);
-			}if(set.getString("bloodGroup").equals("BN")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.BN);
-			}if(set.getString("bloodGroup").equals("ZP")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.ZP);
-			}if(set.getString("bloodGroup").equals("ZN")) {
-				clinicalHistory.setBloodgroup(BLOODGROUP.ZN);
-			}
-			
-			clinicalHistory.setLastModification(set.getDate("lastModification"));
-			clinicalH.add(clinicalHistory);
-		}
-		
-		set.close();
-		
-		return clinicalH ;		
-	}*/
-	
 	public ArrayList<String> selectHoursDoctorApp(int id) throws SQLException {
 		String query = "SELECT hour from appointment where iddoctor = ?";
 		ArrayList<String> hours = new ArrayList<>();
@@ -434,6 +496,32 @@ public class QuerysSelect {
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		st.setInt(1, id);
+		
+		ResultSet set = st.executeQuery();
+		
+		while(set.next()) {
+			Appointment app = new Appointment();
+			app.setReason(set.getString("reason"));
+			app.setDate(set.getDate("date"));
+			app.setHour(set.getString("hour"));
+			app.setID(set.getInt("id"));
+			int iddoc = set.getInt("iddoctor");
+			Doctor doc = this.selectDoctorByID(iddoc);
+			app.setDoctor(doc);
+			apps.add(app);
+		}
+		
+		st.close();
+		set.close();
+		
+		return apps;
+	}
+	
+	public ArrayList<Appointment> selectAppointmentsClear() throws SQLException {
+		ArrayList<Appointment> apps = new ArrayList<>();
+		
+		String query = "SELECT * from appointment";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 		ResultSet set = st.executeQuery();
 		
@@ -490,32 +578,7 @@ public class QuerysSelect {
 		
 		return doctor;
 	}
-	
-	public ArrayList <Surgeries> selectSurgery (int id) throws SQLException {
-	  ArrayList <Surgeries> surgeries = new ArrayList<>();
-	  
-	  String query = "SELECT * FROM surgeries WHERE idpatient = ?";
-	  PreparedStatement st = conn.getConnect().prepareStatement(query);
-	  
-	  st.setInt(1, id);
-	  
-	  ResultSet set = st.executeQuery();
-		
-	  while(set.next()) {
-	      Surgeries surg = new Surgeries();
-	      surg.setDate(set.getDate("date"));
-	      surg.setID(set.getInt("id"));
-	      //surg.setTreatment(set.getInt("treatment"));
-	      surg.setType(set.getString("type"));
-	      
-	      surgeries.add(surg);		
-	  }
-	  st.close();
-	  set.close();
-	  
-	return surgeries;
-	}
-	
+
 	public ArrayList <Allergies> selectAllergy (int id) throws SQLException{
 		ArrayList <Allergies> allergy = new ArrayList<>();
 		
@@ -567,4 +630,37 @@ public class QuerysSelect {
 		
 		return apps;
 	}
+	
+	public int selectIdUser(Doctor doctor) throws SQLException {
+		String query = "SELECT id from mappinglogin where email  = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setString(1, doctor.getEmail());
+		int id2;
+		
+		ResultSet set = st.executeQuery();
+		
+		id2 = set.getInt("id");
+		
+		st.close();
+		set.close();
+		
+		return id2;
+	}
+	
+	public int selectIdUser2(Patient patient) throws SQLException {
+		String query = "SELECT id from mappinglogin where email  = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setString(1, patient.getEmail());
+		int id2;
+		
+		ResultSet set = st.executeQuery();
+		
+		id2 = set.getInt("id");
+		
+		st.close();
+		set.close();
+		
+		return id2;
+	}
+	
 }

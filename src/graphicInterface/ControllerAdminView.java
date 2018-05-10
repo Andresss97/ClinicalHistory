@@ -1,5 +1,6 @@
 package graphicInterface;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -7,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import javax.xml.bind.JAXBException;
 
 import com.jfoenix.controls.JFXTextField;
 
@@ -19,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -32,10 +36,20 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jpa.ReadJPA;
+import pojos.Allergies;
+import pojos.ClinicalHistory;
 import pojos.Doctor;
+import pojos.Illness;
 import pojos.Patient;
 import pojos.Person;
+import pojos.Surgeries;
+import pojos.Treatment;
+import pojos.Vaccine;
+import pojos.XmlLists;
+import xml.ExportDataBase;
 
 public class ControllerAdminView implements Initializable{
 
@@ -267,6 +281,54 @@ public class ControllerAdminView implements Initializable{
     private void refreshList() {
     	this.list.getItems().clear();
     	this.list.getItems().addAll(accounts);
+    }
+    
+    @FXML
+    void onClickXML(ActionEvent event) {
+    	XmlLists xml = new XmlLists();
+    	QuerysSelect qs = new QuerysSelect();
+    	ReadJPA read = new ReadJPA();
+    	ExportDataBase exporter = new ExportDataBase();
+    	ArrayList<Allergies> allergies = new ArrayList<>();
+    	ArrayList<Surgeries> surgeries = new ArrayList<>();
+    	ArrayList<Vaccine> vaccines = new ArrayList<>();
+    	ArrayList<Treatment> treatments = new ArrayList<>();
+    	ArrayList<ClinicalHistory> clinicalHistories = new ArrayList<>();
+    	ArrayList<Illness> illnesses = new ArrayList<>();
+    	
+    	
+    	allergies.addAll(read.selectAllergies());
+    	surgeries.addAll(read.selectSurgeries());
+    	vaccines.addAll(read.selectVaccine());
+    	treatments.addAll(read.selectTreatment());
+    	clinicalHistories.addAll(read.selectClinicalHistory());
+    	illnesses.addAll(read.selectIllness());
+    	
+    	try {
+			xml.setPatients(qs.selectPatients());
+			xml.setDoctors(qs.selectDoctors());
+			xml.setAppointments(qs.selectAppointmentsClear());
+			xml.setAllergies(allergies);
+			xml.setSurgeries(surgeries);
+			xml.setTreatments(treatments);
+			xml.setVaccines(vaccines);
+			xml.setClinicalHistories(clinicalHistories);
+			xml.setIllnesses(illnesses);
+			xml.setAddresses(qs.selectAddresses());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	FileChooser chooser = new FileChooser();
+    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	File file = chooser.showSaveDialog(window);
+    	
+    	try {
+			exporter.export(xml, file);
+		} catch (JAXBException e) {
+			System.out.println(e.getMessage());
+		}
     }
     
 	@Override

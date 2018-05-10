@@ -40,7 +40,7 @@ public class Patient extends Person {
 	private LinkedList<Appointment> appointments;
 	
 	@XmlElement
-	@OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="patient", cascade = CascadeType.PERSIST)
 	private LinkedList<Illness> illnesses;
 	
 	
@@ -53,7 +53,7 @@ public class Patient extends Person {
 	private LinkedList<Surgeries> surgeries;
 	
 	@XmlElement
-	@OneToMany(mappedBy="patient", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="patient", cascade = CascadeType.PERSIST)
 	private LinkedList<Treatment> treatment;
 	
 	@XmlElement
@@ -61,7 +61,7 @@ public class Patient extends Person {
 	private LinkedList<Vaccine> vaccines;
 	
 	@XmlElement
-	@OneToOne(mappedBy="patient", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy="patient", cascade = CascadeType.PERSIST)
 	private ClinicalHistory cHistory;
 	
 	public Patient() { 

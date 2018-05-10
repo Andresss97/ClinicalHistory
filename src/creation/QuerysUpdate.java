@@ -6,43 +6,10 @@ import pojos.*;
 import java.sql.SQLException;
 
 import graphicInterface.Main;
-import pojos.Illness.typeDisease;
 
 public class QuerysUpdate {
 
-	private Conector conn = (Conector) Main.conector;
-	
-	public void updateIllness(Illness illness) throws SQLException {
-		String query;
-
-		query = "UPDATE illness"
-				+ "SET  name =?,"
-				+ "SET  description= ?,"
-				+ "SET  type= ?,"
-				+ "SET  date= ?,"
-				+ "WHERE id =?";
-			
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		st.setString(1,illness.getName());
-		st.setString(2, illness.getDescription());
-		
-		if(illness.getTypeDisease().equals(typeDisease.HEREDITARY)) {
-			st.setString(3,"Hereditary");
-		}
-		else {
-			st.setString(3, "Personal");
-		}
-		st.setDate(4, illness.getDate());
-		
-		st.setString(3,illness.getDescription());
-		st.setDate(4,illness.getDate());;
-		st.setInt(5,illness.getID());
-		
-		st.executeUpdate();
-		st.close();
-	
-	}	
+	private Conector conn = (Conector) Main.conector;	
 	
 	public void addressDoctorAssigment(Address address, Doctor doctor) throws SQLException {
 		String query;
@@ -82,24 +49,6 @@ public class QuerysUpdate {
 	    st.executeUpdate();
 	    st.close();
 	}
-	
-	/*private void updateClinicalHistory (ClinicalHistory clinicalHistory) throws SQLException {
-		String query;
-		query = "UPDATE clinicalHistory "
-				+ " SET addictions = ? "
-				+ " SET observations = ? "
-				+ " SET lastModication = ? "
-				+ " WHERE id = ?";
-		PreparedStatement st;
-		st = conn.getConnect().prepareStatement(query);
-		st.setString(1, clinicalHistory.getAddictions());
-		st.setString(2, clinicalHistory.getObservations());
-		st.setDate(3, clinicalHistory.getLastModification());
-		st.setInt(4, clinicalHistory.getID());
-		
-		st.executeUpdate();
-		st.close();
-	}*/
 	
 	private void updateAllergy (Allergies allergy) throws SQLException {
 		String query;
@@ -254,6 +203,50 @@ private void updateTreatment (Treatment treatment) throws SQLException {
 		
 		st.executeUpdate();
 		
+		st.close();
+	}
+	
+	public void updateAdmin(String user, String password) throws SQLException {
+		String query = "UPDATE mappinglogin SET "
+				+ "username = ?,"
+				+ "password = ? where id = 1";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		st.setString(1, user);
+		st.setString(2, password);
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	public void updateUserDoctor(Doctor doctor, int id) throws SQLException {
+		String query = "UPDATE mappinglogin SET "
+				+ "username = ?,"
+				+ "password = ?,"
+				+ "email = ? where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, doctor.getUsername());
+		st.setString(2, doctor.getPassword());
+		st.setString(3, doctor.getEmail());
+		st.setInt(4, id);
+		
+		st.executeUpdate();
+		st.close();
+	}
+	
+	public void updateUserPatient(Patient patient, int id) throws SQLException {
+		String query = "UPDATE mappinglogin SET "
+				+ "username = ?,"
+				+ "password = ?,"
+				+ "email = ? where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setString(1, patient.getUsername());
+		st.setString(2, patient.getPassword());
+		st.setString(3, patient.getEmail());
+		st.setInt(4, id);
+		
+		st.executeUpdate();
 		st.close();
 	}
 }

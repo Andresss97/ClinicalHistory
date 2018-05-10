@@ -3,6 +3,7 @@ package graphicInterface;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,6 +15,8 @@ import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import com.jfoenix.controls.JFXComboBox;
+
 import creation.QuerysSelect;
 import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
@@ -23,23 +26,24 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pojos.Doctor;
+import virtualization.Photo;
 
-public class ControllerUpdateDoctors implements Initializable{
+public class ControllerUpdateDoctor implements Initializable {
 
     @FXML
     private Button update;
@@ -54,7 +58,7 @@ public class ControllerUpdateDoctors implements Initializable{
     private Button takePhoto;
 
     @FXML
-    private ComboBox<String> gender;
+    private JFXComboBox<String> gender;
 
     @FXML
     private TextField name;
@@ -95,19 +99,29 @@ public class ControllerUpdateDoctors implements Initializable{
     @FXML
     private PasswordField password;
     
-    private Doctor doctor;
+    Doctor doctor = new Doctor();
+    
     @FXML
-    void onClickBrowse(ActionEvent event) {
+    void onBrowseClick(ActionEvent event) {
+		FileChooser fl = new FileChooser();
+		Image img = null;
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		fl.setTitle("Babylon Studio - Select a profile picture");
+		FileChooser.ExtensionFilter extFilterJPG = new FileChooser.ExtensionFilter("JPG files (*.JPG)", "*.JPG");
+		FileChooser.ExtensionFilter extFilterPNG = new FileChooser.ExtensionFilter("PNG files (*.PNG)", "*.PNG");
+		fl.getExtensionFilters().addAll(extFilterPNG, extFilterJPG);
+		
+		File file = fl.showOpenDialog(window);
 
-    }
-
-    private void onClickHomePage() throws IOException {
-    	Parent root = FXMLLoader.load(getClass().getResource("AdminView.fxml"));
-		Scene scene = gender.getScene();
-    	Stage window = (Stage) scene.getWindow();
-    	Scene scene2 = new Scene(root);
-    	window.setScene(scene2);
-    	window.show();
+		if (file != null) {
+			try {
+				img = new Image(file.toURI().toURL().toString());
+				this.image.setImage(img);
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+			}
+		}
     }
 
     @FXML
@@ -122,7 +136,8 @@ public class ControllerUpdateDoctors implements Initializable{
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-    	doctor.setID(this.doctor.getID());
+    	
+    	doctor.setID(Main.doctor.getID());
     	QuerysUpdate qu = new QuerysUpdate();
     	Date date;
     	LocalDate ld;
@@ -160,18 +175,26 @@ public class ControllerUpdateDoctors implements Initializable{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-    	
-    	Main.doctor = doctor;
-    	
     	Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setContentText("Correctly update");
     	alert.setTitle("Information");
     	alert.setHeaderText("Update doctor account");
     	alert.showAndWait();
     	
-    	try {
-			this.onClickHomePage();
+    	this.onHomeClick();
+    }
+    
+    private void onHomeClick() {
+    	Parent root;
+		try {
+			root = FXMLLoader.load(getClass().getResource("HomeDoctors.fxml"));
+			Scene scene = update.getScene();
+			Stage window = (Stage) scene.getWindow();
+			Scene scene2 = new Scene(root);
+			window.setScene(scene2);
+			window.show();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
@@ -201,7 +224,6 @@ public class ControllerUpdateDoctors implements Initializable{
     			this.image.setImage(img);
     		}
     	}
-    	
     	if(doctor.getGender().equals("Male")) {
     		gender.getSelectionModel().select("Male");
     	}
@@ -213,6 +235,12 @@ public class ControllerUpdateDoctors implements Initializable{
     	pCode.setText(String.valueOf(doctor.getAddress().getPostalCode()));
     	user.setText(doctor.getUsername());
     	password.setText(doctor.getPassword());
+    }
+    
+    @FXML
+    void onTakePhotoClick(ActionEvent event) {
+    	Photo p = new Photo();
+    	this.image = p.takePhoto(this.image);
     }
 
 	@Override
@@ -231,4 +259,6 @@ public class ControllerUpdateDoctors implements Initializable{
 		ObservableList list2 = FXCollections.observableArrayList("Male", "Female");
 		gender.setItems(list2);
 	}
+
 }
+
