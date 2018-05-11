@@ -1,6 +1,7 @@
 package pojos;
 import java.io.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
@@ -24,6 +25,9 @@ public class Doctor extends Person  {
 	@ManyToMany(mappedBy="doctors")
 	private LinkedList<Patient>patients;
 	
+	@XmlElement
+	@OneToMany(fetch = FetchType.LAZY)
+	private ArrayList<Appointment>  appointments;
 	
 	public Doctor() {
 		super();
@@ -36,6 +40,14 @@ public class Doctor extends Person  {
 
 	public void setSpeciality(String speciality) {
 		this.speciality = speciality;
+	}
+
+	public ArrayList<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(ArrayList<Appointment> appointments) {
+		this.appointments = appointments;
 	}
 
 	@Override
