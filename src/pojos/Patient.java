@@ -1,7 +1,10 @@
 
 package pojos;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 
@@ -102,7 +105,7 @@ public class Patient extends Person {
 		this.housePhone = housePhone;
 	}
 
-	public LinkedList<Doctor> getDoctors() {
+	public List<Doctor> getDoctors() {
 		return doctors;
 	}
 
@@ -126,7 +129,7 @@ public class Patient extends Person {
 		this.illnesses = illnesses;
 	}
 
-	public LinkedList<Allergies> getAllergies() {
+	public List<Allergies> getAllergies() {
 		return allergies;
 	}
 
@@ -134,7 +137,7 @@ public class Patient extends Person {
 		this.allergies = allergies;
 	}
 
-	public LinkedList<Surgeries> getSurgeries() {
+	public List<Surgeries> getSurgeries() {
 		return surgeries;
 	}
 
@@ -142,7 +145,7 @@ public class Patient extends Person {
 		this.surgeries = surgeries;
 	}
 
-	public LinkedList<Vaccine> getVaccines() {
+	public List<Vaccine> getVaccines() {
 		return vaccines;
 	}
 
