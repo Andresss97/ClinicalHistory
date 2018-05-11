@@ -16,7 +16,7 @@ public class ImportDataBase {
 		databaseunmarshaller = new DataBaseUnmarshaller();
 	}
 	
-	//*Mirar cual te conviene añadir con jpa o jdbc
+	
 	public void importDataBase (File file) throws Exception {
 		
 		XmlLists database = (XmlLists)databaseunmarshaller.unmarshallXmL(file);
