@@ -10,8 +10,8 @@ public class EmailSender {
 	@SuppressWarnings("static-access")
 	public void sendEmail(String user, String password, String email) throws MessagingException {
 		String to = email;
-		String from = "carlosi@tecnovoice.es";
-		String passwordGmail = "Indi.1111";
+		String from = "babylon@tecnovoice.es";
+		String passwordGmail = "indi1111";
 		String content = "User: " + user + " Password: " + password;
 		
 		Properties props = new Properties();

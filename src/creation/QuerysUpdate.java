@@ -45,7 +45,7 @@ public class QuerysUpdate {
 		st.setString(3, appointment.getReason());
 		st.setBoolean(4, appointment.isDone());
 		st.setInt(5, appointment.getDoctor().getID());
-		st.setInt(6, appointment.getPatient().getID());
+		st.setInt(6, Main.patient.getID());
 		st.setInt(7, appointment.getID());
 		
 	    st.executeUpdate();
