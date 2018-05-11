@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.sun.xml.internal.bind.v2.model.core.Adapter;
+
+import xml.AdapterDate;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -19,6 +24,7 @@ public class Appointment implements Serializable  {
 	private Integer ID;
 	
 	@XmlElement
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date date;
 	
 	@XmlElement
