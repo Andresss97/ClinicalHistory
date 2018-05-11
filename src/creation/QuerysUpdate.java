@@ -67,6 +67,29 @@ public class QuerysUpdate {
 	    st.close();
 	}
 	
+	public void updateAppointment3 (Appointment appointment) throws SQLException {
+		String query;
+		query = "UPDATE appointment " 
+				+ "SET date = ?,"
+				+ "hour = ?,"
+				+ "reason = ?,"
+				+ "done = ?,"
+				+ "iddoctor = ?"
+				+ "WHERE id = ?";
+		
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setDate(1, appointment.getDate());
+		st.setString(2, appointment.getHour());
+		st.setString(3, appointment.getReason());
+		st.setBoolean(4, appointment.isDone());
+		st.setInt(5, appointment.getDoctor().getID());
+		st.setInt(6, appointment.getID());
+		
+	    st.executeUpdate();
+	    st.close();
+	}
+	
 	private void updateAllergy (Allergies allergy) throws SQLException {
 		String query;
 		query = "UPDATE allergy "

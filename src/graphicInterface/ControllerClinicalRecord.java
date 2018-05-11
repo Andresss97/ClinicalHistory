@@ -324,6 +324,7 @@ public class ControllerClinicalRecord implements Initializable {
 			    	modal.showAndWait();
 			    	
 			    	refreshIllness();
+			    	tableIllness.autosize();
 				}
 			});
 			

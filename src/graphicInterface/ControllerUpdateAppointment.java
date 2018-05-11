@@ -156,7 +156,7 @@ public class ControllerUpdateAppointment implements Initializable {
     				}
     			}
     		
-    			qu.updateAppointment(app);
+    			qu.updateAppointment3(app);
     		}
     		catch(SQLException ex) {
     			System.out.println(ex.getMessage());

@@ -41,13 +41,13 @@ public class ImportDataBase {
 		}
 		
 		//*revisar doctor appointment falta un get no hay una lista de appointments en doctor
-		for(Doctor doctor:database.getDoctors()) {
+		/*for(Doctor doctor:database.getDoctors()) {
 			insert.insertDoctor(doctor);
 			insert.insertAddress(doctor.getAddress());
 			for(Appointment appointment: doctor.getAppointments()) {
 				insert.insertAppointment(appointment);
 			}
-		}
+		}*/
 		
 		for(Illness illness:database.getIllnesses()) {
 			create.createIllnes(illness);

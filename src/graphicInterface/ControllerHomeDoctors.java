@@ -216,8 +216,7 @@ public class ControllerHomeDoctors implements Initializable {
 		alert.showAndWait();
 			
 		this.list.remove(app);
-		appointments.getItems().remove(app);
-
+		this.appointments.getItems().remove(app);
     }
 
     @FXML

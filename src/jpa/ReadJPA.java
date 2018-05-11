@@ -17,9 +17,9 @@ public class ReadJPA {
 	
 	public List<Patient> selectPatientsForDoctor(Doctor doctor) {
 		this.con.getEntityManager().getTransaction().begin();
-		Query query = this.con.getEntityManager().createNativeQuery("SELECT * from patient as p JOIN "
-				+ "appointment as a on p.id = a.idpatient where "
-				+ "a.iddoctor = " + doctor.getID(), Patient.class);
+		Query query = this.con.getEntityManager().createNativeQuery("SELECT * from patient where id "
+				+ "in (SELECT idpatient from appointment where iddoctor ="
+				+ doctor.getID() + ")", Patient.class);
 		
 		List<Patient> patients = new ArrayList<>();
 		patients.addAll(query.getResultList());

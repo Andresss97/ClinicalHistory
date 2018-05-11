@@ -51,6 +51,7 @@ import pojos.Treatment;
 import pojos.Vaccine;
 import pojos.XmlLists;
 import xml.ExportDataBase;
+import xml.ImportDataBase;
 
 public class ControllerAdminView implements Initializable{
 
@@ -104,7 +105,27 @@ public class ControllerAdminView implements Initializable{
 		root.prefWidthProperty().bind(cContainer.widthProperty());
 		cContainer.setCenter(root);
     }
+    
 
+    @FXML
+    void onClickImport(ActionEvent event) {
+    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	ImportDataBase im = new ImportDataBase();
+    	
+    	FileChooser chooser = new FileChooser();
+    	File file = chooser.showOpenDialog(window);
+    	
+    	if(file == null) {
+    		return;
+    	}
+    	
+    	try {
+			im.importDataBase(file);
+		} catch (Exception e) {
+			System.out.println("peto aqui");
+		}
+    }
+    
     @FXML
     void onClickDelete(ActionEvent event) throws IOException {
     	QuerysDelete qs = new QuerysDelete();
