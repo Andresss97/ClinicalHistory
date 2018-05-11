@@ -2,7 +2,6 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
-<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -45,7 +44,6 @@
             <Menu mnemonicParsing="false" text="View">
               <items>
                 <MenuItem fx:id="mPatients" mnemonicParsing="false" onAction="#onClickmPatients" text="My Patients" />
-                  <MenuItem fx:id="mAgenda" mnemonicParsing="false" onAction="#onClickmAgenda" text="My Agenda" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Edit">
@@ -110,7 +108,6 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="print" onAction="#onClickPrint" prefHeight="25.0" prefWidth="769.0" style="-fx-background-color: #249ce8;" text="Print" textFill="WHITE" VBox.vgrow="ALWAYS" />
                   <JFXButton fx:id="cApp" onAction="#onClickcApp" prefHeight="25.0" prefWidth="688.0" style="-fx-background-color: #249ce8;" text="Check Appointments" textFill="WHITE" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets top="15.0" />
@@ -125,13 +122,6 @@
          <top>
             <HBox alignment="TOP_RIGHT" prefHeight="28.0" prefWidth="508.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXTextField fx:id="search" focusColor="#249ce8" labelFloat="true" onAction="#onClickSearch" promptText="Search" />
-                  <ImageView fitHeight="28.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/Search-WF.png" />
-                     </image>
-                  </ImageView>
-                  <Region prefHeight="28.0" prefWidth="14.0" />
                   <JFXComboBox fx:id="orderBy" focusColor="#249ce8" onAction="#onClickOrderBy" prefHeight="25.0" prefWidth="129.0" promptText="Order by:" HBox.hgrow="ALWAYS" />
                </children>
                <BorderPane.margin>

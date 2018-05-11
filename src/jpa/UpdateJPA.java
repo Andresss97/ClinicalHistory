@@ -46,4 +46,10 @@ public class UpdateJPA {
 		con.getEntityManager().flush();
 		con.getEntityManager().getTransaction().commit();
 	}
+	
+	public void updateAppointment(Appointment appointment, Patient patient) {
+		con.getEntityManager().getTransaction().begin();
+		con.getEntityManager().flush();
+		con.getEntityManager().getTransaction().commit();
+	}
 }

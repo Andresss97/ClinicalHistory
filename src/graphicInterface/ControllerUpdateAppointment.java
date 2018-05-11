@@ -5,9 +5,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.calendarfx.model.Entry;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -20,6 +22,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
@@ -58,6 +61,7 @@ public class ControllerUpdateAppointment implements Initializable {
     
     private Appointment app;
     
+    private Boolean agenda = false;
     @FXML
     void onClickAhBh(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
@@ -96,42 +100,89 @@ public class ControllerUpdateAppointment implements Initializable {
 
     @FXML
     void onClickUpdate(ActionEvent event) {
-    	QuerysUpdate qu = new QuerysUpdate();
-    	Appointment app = new Appointment();
-    	app.setID(this.app.getID());
-    	app.setReason(this.rAppointment.getText());
-    	app.setDoctor(doctorApp.getSelectionModel().getSelectedItem());
-    	LocalDate ld = this.dApp.getValue();
-    	app.setDate(Date.valueOf(ld));
-    	app.setHour(hApp.getSelectionModel().getSelectedItem());
+    	if(agenda == false) {
+    		QuerysUpdate qu = new QuerysUpdate();
+    		Appointment app = new Appointment();
+    		app.setID(this.app.getID());
+    		app.setReason(this.rAppointment.getText());
+    		app.setDoctor(doctorApp.getSelectionModel().getSelectedItem());
+    		LocalDate ld = this.dApp.getValue();
+    		app.setDate(Date.valueOf(ld));
+    		app.setHour(hApp.getSelectionModel().getSelectedItem());
     	
-    	try {
-    		for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
-    			if(Main.patient.getAppointments().get(i).equals(this.app)) {
-    				Main.patient.getAppointments().set(i, app);
-    				break;
+    		try {
+    			for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
+    				if(Main.patient.getAppointments().get(i).equals(this.app)) {
+    					Main.patient.getAppointments().set(i, app);
+    					break;
+    				}
     			}
+    		
+    			qu.updateAppointment(app);
+    		}
+    		catch(SQLException ex) {
+    			System.out.println(ex.getMessage());
+    			return;
+    		}
+    	
+    		Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setHeaderText("Update information");
+    		alert.setTitle("Information");
+    		alert.setContentText("Correctly updated");
+    		alert.showAndWait();
+    	
+    		try {
+    			this.toHome();
+    		} catch (IOException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}
+    	else {
+    		QuerysUpdate qu = new QuerysUpdate();
+    		Appointment app = new Appointment();
+    		app.setID(this.app.getID());
+    		app.setReason(this.rAppointment.getText());
+    		app.setDoctor(doctorApp.getSelectionModel().getSelectedItem());
+    		LocalDate ld = this.dApp.getValue();
+    		app.setDate(Date.valueOf(ld));
+    		app.setHour(hApp.getSelectionModel().getSelectedItem());
+    	
+    		try {
+    			for(int i = 0; i < Main.patient.getAppointments().size(); i++) {
+    				if(Main.patient.getAppointments().get(i).equals(this.app)) {
+    					Main.patient.getAppointments().set(i, app);
+    					break;
+    				}
+    			}
+    		
+    			qu.updateAppointment(app);
+    		}
+    		catch(SQLException ex) {
+    			System.out.println(ex.getMessage());
+    			return;
     		}
     		
-    		qu.updateAppointment(app);
-    	}
-    	catch(SQLException ex) {
-    		System.out.println(ex.getMessage());
-    		return;
-    	}
-    	
-    	Alert alert = new Alert(AlertType.INFORMATION);
-    	alert.setHeaderText("Update information");
-    	alert.setTitle("Information");
-    	alert.setContentText("Correctly updated");
-    	alert.showAndWait();
-    	
-    	try {
-			this.toHome();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    		Entry<Object> entry = new Entry<>();
+			entry.setTitle(app.getReason());
+			LocalTime time = LocalTime.parse(app.getHour());
+			entry.setId(String.valueOf(app.getID()));
+			entry.changeStartDate(app.getDate().toLocalDate());
+			entry.changeEndDate(app.getDate().toLocalDate());
+			entry.changeStartTime(time);
+			entry.changeEndTime(entry.getStartTime().plusMinutes(30));
+			ControllerAgendaPatients.entry = entry;
+			
+    		Alert alert = new Alert(AlertType.INFORMATION);
+    		alert.setHeaderText("Update information");
+    		alert.setTitle("Information");
+    		alert.setContentText("Correctly updated");
+    		alert.showAndWait();    	
+    		
+    		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+	    	window.close();
+    	}	
+
     }
     
     private void toHome() throws IOException {
@@ -169,6 +220,25 @@ public class ControllerUpdateAppointment implements Initializable {
 	}
 	
 	public void initComponents(Appointment app) {
+		QuerysSelect qs = new QuerysSelect();
+		this.app = app;
+		rAppointment.setText(this.app.getReason());
+		hApp.getSelectionModel().select(this.app.getHour());
+		dApp.setValue(app.getDate().toLocalDate());
+		speciality.getSelectionModel().select(this.app.getDoctor().getSpeciality());
+		this.setDoctors(this.app.getDoctor().getSpeciality());
+		ObservableList<Doctor> list = doctorApp.getItems();
+
+		for(int i = 0; i < list.size(); i++) {
+			if(app.getDoctor().equals(list.get(i))) {
+				this.doctorApp.getSelectionModel().select(list.get(i));
+				break;
+			}
+		}
+	}
+	
+	public void initComponents2(Appointment app) {
+		this.agenda = true;
 		QuerysSelect qs = new QuerysSelect();
 		this.app = app;
 		rAppointment.setText(this.app.getReason());

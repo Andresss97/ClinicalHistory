@@ -100,7 +100,7 @@ public abstract class DBCreation {
 			st = con.getConnect().createStatement();
 
 			in = "CREATE TABLE DOCTOR" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-					+ "USERNAME varchar(50) NOT NULL," + "PASSWORD varchar(50) NOT NULL,"
+					+ "USERNAME varchar(50) NOT NULL UNIQUE," + "PASSWORD varchar(50) NOT NULL,"
 					+ "EMAIL varchar(100) NOT NULL," + "GENDER varchar(20) NOT NULL,"
 					+ "IDSPECIALITY int CONSTRAINT rSpeciality REFERENCES SPECIALITY (ID) ON UPDATE CASCADE ON DELETE SET NULL," + "MOBILEPHONE int," + "NAME varchar(50) NOT NULL,"
 					+ "SURNAME varchar(50) NOT NULL," + "NIF varchar(25) NOT NULL," + "DOB date NOT NULL,"
@@ -190,7 +190,7 @@ public abstract class DBCreation {
 			in = "CREATE TABLE PATIENT" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
 					+ "NAME varchar(25) NOT NULL," + "SURNAME varchar(25) NOT NULL," + "NIF varchar (15) NOT NULL,"
 					+ "EMAIL varchar(50) NOT NULL," + "MOBILEPHONE bigint," + "HOMEPHONE bigint," + "DOB date NOT NULL,"
-					+ "GENDER varchar (15) NOT NULL," + "USERNAME varchar(50) NOT NULL,"
+					+ "GENDER varchar (15) NOT NULL," + "USERNAME varchar(50) NOT NULL UNIQUE,"
 					+ "PASSWORD varchar (20) NOT NULL," + "WEIGHT float," + "HEIGHT float," + "PHOTO blob,"
 					+ "IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL)";
 			st.execute(in);
@@ -262,6 +262,7 @@ public abstract class DBCreation {
 			in = "CREATE TABLE APPOINTMENT" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL," 
 					+ "HOUR varchar(10) NOT NULL,"
 					+ "DATE date NOT NULL,"
+					+ "DONE boolean,"
 					+ "IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,"
 					+ "IDDOCTOR int CONSTRAINT rDoctor REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL,"
 					+ "REASON text NOT NULL)";
@@ -304,7 +305,7 @@ public abstract class DBCreation {
 		try {
 			st = con.getConnect().createStatement();
 			in = "CREATE TABLE MAPPINGLOGIN" + "(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,"
-					+ "USERNAME varchar(50)," + "PASSWORD varchar (50)," + "USERTYPE int NOT NULL, EMAIL varchar(100))";
+					+ "USERNAME varchar(50) UNIQUE," + "PASSWORD varchar (50)," + "USERTYPE int NOT NULL, EMAIL varchar(100))";
 			st.execute(in);
 			st.close();
 		} catch (Exception ex) {

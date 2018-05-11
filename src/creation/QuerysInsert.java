@@ -134,140 +134,18 @@ public class QuerysInsert {
 		st.close();
 	}
 	
-	public void insertVaccine(Vaccine vaccine) throws SQLException{
-		String query;
-		
-		query = "INSERT into vaccine (name,date,observations,idpatient,) values(?,?,?,?)";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		switch(vaccine.getNameVaccine()){
-		case CHOLERA:
-			st.setString(1, "Cholera");
-			break;
-		case DIPHTHERIA:
-			st.setString(1, "Diphtheria");
-			break;
-		case HEPATITIS_A:
-			st.setString(1, "HepatitisA");
-			break;
-		case HEPATITIS_B:
-			st.setString(1, "HepatitisB");
-			break;
-		case HERPES:
-			st.setString(1, "Herpes");
-			break;
-		case INFLUENZA_A:
-			st.setString(1, "InfluenzaA");
-			break;
-		case INFLUENZA_B:
-			st.setString(1, "InfluenzaB");
-			break;
-		case MEASLES:
-			st.setString(1, "Measles");
-			break;
-		case MENINGOCOCCAL:
-			st.setString(1, "Meningococcal");
-			break;
-		case PAPILLOMAVIRUS:
-			st.setString(1, "Papillomavirus");
-			break;
-		case PNEUMOCOCCAL:
-			st.setString(1, "Pneumocaccal");
-			break;
-		case RABIES:
-			st.setString(1, "Rabies");
-			break;
-		case ROTAVIRUS:
-			st.setString(1, "Rotavirus");
-			break;
-		case RUBELLA:
-			st.setString(1, "Rubella");
-			break;
-		case SMALLPOX:
-			st.setString(1, "SmallPox");
-			break;
-		case TETANUS:
-			st.setString(1, "Tetanus");
-			break;
-		case TUBERCULOSIS:
-			st.setString(1, "Tuberculosis");
-			break;
-		case TYPHOID:
-			st.setString(1, "Typhoid");
-			break;
-		case VARICELLA:
-			st.setString(1, "Varicella");
-			break;
-		case YELLOWFEVER:
-			st.setString(1, "YellowFever");
-			break;
-		default:
-			break;	
-		}
-		
-		st.setDate(2, vaccine.getDate());
-		st.setString(3, vaccine.getDescription());
-		st.setInt(4, vaccine.getPatient().getID());
-		
-		st.executeUpdate();
-		st.close();	
-	}
-	
-	
-	//*Ojo con treatment 
-	public void insertTreatment(Treatment treatment) throws SQLException {
-		String query;
-		
-		query = "INSERT into treatment (start,end, type, description,tresults,idpatient,) values(?,?,?,?,?,?,)";
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		
-		/*st.setDate(1, treatment.getStartDate());
-		st.setDate(2, treatment.getEndDate());*/
-		
-		/*if(treatment.getTreatment().equals(typeTreatment.MEDICATION)) {
-			st.setString(3, "Medication");
-		}
-		else {
-			st.setString(3, "Rehab");
-		}*/
-		st.setString(4, treatment.getDescrpition());
-		st.setString(5, treatment.getResults());
-		st.setInt(6, treatment.getPatient().getID());
-		
-		st.executeUpdate();
-		st.close();
-		
-	}
-	
-	public void insertClinicalRecord(ClinicalHistory cl) throws SQLException {
-		String query = "INSERT into clinicalhistory (addictionsalcohol, addictionsdrugs, addictionsothers,"
-				+ " bloodgroup, insurancecompany,"
-				+ " idpatient) values (?,?,?,?,?,?)";
-		
-		PreparedStatement st = conn.getConnect().prepareStatement(query);
-		st.setInt(1, cl.getAddictionAlcohol().ordinal());
-		st.setInt(2, cl.getAddictionsDrugs().ordinal());
-		st.setInt(3, cl.getAddictionsOthers().ordinal());
-		st.setInt(4, cl.getBloodgroup().ordinal());
-		st.setString(5, cl.getMedicalInsurance());
-		st.setInt(6, cl.getPatient().getID2());
-		
-		st.executeUpdate();
-		st.close();
-	}
-	
-	//*No entiendo q pasa con main patient.getID
 	public void insertAppointment(Appointment appointment) throws SQLException {
 		String query;
 
-		query = "INSERT into appointment (date, hour, reason, iddoctor, idpatient) values (?,?,?,?,?)";
+		query = "INSERT into appointment (date, hour, reason, done, iddoctor, idpatient) values (?,?,?,?,?,?)";
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		
 	    st.setDate(1, appointment.getDate());
 		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
-		st.setInt(4, appointment.getDoctor().getID());
-		st.setInt(5, Main.patient.getID());
+		st.setBoolean(4, appointment.isDone());
+		st.setInt(5, appointment.getDoctor().getID());
+		st.setInt(6, appointment.getPatient().getID());
 		
 		st.executeUpdate();
 		st.close();

@@ -194,11 +194,6 @@ public class ControllerHomePatients implements Initializable {
 			}
 		}
 	}
-
-	@FXML
-	void onClickPrint(ActionEvent event) {
-    	
-	}
 	
 	@FXML
 	void onClickAppointments(ActionEvent event) throws IOException {

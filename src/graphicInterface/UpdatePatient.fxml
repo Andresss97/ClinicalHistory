@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="container" prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdatePatient">
+<BorderPane fx:id="container" prefHeight="509.0" prefWidth="855.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdatePatient">
    <bottom>
       <HBox alignment="TOP_RIGHT" BorderPane.alignment="CENTER">
          <BorderPane.margin>

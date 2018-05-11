@@ -42,6 +42,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import pojos.*;
+import secure.Secure;
 import virtualization.Photo;
 
 
@@ -158,6 +159,24 @@ public class ControllerSignUpPatient implements Initializable{
 			return;
 		}
 		
+		if(checkData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce integer numbers.");
+			alert.setHeaderText("Wrong data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkEmail() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce a valid email.");
+			alert.setHeaderText("Wrong email");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
     	Address address = new Address();
     	Patient patient = new Patient();
     	QuerysInsert query = new QuerysInsert();
@@ -169,14 +188,6 @@ public class ControllerSignUpPatient implements Initializable{
     	address.setStreet(street.getText());
     	address.setHouseNumber(Integer.parseInt(hNumber.getText()));
     	address.setPostalCode(Integer.parseInt(cp.getText()));
-    	
-    	try {
-			query.insertAddress(address);
-			ad = query2.selectLastId("address");
-		} catch (Exception e) {
-			System.out.println(e.getMessage() + " das error aqui 1");
-		}
-    	address.setID(ad);
     	
     	patient.setName(name.getText());
     	patient.setSurname(surname.getText());
@@ -214,11 +225,19 @@ public class ControllerSignUpPatient implements Initializable{
 		}
 
     	try {
+			query.insertUser1(null, patient);
+			query.insertAddress(address);
+			ad = query2.selectLastId("address");
+			patient.getAddress().setID(ad);
 			query.insertPatient(patient);
 			ad = query2.selectLastId("patient");
-			query.insertUser1(null, patient);
 		} catch (Exception e) {
-			System.out.println(e.getMessage() + " das error aqui 2");
+	    	Alert alert = new Alert(AlertType.WARNING);
+	    	alert.setContentText("Username already exists");
+	    	alert.setHeaderText("Warning");
+	    	alert.setTitle("Babylon Studio");
+	    	alert.show();
+	    	return;
 		}
     	
     	patient.setID(ad);
@@ -239,24 +258,55 @@ public class ControllerSignUpPatient implements Initializable{
     	this.image = p.takePhoto(this.image);
     }
     
+	private boolean checkEmail() {
+		Secure secure = new Secure();
+		if(secure.isValid(mail.getText()) == false) {
+			mail.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private boolean checkData() {
+		Secure secure = new Secure();
+		
+		if(secure.IsInt2(hNumber.getText()) == false) {
+			hNumber.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(cp.getText()) == false) {
+			cp.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(mPhone.getText()) == false) {
+			mPhone.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
     private boolean checkPersonalData() {
-    	if(name.getText().isEmpty()) {
+    	if(name.getText().trim().isEmpty()) {
     		name.requestFocus();
     		return false;
     	}
-    	else if(surname.getText().isEmpty()) {
+    	else if(surname.getText().trim().isEmpty()) {
     		surname.requestFocus();
     		return false;
     	}
-    	else if(nif.getText().isEmpty()) {
+    	else if(nif.getText().trim().isEmpty()) {
     		nif.requestFocus();
     		return false;
     	}
-    	else if(mail.getText().isEmpty()) {
+    	else if(mail.getText().trim().isEmpty()) {
     		mail.requestFocus();
     		return false;
     	}
-    	else if(gender == null ) {
+    	else if(gender.getSelectionModel().getSelectedItem() == null ) {
     		gender.requestFocus();
     		return false;
     	}

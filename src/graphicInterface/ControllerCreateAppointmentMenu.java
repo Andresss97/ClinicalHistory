@@ -5,8 +5,11 @@ import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
+import com.calendarfx.model.Entry;
 
 import creation.QuerysInsert;
 import creation.QuerysSelect;
@@ -16,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -43,7 +47,7 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 	private ComboBox<String> speciality;
 
 	@FXML
-	private ComboBox<?> doctorApp;
+	private ComboBox<Doctor> doctorApp;
 
 	@FXML
 	private DatePicker dApp;
@@ -56,7 +60,9 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 
 	@FXML
 	private Button create;
-
+	
+	private Boolean agenda = false;
+	
 	@FXML
 	void onClickAhBh(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
@@ -68,21 +74,53 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 
 	@FXML
 	void onClickCreate(ActionEvent event) throws IOException {
-		Appointment app = this.obtainData();
-		QuerysInsert qs = new QuerysInsert();
-		try {
-			qs.insertAppointment(app);
-			Main.patient.getAppointments().add(app);
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setHeaderText("Appointment information");
-			alert.setTitle("Information");
-			alert.setContentText("Appointment succesfully created");
-			alert.showAndWait();
+		if(agenda == false) {
+			Appointment app = this.obtainData();
+			QuerysInsert qi = new QuerysInsert();
+			QuerysSelect qs = new QuerysSelect();
+			try {
+				qi.insertAppointment(app);
+				int id = qs.selectLastId("appointment");
+				app.setID(id);
+				Main.patient.getAppointments().add(app);
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setHeaderText("Appointment information");
+				alert.setTitle("Information");
+				alert.setContentText("Appointment succesfully created");
+				alert.showAndWait();
 			
-			this.toHomePage();
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+				this.toHomePage();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
 		}
+		else {
+			System.out.println("Estas aqui");
+			Appointment app = this.obtainData();
+			QuerysInsert qi = new QuerysInsert();
+			QuerysSelect qs = new QuerysSelect();
+			try {
+				qi.insertAppointment(app);
+				int id = qs.selectLastId("appointment");
+				app.setID(id);
+				Main.patient.getAppointments().add(app);
+				Entry<Object> entry = new Entry<>();
+				entry.setTitle(app.getReason());
+				LocalTime time = LocalTime.parse(app.getHour());
+				entry.setId(String.valueOf(app.getID()));
+				entry.changeStartDate(app.getDate().toLocalDate());
+				entry.changeEndDate(app.getDate().toLocalDate());
+				entry.changeStartTime(time);
+				entry.changeEndTime(entry.getStartTime().plusMinutes(30));
+				ControllerAgendaPatients.entry = entry;
+				
+		    	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		    	window.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
 	}
 	
 	@FXML
@@ -123,6 +161,7 @@ public class ControllerCreateAppointmentMenu implements Initializable {
 		app.setDate(date);
 		Doctor doctor = (Doctor) doctorApp.getSelectionModel().getSelectedItem();
 		app.setDoctor(doctor);
+		app.setPatient(Main.patient);
 		
 		return app;
 	}
@@ -159,6 +198,10 @@ public class ControllerCreateAppointmentMenu implements Initializable {
     	Scene scene2 = new Scene(root);
     	window.setScene(scene2);
     	window.show();
+	}
+	
+	public void initAgenda(Boolean boo) {
+		this.agenda = boo;
 	}
 	
 	@Override

@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctor">
+<BorderPane fx:id="container" prefHeight="509.0" prefWidth="855.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="graphicInterface.ControllerUpdateDoctor">
    <top>
       <Label text="Update Doctor account" textFill="#249ce8" BorderPane.alignment="CENTER">
          <font>
@@ -60,6 +60,9 @@
                   <Region prefHeight="25.0" prefWidth="16.0" HBox.hgrow="ALWAYS" />
                   <Button fx:id="takePhoto" mnemonicParsing="false" onAction="#onTakePhotoClick" prefHeight="25.0" prefWidth="92.0" style="-fx-background-color: #249ce8;" text="Take photo" textFill="WHITE" />
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
             <JFXComboBox fx:id="gender" focusColor="#249ce8" labelFloat="true" prefHeight="25.0" prefWidth="1053.0" promptText="Gender">
                <VBox.margin>

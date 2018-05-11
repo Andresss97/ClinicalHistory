@@ -34,6 +34,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -87,10 +88,7 @@ public class ControllerAdminView implements Initializable{
     private ImageView iButton;
 
     @FXML
-    private ComboBox<?> orderBy;
-    
-    @FXML
-    private JFXTextField search;
+    private ComboBox<String> orderBy;
     
     private Doctor doctor;
     
@@ -272,12 +270,6 @@ public class ControllerAdminView implements Initializable{
     	window.show();
     }
     
-    
-	@FXML
-    void onClickedSearch(ActionEvent event) {
-		
-    }
-    
     private void refreshList() {
     	this.list.getItems().clear();
     	this.list.getItems().addAll(accounts);
@@ -323,7 +315,9 @@ public class ControllerAdminView implements Initializable{
     	FileChooser chooser = new FileChooser();
     	Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
     	File file = chooser.showSaveDialog(window);
-    	
+    	if(file == null) {
+    		return;
+    	}
     	try {
 			exporter.export(xml, file);
 		} catch (JAXBException e) {
@@ -344,6 +338,7 @@ public class ControllerAdminView implements Initializable{
 			this.accounts.addAll(qs.selectPatientsAccounts());
 			this.list.getItems().addAll(accounts);
 		} catch (SQLException e) {
+			System.out.println("aqui");
 			System.out.println(e.getMessage());
 		}
 	}

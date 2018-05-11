@@ -21,6 +21,9 @@ public class Appointment implements Serializable  {
 	private Date date;
 	
 	@XmlElement
+	private boolean done;
+	
+	@XmlElement
 	private String hour;
 	
 	@XmlElement
@@ -41,6 +44,7 @@ public class Appointment implements Serializable  {
 		this.date = null;
 		this.hour = null;
 		this.reason = null;
+		this.done = false;
 	}
 
 	public int getID() {
@@ -91,6 +95,14 @@ public class Appointment implements Serializable  {
 		this.doctor = doctor;
 	}
 	
+	public boolean isDone() {
+		return done;
+	}
+
+	public void setDone(boolean done) {
+		this.done = done;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

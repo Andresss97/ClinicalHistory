@@ -17,8 +17,6 @@ public class ExportDataBase {
 	}
 	
 	public void export (XmlLists lists, File file) throws JAXBException {
-	
 		marshaller.marshallLists(lists, file);
 	}
-
 }

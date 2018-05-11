@@ -203,7 +203,7 @@ public class Patient extends Person {
 	}
 
 	public void setID2(Integer iD) {
-		ID = iD;
+		this.ID = iD;
 	}
 
 	public LinkedList<Treatment> getTreatment() {

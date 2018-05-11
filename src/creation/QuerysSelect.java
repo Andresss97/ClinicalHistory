@@ -517,6 +517,29 @@ public class QuerysSelect {
 		return apps;
 	}
 	
+	public Appointment selectAppointmentById(int id) throws SQLException {
+		String query = "SELECT * from appointment where id = ?";
+		PreparedStatement st = conn.getConnect().prepareStatement(query);
+		
+		st.setInt(1, id);
+		
+		Appointment app = new Appointment();
+		ResultSet set = st.executeQuery();
+
+		app.setReason(set.getString("reason"));
+		app.setDate(set.getDate("date"));
+		app.setHour(set.getString("hour"));
+		app.setID(set.getInt("id"));
+		int iddoc = set.getInt("iddoctor");
+		Doctor doc = this.selectDoctorByID(iddoc);
+		app.setDoctor(doc);
+		
+		st.close();
+		set.close();
+		
+		return app;
+	}
+	
 	public ArrayList<Appointment> selectAppointmentsClear() throws SQLException {
 		ArrayList<Appointment> apps = new ArrayList<>();
 		
@@ -606,7 +629,7 @@ public class QuerysSelect {
 	
 	public ArrayList<Appointment> selectAppointmentForDoctor(int id) throws SQLException {
 		ArrayList<Appointment> apps = new ArrayList<>();
-		String query = "SELECT * from appointment where iddoctor = ?";
+		String query = "SELECT * from appointment where iddoctor = ? and done = 0";
 		
 		PreparedStatement st = conn.getConnect().prepareStatement(query);
 		st.setInt(1, id);

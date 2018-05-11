@@ -37,6 +37,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import pojos.Address;
 import pojos.Patient;
+import secure.Secure;
 
 public class ControllerUpdatePatientAdmin implements Initializable {
 
@@ -98,11 +99,6 @@ public class ControllerUpdatePatientAdmin implements Initializable {
     private PasswordField password;
     
     private Patient patient;
-    
-    @FXML
-    void onBrowseClick(ActionEvent event) {
-
-    }
 
     private void onHomeClick() {
     	Parent root;
@@ -121,6 +117,52 @@ public class ControllerUpdatePatientAdmin implements Initializable {
 
     @FXML
     void onUpdateClick(ActionEvent event) {
+    	
+		if(checkPersonalData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every personal data must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkAddressData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every data regarding your address must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkCredentials() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Credentials are missing.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce integer numbers.");
+			alert.setHeaderText("Wrong data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkEmail() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce a valid email.");
+			alert.setHeaderText("Wrong email");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
     	Patient patient = new Patient();
     	Address address = new Address();
     	QuerysUpdate qu = new QuerysUpdate();
@@ -226,7 +268,101 @@ public class ControllerUpdatePatientAdmin implements Initializable {
 			this.gender.getSelectionModel().select("Female");
 		}
     }
+	private boolean checkEmail() {
+		Secure secure = new Secure();
+		if(secure.isValid(mail.getText()) == false) {
+			mail.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private boolean checkData() {
+		Secure secure = new Secure();
+		
+		if(secure.IsInt2(hNumber.getText()) == false) {
+			hNumber.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(cp.getText()) == false) {
+			cp.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(mPhone.getText()) == false) {
+			mPhone.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+    private boolean checkPersonalData() {
+    	if(name.getText().trim().isEmpty()) {
+    		name.requestFocus();
+    		return false;
+    	}
+    	else if(surname.getText().trim().isEmpty()) {
+    		surname.requestFocus();
+    		return false;
+    	}
+    	else if(nif.getText().trim().isEmpty()) {
+    		nif.requestFocus();
+    		return false;
+    	}
+    	else if(mail.getText().trim().isEmpty()) {
+    		mail.requestFocus();
+    		return false;
+    	}
+    	else if(gender.getSelectionModel().getSelectedItem() == null ) {
+    		gender.requestFocus();
+    		return false;
+    	}
+    	else if(dBirth == null) {
+    		dBirth.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
     
+    private boolean checkAddressData() {
+    	if(city.getText().isEmpty()) {
+    		city.requestFocus();
+    		return false;
+    	}
+    	else if(street.getText().isEmpty()) {
+    		street.requestFocus();
+    		return false;
+    	}
+    	else if(hNumber.getText().isEmpty()) {
+    		hNumber.requestFocus();
+    		return false;
+    	}
+    	else if(cp.getText().isEmpty()) {
+    		cp.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+	private boolean checkCredentials() {
+		if (user.getText().isEmpty()) {
+			user.requestFocus();
+			return false;
+		} else if (password.getText().isEmpty()) {
+			password.requestFocus();
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList list2 = FXCollections.observableArrayList("Male", "Female");

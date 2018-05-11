@@ -2,37 +2,49 @@ package graphicInterface;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 
+import com.itextpdf.text.DocumentException;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 
 import creation.QuerysSelect;
+import creation.QuerysUpdate;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jpa.UpdateJPA;
 import pojos.Appointment;
+import virtualization.PDFGenerator;
 
 public class ControllerHomeDoctors implements Initializable {
 
@@ -61,7 +73,7 @@ public class ControllerHomeDoctors implements Initializable {
     private BorderPane central;
 
     @FXML
-    private ListView<?> appointments;
+    private ListView<Appointment> appointments;
 
     @FXML
     private ImageView image;
@@ -90,6 +102,8 @@ public class ControllerHomeDoctors implements Initializable {
     @FXML
     private JFXComboBox<?> orderBy;
     
+    private ArrayList<Appointment> list;
+    
     @FXML
     void oClickHome(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("HomeDoctors.fxml"));
@@ -100,19 +114,37 @@ public class ControllerHomeDoctors implements Initializable {
     	window.show();
     }
 
-    @FXML
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@FXML
     void onClickOrderBy(ActionEvent event) {
-    	
-    }
+		if(orderBy.getSelectionModel().getSelectedItem().equals("Alphabetically")) {
+			ObservableList s = FXCollections.observableArrayList(list);
+			SortedList so = new SortedList(s);
+			
+			so.setComparator(new Comparator<Appointment>() {
 
-    @FXML
-    void onClickPrint(ActionEvent event) {
-    	
-    }
+				@Override
+				public int compare(Appointment arg0, Appointment arg1) {
+					return arg0.getReason().compareToIgnoreCase(arg1.getReason());
+				}
+			});
+			
+			this.appointments.setItems(so);
+		}
+		else if(orderBy.getSelectionModel().getSelectedItem().equals("Date")) {
+			ObservableList s = FXCollections.observableArrayList(list);
+			SortedList so = new SortedList(s);
+			
+			so.setComparator(new Comparator<Appointment>() {
 
-    @FXML
-    void onClickSearch(ActionEvent event) {
-    	
+				@Override
+				public int compare(Appointment arg0, Appointment arg1) {
+					return arg0.getDate().compareTo(arg1.getDate());
+				}
+			});
+			
+			this.appointments.setItems(so);
+		}
     }
 
     @FXML
@@ -128,12 +160,64 @@ public class ControllerHomeDoctors implements Initializable {
 
     @FXML
     void onClickToPDF(ActionEvent event) {
+		PDFGenerator pdf = new PDFGenerator();
+		
+    	if(appointments.getSelectionModel().getSelectedItem() == null) {
+    		Alert alert = new Alert(AlertType.WARNING);
+        	alert.setContentText("You must select an appointment");
+        	alert.setTitle("Warning PDF");
+        	alert.setHeaderText("Virtualization information");
+        	alert.show();
+        	return;
+    	}
     	
+		Appointment app = appointments.getSelectionModel().getSelectedItem();
+		
+		Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+		FileChooser fc = new FileChooser();
+		FileChooser.ExtensionFilter extFilterPDF = new FileChooser.ExtensionFilter("PDF files (*.PDF)", "*.PDF");
+		fc.getExtensionFilters().addAll(extFilterPDF);
+		
+		File file = fc.showSaveDialog(window);
+		if(file != null) {
+			try {
+				pdf.generateAppointmentPDF(app, file);
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Appointment virtualization");
+				alert.setHeaderText("Virtualization information");
+				alert.setContentText("Succesfully export to PDF");
+				alert.show();
+			} catch (DocumentException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
     }
 
     @FXML
     void onClickcApp(ActionEvent event) {
+    	QuerysUpdate qu = new QuerysUpdate();
     	
+    	Appointment app = appointments.getSelectionModel().getSelectedItem();
+    	app.setDone(true);
+    	
+    	try {
+			qu.updateAppointment2(app);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Appointment information");
+		alert.setHeaderText("Appointment check");
+		alert.setContentText("Succesfully checked");
+		alert.showAndWait();
+			
+		this.list.remove(app);
+		appointments.getItems().remove(app);
+
     }
 
     @FXML
@@ -151,11 +235,6 @@ public class ControllerHomeDoctors implements Initializable {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-    }
-
-    @FXML
-    void onClickmAgenda(ActionEvent event) {
-    	
     }
 
     @FXML
@@ -179,7 +258,8 @@ public class ControllerHomeDoctors implements Initializable {
 		orderBy.setItems(list);
 		
 		try {
-			ObservableList list2 = FXCollections.observableArrayList(qs.selectAppointmentForDoctor(Main.doctor.getID()));
+			this.list = qs.selectAppointmentForDoctor(Main.doctor.getID());
+			ObservableList list2 = FXCollections.observableArrayList(this.list);
 			this.appointments.setItems(list2);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

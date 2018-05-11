@@ -33,6 +33,7 @@ public class QuerysUpdate {
 				+ "SET date = ?,"
 				+ "hour = ?,"
 				+ "reason = ?,"
+				+ "done = ?,"
 				+ "iddoctor = ?,"
 				+ "idpatient = ?"
 				+ "WHERE id = ?";
@@ -42,9 +43,25 @@ public class QuerysUpdate {
 		st.setDate(1, appointment.getDate());
 		st.setString(2, appointment.getHour());
 		st.setString(3, appointment.getReason());
-		st.setInt(4, appointment.getDoctor().getID());
-		st.setInt(5, Main.patient.getID());
-		st.setInt(6, appointment.getID());
+		st.setBoolean(4, appointment.isDone());
+		st.setInt(5, appointment.getDoctor().getID());
+		st.setInt(6, appointment.getPatient().getID());
+		st.setInt(7, appointment.getID());
+		
+	    st.executeUpdate();
+	    st.close();
+	}
+	
+	public void updateAppointment2 (Appointment appointment) throws SQLException {
+		String query;
+		query = "UPDATE appointment " 
+				+ "SET done = ?"
+				+ "WHERE id = ?";
+		
+		PreparedStatement st;
+		st = conn.getConnect().prepareStatement(query);
+		st.setBoolean(1, appointment.isDone());
+		st.setInt(2, appointment.getID());
 		
 	    st.executeUpdate();
 	    st.close();

@@ -29,6 +29,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import pojos.*;
+import secure.Secure;
 
 public class ControllerCreateDoctor implements Initializable{
 
@@ -81,12 +82,52 @@ public class ControllerCreateDoctor implements Initializable{
     private PasswordField password;
 
 	@FXML
-	void onClickBrowse(ActionEvent event) {
-
-	}
-
-	@FXML
 	void onClickCreate(ActionEvent event) {
+		if(checkPersonalData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every personal data must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkAddressData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Every data regarding your address must be filled.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkCredentials() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Credentials are missing.");
+			alert.setHeaderText("Missing data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkData() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce integer numbers.");
+			alert.setHeaderText("Wrong data");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
+		if(checkEmail() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce a valid email.");
+			alert.setHeaderText("Wrong email");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
 		Address address = new Address();
 		Doctor doctor = new Doctor();
 		QuerysInsert query = new QuerysInsert();
@@ -99,13 +140,6 @@ public class ControllerCreateDoctor implements Initializable{
 		address.setHouseNumber(Integer.parseInt(houseNumber.getText()));
 		address.setPostalCode(Integer.parseInt(pCode.getText()));
 
-		try {
-			query.insertAddress(address);
-			id = query2.selectLastId("address");
-		} catch (SQLException ex) {
-			System.out.println(ex.getMessage());
-		}
-		address.setID(id);
 		doctor.setName(name.getText());
 		doctor.setSurname(surname.getText());
 		doctor.setNIF(dni.getText());
@@ -124,13 +158,21 @@ public class ControllerCreateDoctor implements Initializable{
 		doctor.setUsername(user.getText());
 		doctor.setPassword(password.getText());
 		doctor.setAddress(address);
-		//*remember that I change the insert
+		
 		try {
-			query.insertDoctor(doctor);
 			query.insertUser1(doctor, null);
+			query.insertAddress(address);
+			id = query2.selectLastId("address");
+			doctor.getAddress().setID(id);
+			query.insertDoctor(doctor);
 		}
 		catch(SQLException ex) {
-			System.out.println(ex.getMessage());
+			Alert alert = new Alert(AlertType.WARNING);
+	    	alert.setContentText("Username already exists");
+	    	alert.setHeaderText("Warning");
+	    	alert.setTitle("Babylon Studio");
+	    	alert.show();
+	    	return;
 		}
 		Alert alert = new Alert(AlertType.INFORMATION);
     	alert.setContentText("Account succesfully created");
@@ -154,7 +196,102 @@ public class ControllerCreateDoctor implements Initializable{
 			System.out.println(e.getMessage());
 		}
 	}
-
+	
+	private boolean checkEmail() {
+		Secure secure = new Secure();
+		if(secure.isValid(email.getText()) == false) {
+			email.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private boolean checkData() {
+		Secure secure = new Secure();
+		
+		if(secure.IsInt2(houseNumber.getText()) == false) {
+			houseNumber.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(pCode.getText()) == false) {
+			pCode.requestFocus();
+			return false;
+		}
+		else if(secure.IsInt2(mPhone.getText()) == false) {
+			mPhone.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+    private boolean checkPersonalData() {
+    	if(name.getText().trim().isEmpty()) {
+    		name.requestFocus();
+    		return false;
+    	}
+    	else if(surname.getText().trim().isEmpty()) {
+    		surname.requestFocus();
+    		return false;
+    	}
+    	else if(dni.getText().trim().isEmpty()) {
+    		dni.requestFocus();
+    		return false;
+    	}
+    	else if(email.getText().trim().isEmpty()) {
+    		email.requestFocus();
+    		return false;
+    	}
+    	else if(gender.getSelectionModel().getSelectedItem() == null ) {
+    		gender.requestFocus();
+    		return false;
+    	}
+    	else if(dBirth == null) {
+    		dBirth.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+    private boolean checkAddressData() {
+    	if(city.getText().isEmpty()) {
+    		city.requestFocus();
+    		return false;
+    	}
+    	else if(street.getText().isEmpty()) {
+    		street.requestFocus();
+    		return false;
+    	}
+    	else if(houseNumber.getText().isEmpty()) {
+    		houseNumber.requestFocus();
+    		return false;
+    	}
+    	else if(pCode.getText().isEmpty()) {
+    		pCode.requestFocus();
+    		return false;
+    	}
+    	else {
+    		return true;
+    	}
+    }
+    
+	private boolean checkCredentials() {
+		if (user.getText().isEmpty()) {
+			user.requestFocus();
+			return false;
+		} else if (password.getText().isEmpty()) {
+			password.requestFocus();
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		QuerysSelect qs = new QuerysSelect();

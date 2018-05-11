@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import secure.Secure;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import virtualization.EmailSender;
@@ -34,6 +35,15 @@ public class ControllerPasswordRecovery {
     
 	@FXML
 	void onClickRecover(ActionEvent event) {
+		if(checkEmail() == false) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("You must introduce a valid email.");
+			alert.setHeaderText("Wrong email");
+			alert.setTitle("Information");
+			alert.showAndWait();
+			return;
+		}
+		
 		if (this.checkEmail(email.getText()) == true) {
 			EmailSender ms = new EmailSender();
 			try {
@@ -70,5 +80,16 @@ public class ControllerPasswordRecovery {
 
 		data = (data2);
 		return true;
+	}
+	
+	private boolean checkEmail() {
+		Secure secure = new Secure();
+		if(secure.isValid(email.getText()) == false) {
+			email.requestFocus();
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 }
