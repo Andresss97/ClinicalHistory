@@ -17,7 +17,7 @@ public class ImportDataBase {
 	}
 	
 	//*Mirar cual te conviene añadir con jpa o jdbc
-	public XmlLists importDataBase (File file) throws Exception {
+	public void importDataBase (File file) throws Exception {
 		
 		XmlLists database = (XmlLists)databaseunmarshaller.unmarshallXmL(file);
 		QuerysInsert insert = new QuerysInsert();
@@ -54,7 +54,6 @@ public class ImportDataBase {
 			create.createTreatment(illness.getTreatment());
 		}
 		
-		//*varias mas illness,vaccines
 		for(Patient patient:database.getPatients()) {
 			insert.insertPatient(patient);
 			insert.insertAddress(patient.getAddress());
@@ -62,25 +61,25 @@ public class ImportDataBase {
 			
 			for(Allergies allergy:patient.getAllergies()) {
 				insert.insertAllergies(allergy);
-				insert.insertTreatment(allergy.getTreatment());
+				create.createTreatment(allergy.getTreatment());
 			}
 			for(Appointment appointment: patient.getAppointments()) {
 				insert.insertAppointment(appointment);
 			}
 			for(Illness illness:patient.getIllnesses()) {
 				create.createIllnes(illness);
-				insert.insertTreatment(illness.getTreatment());
+				create.createTreatment(illness.getTreatment());
 			}
 			for(Surgeries surgeries:patient.getSurgeries()) {
 				insert.insertSurgeries(surgeries);
-				insert.insertTreatment(surgeries.getTreatment());
+				create.createTreatment(surgeries.getTreatment());
 			}
 			
 		}
 		
 		for(Surgeries surgeries :database.getSurgeries()) {
 			insert.insertSurgeries(surgeries);
-			insert.insertTreatment(surgeries.getTreatment());
+			create.createTreatment(surgeries.getTreatment());
 		}
 		
 		for(Treatment treatment: database.getTreatments()) {
@@ -90,8 +89,6 @@ public class ImportDataBase {
 		for(Vaccine vaccine:database.getVaccines()) {
 			create.createVaccine(vaccine);
 		}
-		
-		return database;
 	}
 
 }
