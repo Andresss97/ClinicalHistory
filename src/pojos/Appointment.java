@@ -42,7 +42,6 @@ public class Appointment implements Serializable  {
 	private Patient patient;
 	
 	@XmlTransient
-	@ManyToOne(fetch=FetchType.LAZY) 
 	@JoinColumn(name="IDDOCTOR")
 	private Doctor doctor;
 	

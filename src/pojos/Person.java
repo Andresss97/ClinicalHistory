@@ -4,23 +4,41 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Arrays;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import javafx.scene.image.Image;
+import xml.AdapterDate;
 
 @Entity
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Person implements Serializable {
 	
-	
+	@XmlElement
 	protected String username;
+	@XmlElement
 	protected String password;
+	@XmlElement
 	protected String email;
+	@XmlElement
 	protected String NIF;
+	@XmlElement
 	protected int mobilePhone;
+	@XmlElement
 	protected String name;
+	@XmlElement
 	protected String surname;
+	@XmlElement
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	protected Date dob;
+	@XmlElement
 	protected String gender;
+	@XmlElement
 	protected byte[] photo;
 	
 	@OneToOne (fetch = FetchType.LAZY)
@@ -28,11 +46,10 @@ public abstract class Person implements Serializable {
 	protected Address address;
 	
 	@Id
+	@XmlElement
 	protected Integer ID;
-	
-	
+
 	@SuppressWarnings("deprecation")
-	
 	public Person() {
 		this.username = null;
 		this.password = null;

@@ -227,10 +227,10 @@ public class ControllerHomeDoctors implements Initializable {
 			root = loader.load();
 			ControllerUpdateDoctor controller = loader.<ControllerUpdateDoctor>getController();
 			controller.initComponents(Main.doctor);
-			container.getChildren().clear();
+			central.getChildren().clear();
 			root.prefHeightProperty().bind(container.heightProperty());
 			root.prefWidthProperty().bind(container.widthProperty());
-			container.setCenter(root);
+			central.setCenter(root);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

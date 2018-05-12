@@ -3,6 +3,9 @@ package pojos;
 import java.sql.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import xml.AdapterDate;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -25,6 +28,7 @@ public class Vaccine {
 	private typeVaccine nameVaccine;
 	
 	@XmlElement
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date date;
 	
 	@Column(name = "observations")

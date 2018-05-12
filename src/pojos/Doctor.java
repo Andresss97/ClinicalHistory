@@ -39,7 +39,8 @@ public class Doctor extends Person  {
 	public void setSpeciality(String speciality) {
 		this.speciality = speciality;
 	}
-
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

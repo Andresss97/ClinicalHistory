@@ -3,6 +3,9 @@ import java.io.*;
 import java.sql.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import xml.AdapterDate;
 
 //*CLASE NO ACABADA endate y startdate salen en las tables
 
@@ -19,8 +22,10 @@ public class Treatment implements Serializable{
 	private Integer ID;
 	
 	@Column(name = "start")
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date startDate;
 	@Column(name = "end")
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date endDate;
 	
 	@XmlTransient

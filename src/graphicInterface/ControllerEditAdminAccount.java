@@ -12,12 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class ControllerEditAdminAccount {
 
     @FXML
-    private BorderPane conatiner;
+    private GridPane conatiner;
 
     @FXML
     private TextField user;
