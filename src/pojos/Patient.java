@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.*;
 
 
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 @Entity
 @Table(name = "PATIENT")
 public class Patient extends Person {

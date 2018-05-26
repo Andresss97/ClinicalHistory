@@ -5,6 +5,9 @@ import java.sql.Date;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import xml.AdapterDate;
 
 
 
@@ -24,6 +27,7 @@ public class Illness implements Serializable {
 	private String description;
 	
 	@XmlElement
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date date;
 	
 	@XmlTransient

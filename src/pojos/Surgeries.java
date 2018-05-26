@@ -3,6 +3,9 @@ import java.io.*;
 import java.sql.Date;
 import javax.persistence.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import xml.AdapterDate;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @Entity
@@ -17,6 +20,7 @@ public class Surgeries implements Serializable {
 	private Integer ID;
 	
 	@XmlElement
+	@XmlJavaTypeAdapter(AdapterDate.class)
 	private Date date;
 	
 	@XmlElement

@@ -122,7 +122,7 @@ public class ControllerAdminView implements Initializable{
     	try {
 			im.importDataBase(file);
 		} catch (Exception e) {
-			System.out.println("peto aqui");
+			e.printStackTrace();
 		}
     }
     
