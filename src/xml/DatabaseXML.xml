@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="System"?>
+<database>
+    <name>DBproject</name>
+    <table>
+        <database></database>
+        <name>ADDRESS</name>
+        <ddl>CREATE TABLE ADDRESS (ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,CITY varchar(50),STREET varchar(50),CP bigint,HOUSENUMBER bigint)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>CITY</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>STREET</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>CP</name>
+                <type>bigint</type>
+            </column>
+            <column>
+                <name>HOUSENUMBER</name>
+                <type>bigint</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">1234</value>
+                <value column="2">1234</value>
+                <value column="3">1234</value>
+                <value column="4">1234</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">1234</value>
+                <value column="2">1234</value>
+                <value column="3">1234</value>
+                <value column="4">1234</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>ALLERGIES</name>
+        <ddl>CREATE TABLE ALLERGIES(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,TYPE varchar(50),OBSERVATIONS text,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>TYPE</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>OBSERVATIONS</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>IDTREATMENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>APPOINTMENT</name>
+        <ddl>CREATE TABLE APPOINTMENT(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,HOUR varchar(10) NOT NULL,DATE date NOT NULL,DONE boolean,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,IDDOCTOR int CONSTRAINT rDoctor REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL,REASON text NOT NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>HOUR</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DATE</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DONE</name>
+                <type>boolean</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>IDDOCTOR</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES DOCTOR ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>REASON</name>
+                <type>text</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">12:00</value>
+                <value column="2">1527458400000</value>
+                <value column="3">1</value>
+                <value column="4">1</value>
+                <value column="5">1</value>
+                <value column="6">asdfgh</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>CLINICALHISTORY</name>
+        <ddl>CREATE TABLE CLINICALHISTORY(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,ADDICTIONSALCOHOL int, ADDICTIONSDRUGS int, ADDICTIONSOTHERS int, BLOODGROUP int, INSURANCECOMPANY varchar(50), IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>ADDICTIONSALCOHOL</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>ADDICTIONSDRUGS</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>ADDICTIONSOTHERS</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>BLOODGROUP</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>INSURANCECOMPANY</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">2</value>
+                <value column="1">0</value>
+                <value column="2">1</value>
+                <value column="3">0</value>
+                <value column="4">2</value>
+                <value column="5">SANITAS</value>
+                <value column="6">1</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>DOCTOR</name>
+        <ddl>CREATE TABLE DOCTOR(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,USERNAME varchar(50) NOT NULL UNIQUE,PASSWORD varchar(50) NOT NULL,EMAIL varchar(100) NOT NULL,GENDER varchar(20) NOT NULL,IDSPECIALITY int CONSTRAINT rSpeciality REFERENCES SPECIALITY (ID) ON UPDATE CASCADE ON DELETE SET NULL,MOBILEPHONE int,NAME varchar(50) NOT NULL,SURNAME varchar(50) NOT NULL,NIF varchar(25) NOT NULL,DOB date NOT NULL,PHOTO blob,IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>USERNAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>PASSWORD</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>EMAIL</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>GENDER</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>IDSPECIALITY</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES SPECIALITY (ID) ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>MOBILEPHONE</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>NAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>SURNAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>NIF</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DOB</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>PHOTO</name>
+                <type>blob</type>
+            </column>
+            <column>
+                <name>IDADDRESS</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">andresp</value>
+                <value column="2">indi</value>
+                <value column="3">andresdeperedacruz@hotmail.com</value>
+                <value column="4">Male</value>
+                <value column="5">1</value>
+                <value column="6">1234</value>
+                <value column="7">asd</value>
+                <value column="8">asdf</value>
+                <value column="9">12345</value>
+                <value column="10">1527372000000</value>
+                <value column="11" null="true"/>
+                <value column="12">1</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>ILLNESSES</name>
+        <ddl>CREATE TABLE ILLNESSES(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,DESCRIPTION text,DATE date,TYPE varchar(50),NAME text,IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DESCRIPTION</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>DATE</name>
+                <type>date</type>
+            </column>
+            <column>
+                <name>TYPE</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>NAME</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>IDTREATMENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>MAPPING</name>
+        <ddl>CREATE TABLE MAPPING(IDDOCTOR int,IDPATIENT int)</ddl>
+        <columns>
+            <column>
+                <name>IDDOCTOR</name>
+                <type>int</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>MAPPINGLOGIN</name>
+        <ddl>CREATE TABLE MAPPINGLOGIN(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,USERNAME varchar(50) UNIQUE,PASSWORD varchar (50),USERTYPE int NOT NULL, EMAIL varchar(100))</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>USERNAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>PASSWORD</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>USERTYPE</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>EMAIL</name>
+                <type>varchar</type>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">admin</value>
+                <value column="2">indi</value>
+                <value column="3">3</value>
+                <value column="4" null="true"/>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">andresp</value>
+                <value column="2">indi</value>
+                <value column="3">2</value>
+                <value column="4">andresdeperedacruz@hotmail.com</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">andres</value>
+                <value column="2">indi</value>
+                <value column="3">1</value>
+                <value column="4">andresdeperedacruz@hotmail.com</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>PATIENT</name>
+        <ddl>CREATE TABLE PATIENT(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,NAME varchar(25) NOT NULL,SURNAME varchar(25) NOT NULL,NIF varchar (15) NOT NULL,EMAIL varchar(50) NOT NULL,MOBILEPHONE bigint,HOMEPHONE bigint,DOB date NOT NULL,GENDER varchar (15) NOT NULL,USERNAME varchar(50) NOT NULL UNIQUE,PASSWORD varchar (20) NOT NULL,WEIGHT float,HEIGHT float,PHOTO blob,IDADDRESS int CONSTRAINT rAddress REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>NAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>SURNAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>NIF</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>EMAIL</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>MOBILEPHONE</name>
+                <type>bigint</type>
+            </column>
+            <column>
+                <name>HOMEPHONE</name>
+                <type>bigint</type>
+            </column>
+            <column>
+                <name>DOB</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>GENDER</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>USERNAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL </definition>
+                    </constraint>
+                    <constraint>
+                        <type>UNIQUE</type>
+                        <definition>UNIQUE</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>PASSWORD</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>WEIGHT</name>
+                <type>float</type>
+            </column>
+            <column>
+                <name>HEIGHT</name>
+                <type>float</type>
+            </column>
+            <column>
+                <name>PHOTO</name>
+                <type>blob</type>
+            </column>
+            <column>
+                <name>IDADDRESS</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES ADDRESS ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">asdf</value>
+                <value column="2">sdf</value>
+                <value column="3">123</value>
+                <value column="4">andresdeperedacruz@hotmail.com</value>
+                <value column="5">12345</value>
+                <value column="6">1234</value>
+                <value column="7">1525298400000</value>
+                <value column="8">Male</value>
+                <value column="9">andres</value>
+                <value column="10">indi</value>
+                <value column="11">123</value>
+                <value column="12">123</value>
+                <value column="13">????</value>
+                <value column="14">2</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>SPECIALITY</name>
+        <ddl>CREATE TABLE SPECIALITY(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,TYPE varchar(50) NOT NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>TYPE</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+            <row>
+                <value column="0">1</value>
+                <value column="1">Allergy and Immunollogy</value>
+            </row>
+            <row>
+                <value column="0">2</value>
+                <value column="1">General Pathology</value>
+            </row>
+            <row>
+                <value column="0">3</value>
+                <value column="1">Cardiology</value>
+            </row>
+            <row>
+                <value column="0">4</value>
+                <value column="1">Clinical Neurophisiology</value>
+            </row>
+            <row>
+                <value column="0">5</value>
+                <value column="1">Endocrinology</value>
+            </row>
+            <row>
+                <value column="0">6</value>
+                <value column="1">General Practice</value>
+            </row>
+            <row>
+                <value column="0">7</value>
+                <value column="1">Internal Medicine</value>
+            </row>
+            <row>
+                <value column="0">8</value>
+                <value column="1">Nephrology</value>
+            </row>
+            <row>
+                <value column="0">9</value>
+                <value column="1">Neurology</value>
+            </row>
+            <row>
+                <value column="0">10</value>
+                <value column="1">Ophthalmology</value>
+            </row>
+            <row>
+                <value column="0">11</value>
+                <value column="1">Orthopaedics</value>
+            </row>
+            <row>
+                <value column="0">12</value>
+                <value column="1">Paediatrics</value>
+            </row>
+            <row>
+                <value column="0">13</value>
+                <value column="1">Neonatology</value>
+            </row>
+            <row>
+                <value column="0">14</value>
+                <value column="1">Physical Medicine Rehabilitation</value>
+            </row>
+            <row>
+                <value column="0">15</value>
+                <value column="1">Pulmonology</value>
+            </row>
+            <row>
+                <value column="0">16</value>
+                <value column="1">Psychiatry</value>
+            </row>
+            <row>
+                <value column="0">17</value>
+                <value column="1">Radiology</value>
+            </row>
+            <row>
+                <value column="0">18</value>
+                <value column="1">General Surgery</value>
+            </row>
+            <row>
+                <value column="0">19</value>
+                <value column="1">Urology</value>
+            </row>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>SURGERIES</name>
+        <ddl>CREATE TABLE SURGERIES(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL,DATE date,TYPE varchar(50),IDTREATMENT int CONSTRAINT rTreatment REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DATE</name>
+                <type>date</type>
+            </column>
+            <column>
+                <name>TYPE</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>IDTREATMENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES TREATMENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>TREATMENT</name>
+        <ddl>CREATE TABLE TREATMENT(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,START date NOT NULL,END date NOT NULL,TYPE varchar(50),DESCRIPTION text,TRESULTS text,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT (ID) ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>START</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>END</name>
+                <type>date</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>TYPE</name>
+                <type>varchar</type>
+            </column>
+            <column>
+                <name>DESCRIPTION</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>TRESULTS</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT (ID) ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+    <table>
+        <database></database>
+        <name>VACCINE</name>
+        <ddl>CREATE TABLE VACCINE(ID integer PRIMARY KEY AUTOINCREMENT NOT NULL,NAME varchar(25) NOT NULL,DATE date,OBSERVATIONS text,IDPATIENT int CONSTRAINT rPatient REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL)</ddl>
+        <columns>
+            <column>
+                <name>ID</name>
+                <type>integer</type>
+                <constraints>
+                    <constraint>
+                        <type>PRIMARY KEY</type>
+                        <definition>PRIMARY KEY AUTOINCREMENT </definition>
+                    </constraint>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>NAME</name>
+                <type>varchar</type>
+                <constraints>
+                    <constraint>
+                        <type>NOT NULL</type>
+                        <definition>NOT NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+            <column>
+                <name>DATE</name>
+                <type>date</type>
+            </column>
+            <column>
+                <name>OBSERVATIONS</name>
+                <type>text</type>
+            </column>
+            <column>
+                <name>IDPATIENT</name>
+                <type>int</type>
+                <constraints>
+                    <constraint>
+                        <type>FOREIGN KEY</type>
+                        <definition>REFERENCES PATIENT ON UPDATE CASCADE ON DELETE SET NULL</definition>
+                    </constraint>
+                </constraints>
+            </column>
+        </columns>
+        <rows>
+        </rows>
+    </table>
+</database>

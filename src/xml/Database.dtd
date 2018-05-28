@@ -1,0 +1,33 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE XmlLists [
+	<!ELEMENT XmlLists(addresses*, appointments*, doctors*, patients*)>
+	<!ELEMENT addresses(postalcode, city, street, housenumber>
+	<!ATTLIST addresses id CDATA #REQUIRED>
+	<!ELEMENT postalcode>
+	<!ELEMENT city>
+	<!ELEMENT street>
+	<!ELEMENT housenumber>
+	<!ELEMENT appointments (date, done, hour, reason)>
+	<!ATTLIST appointments id CDATA #REQUIRED>
+	<!ELEMENT date>
+	<!ELEMENT done>
+	<!ELEMENT hour>
+	<!ELEMENT reason>
+	<!ELEMENT doctors(username, password, email, nif, mobilephone, name, surname, dob, gender, address, speciality>
+	<!ELEMENT username>
+	<!ELEMENT password>
+	<!ELEMENT email>
+	<!ELEMENT nif>
+	<!ELEMENT mobilephone>
+	<!ELEMENT name>
+	<!ELEMENT surname>
+	<!ELEMENT dob>
+	<!ELEMENT gender>
+	<!ELEMENT address>
+	<!ELEMENT speciality>
+	<!ELEMENT doctors(username, password, email, nif, mobilephone, name, surname, dob, gender, photo, address, weight, housephone, cHistory>
+	<!ELEMENT photo>
+	<!ELEMENT weight>
+	<!ELEMENT housephone>
+	<!ELEMENT cHistory>
+]>
